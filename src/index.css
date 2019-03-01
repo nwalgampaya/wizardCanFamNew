@@ -208,6 +208,16 @@ label {
   border-width: 0px 6px 6px;
   border-color: transparent transparent #e00;
 }
+.inline-error-dialog > ul::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -21px;
+  top: -6px;
+  border-style: solid;
+  border-width: 0px 6px 6px;
+  border-color: transparent transparent #e00;
+}
 .radio-inline-x {
   position: relative;
   display: inline-block;
@@ -507,7 +517,22 @@ td.numeric {
   margin: auto;
   margin-top: 5px;
 }
-
+.inline-error-dialog > ul {
+  display: flex;
+  position: relative;
+  list-style-type: none;
+  padding: 0.5em;
+  background: #fff none repeat scroll 0% 0%;
+  color: #000;
+  min-height: 16px;
+  border-width: 1px 1px 1px 29px;
+  border-style: solid;
+  border-color: #e00;
+  border-image: none;
+  box-shadow: 0px 4px 5px #ccc;
+  margin: auto;
+  margin-top: 5px;
+}
 .inline-error > ul::before {
   content: url("./img/error.png");
   display: block;
@@ -526,7 +551,24 @@ td.numeric {
   border-width: 0px 6px 6px;
   border-color: transparent transparent #e00;
 }
+.inline-error-dialog > ul::before {
+  content: url("./img/error.png");
+  display: block;
+  position: absolute;
+  left: -20px;
+  top: 7px;
+}
 
+.inline-error-dialog > ul::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -21px;
+  top: -6px;
+  border-style: solid;
+  border-width: 0px 6px 6px;
+  border-color: transparent transparent #e00;
+}
 .inline-error.ng-hide-add.ng-hide-add-active > ul {
   border-color: #bad405;
 }
@@ -659,7 +701,12 @@ p {
 .modal-dialog {
   width: 800px;
 }
-
+.form-control-modal[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #eee;
+  opacity: 1;
+}
 /* for Add cancer table */
 .CancerAddTab {
   width: 100%;

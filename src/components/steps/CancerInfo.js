@@ -17,6 +17,8 @@ import FormValidator from "../validator/FormValidator";
 import DateSelect from "../util/DateSelect";
 import Autocomplete from "react-autocomplete";
 import HeaderPanel from "../HeaderPanel";
+import AddCancer from "../AddCancer";
+import EditCancer from "../EditCancer";
 
 // import ExampleModal from '../steps/ExampleModal';
 
@@ -44,6 +46,8 @@ class CancerInfo extends React.Component {
       // },
     ]);
     this.state = {
+      showAddCancerDialog: false,
+      showEditCancerDialog: false,
       patientData: null,
       patientDataObject: [],
       cancerInfo: [],
@@ -129,6 +133,7 @@ class CancerInfo extends React.Component {
 
       newCancerModalId: "",
       // ageOfDiagColumn: '',
+      cancer: null,
       validation: this.validator.valid()
     };
 
@@ -145,7 +150,6 @@ class CancerInfo extends React.Component {
     this.setCurrentSource = this.setCurrentSource.bind(this);
     this.state.patientData = this.props.patientDataValue;
     this.convertToGetDate = this.convertToGetDate.bind(this);
-
 
     // this.handleSubmit = this.handleSubmit.bind(this);
     // handleSubmit
@@ -164,54 +168,50 @@ class CancerInfo extends React.Component {
 
     // formatDatestr = formatDatestr!=null ? formatDatestr : 0;
     if (formatDatestr != null) {
-
       var year = formatDatestr.slice(0, 4);
       var month = formatDatestr.slice(4, 6);
-      var date = formatDatestr.slice(6, 8)
+      var date = formatDatestr.slice(6, 8);
 
       formatDatestr = year + "," + month + "," + date;
-
     } else formatDatestr = "N/A";
-    console.log("formatDatestr : " + formatDatestr)
+    console.log("formatDatestr : " + formatDatestr);
 
     formatDatestr = this.getDate(date, month, year);
     return formatDatestr;
-
   }
 
   getDate(d, m, y) {
-    console.log("getDate Month : " + m)
+    console.log("getDate Month : " + m);
     var currentDate;
     if (d == "99" && m != "99" && y != "9999") {
       currentDate = new Date(parseInt(y), parseInt(m), 15);
       // currentDate = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
 
-      console.log("if---1 : " + currentDate)
+      console.log("if---1 : " + currentDate);
     } else if (d != "99" && m == "99" && y != "9999") {
       currentDate = new Date(parseInt(y), 7, parseInt(d));
-      console.log("if---2 : " + currentDate)
-
+      console.log("if---2 : " + currentDate);
     } else if (d == "99" && m == "99" && y != "9999") {
       currentDate = new Date(parseInt(y), 7, 1);
-      console.log("if---3 : " + currentDate)
-
+      console.log("if---3 : " + currentDate);
     } else if (d != "99" && m != "99" && y != "9999") {
       currentDate = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
-      console.log("if---4 : " + currentDate)
-
+      console.log("if---4 : " + currentDate);
     }
     return currentDate;
   }
 
   validateDiagnosisDate = () => {
     // var currentDeathDate = this.getDate(d, m, y);
-    var currentDeathDate = this.convertToGetDate(this.state.selectedPersonData.dateOfDeath);
+    var currentDeathDate = this.convertToGetDate(
+      this.state.selectedPersonData.dateOfDeath
+    );
 
     // if (this.state.isValidLKDSelected) {
     var currentLKDDate = this.getDate(
       this.state.selectedEditDate,
       this.state.selectedEditMonth,
-      this.state.selectedEditYear,
+      this.state.selectedEditYear
     );
 
     if (
@@ -219,56 +219,59 @@ class CancerInfo extends React.Component {
       typeof currentDeathDate !== "undefined"
     ) {
       if (currentDeathDate > currentLKDDate) {
-        console.log("In validateDiagnosisDate() ")
+        console.log("In validateDiagnosisDate() ");
         return true;
         // errors.currentdodColumn =
         //   "Death date should be greater than LKD date";
-      } else return false
+      } else return false;
     }
-
-  }
+  };
   negativeAge = () => {
     console.log("In Negative : " + this.state.ageDiagnosisFromDb);
     console.log("In Negative : " + this.state.selectedPersonData.dateOfDeath);
     console.log("In Negative : " + this.state.dateOfDiagFromDb);
 
-    var locaDoDeath = this.convertToGetDate(this.state.selectedPersonData.dateOfDeath);
+    var locaDoDeath = this.convertToGetDate(
+      this.state.selectedPersonData.dateOfDeath
+    );
     // new Date(this.convertDateFormat(this.state.selectedPersonData.dateOfDeath));
     var locaDoDiag = this.convertToGetDate(this.state.dateOfDiagFromDb);
     // new Date(this.convertDateFormat(this.state.dateOfDiagFromDb));
     console.log("locaDoDeath : " + locaDoDeath);
     console.log("locaDoDiag : " + locaDoDiag);
-    console.log("In Negative difference: " + Math.floor((locaDoDeath - locaDoDiag) / 31536000000));
+    console.log(
+      "In Negative difference: " +
+        Math.floor((locaDoDeath - locaDoDiag) / 31536000000)
+    );
 
     console.log(
       "In Negative :  dateOfDeath: " +
-      new Date(
-        this.convertDateFormat(this.state.selectedPersonData.dateOfDeath)
-      )
+        new Date(
+          this.convertDateFormat(this.state.selectedPersonData.dateOfDeath)
+        )
     );
 
     console.log(
       "In Negative : dateOfDiagFromDb  : " +
-      new Date(this.convertDateFormat(this.state.dateOfDiagFromDb))
-    )
+        new Date(this.convertDateFormat(this.state.dateOfDiagFromDb))
+    );
 
     // Math.floor((dodiag - dob) / 31536000000);
     if (Math.floor((locaDoDeath - locaDoDiag) / 31536000000) > 0) {
-      console.log("dateOfDeath is greater TRUE")
+      console.log("dateOfDeath is greater TRUE");
       return true;
     } else {
-      console.log("dateOfDeath is greater FALSE")
+      console.log("dateOfDeath is greater FALSE");
       return false;
     }
     if (this.state.ageDiagnosisFromDb < 0) {
-      console.log("dateOfDeath is greater")
+      console.log("dateOfDeath is greater");
       return true;
     } else {
-      console.log("dateOfDeath is lesser")
+      console.log("dateOfDeath is lesser");
 
       return false;
     }
-
   };
 
   componentDidMount() {
@@ -288,11 +291,11 @@ class CancerInfo extends React.Component {
     // }
     console.log(
       "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL" +
-      this.props.editedRecordCount
+        this.props.editedRecordCount
     );
     console.log(
       "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL Length" +
-      this.state.arrayEditedData.length
+        this.state.arrayEditedData.length
     );
 
     // const urlProfession = properties.baseUrl + "practitionerscore/" ;
@@ -327,12 +330,12 @@ class CancerInfo extends React.Component {
     this.state.newCancerModalId = Math.floor(Math.random() * 10);
     console.log(
       "site &&&&&&&&&&&&&&&&&&&&&77 intGender : " +
-      this.props.patientDataValue.intGender
+        this.props.patientDataValue.intGender
     );
 
     console.log(
       "site &&&&&&&&&&&&&&&&&&&&&77" +
-      this.props.patientDataValue.cancerList[0].id
+        this.props.patientDataValue.cancerList[0].id
     );
     // this.state.profession.push(data);
 
@@ -568,7 +571,7 @@ class CancerInfo extends React.Component {
     // console.log("in handleSave tumorNo before"  + this.state.cancerInfoEdited[this.state.tumorNo].site.code)
     console.log(
       "in handleSave tumorNo before" +
-      this.state.cancerInfo[this.state.tumorNo].site.code
+        this.state.cancerInfo[this.state.tumorNo].site.code
     );
 
     // if(this.state.siteEditDlg!="undefined"){
@@ -605,8 +608,8 @@ class CancerInfo extends React.Component {
     if (
       this.state.cancerInfoCopy[this.state.tumorNo].dateOfDiagnosis !=
       this.state.selectedEditYear +
-      this.state.selectedEditMonth +
-      this.state.selectedEditDate
+        this.state.selectedEditMonth +
+        this.state.selectedEditDate
     ) {
       console.log("IN createEditedArray : ");
       this.state.dateOfDiagFromDb =
@@ -647,11 +650,11 @@ class CancerInfo extends React.Component {
     console.log("in " + this.state.siteEditDlg);
     console.log(
       "in handleSave age afterin handleSave age after" +
-      this.state.cancerInfo[this.state.tumorNo].site.id
+        this.state.cancerInfo[this.state.tumorNo].site.id
     );
     console.log(
       "in handleSave age afterin changedParameters age after" +
-      this.state.cancerInfoCopy[this.state.tumorNo].site.code
+        this.state.cancerInfoCopy[this.state.tumorNo].site.code
     );
     // console.log("in handleSave age afterin handleSave age after" + this.state.cancerInfoEdited[this.state.tumorNo].site.description)
     console.log("in handleSave age tumor No" + this.state.tumorNo);
@@ -1002,9 +1005,37 @@ class CancerInfo extends React.Component {
     // console.log("in handleShow"+  id )
     // this.setState({ show: false });
     this.state.selectedId = id;
-    this.setState({ showAddCancer: true });
+    this.state.showAddCancerDialog = true;
+    this.setState({ showAddCancerDialog: true });
     // this.state.selectedId=id
     console.log("in handleShow selectedId ;" + this.state.selectedId);
+  }
+  handleShowEditCancer = (tumorNo, rowId) => {
+    console.log("in handleShow" + tumorNo);
+    // console.log("handleYearPicked : " + e.target.valu)
+    this.state.selectedId = rowId;
+    this.state.tumorNo = rowId;
+    this.setState({
+      cancer: this.state.cancerInfo.find(x => x.tumorNo == tumorNo),
+      showEditCancerDialog: true
+    });
+    this.loadDataToEditDialog(rowId);
+    // this.setState(
+    //   { showEditCancerDialog: true },
+
+    //   () => this.showEditCancer(tumorNo)
+    // );
+  };
+
+  showEditCancer(tumorNo) {
+    // return (
+    //   <EditCancer
+    //     cancer={cancer}
+    //     patientData={this.state.patientData}
+    //     showEditCancerDialog={this.state.showEditCancerDialog}
+    //     onSaveCancer={this.refresEditedhCancerList.bind(this)}
+    //   />
+    // );
   }
   handleTxtChange(e) {
     //alert("txt" + e.target.value)
@@ -1013,19 +1044,94 @@ class CancerInfo extends React.Component {
   }
 
   // Edit Modal Dialog functions
-  handleShow(id) {
-    console.log("in handleShow" + id);
-    console.log("in siteEditDlg" + this.state.siteEditDlg);
-    console.log("handleShow RECORD COUNT " + this.state.editedRecordCount);
+  handleShow = tumorNo => {
+    console.log("in handleShow" + tumorNo);
+    // console.log("handleYearPicked : " + e.target.valu)
 
-    this.setState({ show: true });
-    // this.setState({ showAddCancer: true });
-    this.state.selectedId = id;
-    // this will be the unique id of the selected record.
-    this.state.tumorNo = id;
-    console.log("in handleShow selectedId ;" + this.state.selectedId);
+    this.setState(
+      { showEditCancerDialog: true },
 
-    this.loadDataToEditDialog(id);
+      () => this.showEditCancer(tumorNo)
+    );
+  };
+
+  showEditCancer(tumorNo) {
+    var cancer = this.state.cancerInfo.find(x => x.tumorNo === tumorNo);
+
+    // return (
+    //   <EditCancer
+    //     cancer={cancer}
+    //     patientData={this.state.patientData}
+    //     showEditCancerDialog={this.state.showEditCancerDialog}
+    //     onSaveCancer={this.refresEditedhCancerList.bind(this)}
+    //   />
+    // );
+  }
+
+  //   // this.setState({ showAddCancer: true });
+  //   this.state.selectedId = id;
+  //   // this will be the unique id of the selected record.ta
+  //   this.state.tumorNo = id;
+  //   console.log("in handleShow selectedId ;" + this.state.selectedId);
+
+  //   this.loadDataToEditDialog(id);
+  // }
+
+  refreshCancerList(cancerAdded) {
+    this.state.isCanecerAdded = true;
+    this.state.newCancerArr.push(cancerAdded);
+    this.state.cancerInfo.push(cancerAdded);
+
+    this.state.newCancerArr.map((values, i) =>
+      console.log("site values :" + values.site.id)
+    );
+    // Sending the modified patient with added cancer object to be saved to main page(cancerFamily)
+    this.state.patientDataObject.cancerList = this.state.cancerInfo;
+
+    this.props.onSaveNewInfo(
+      this.state.newCancerArr,
+      this.state.patientDataObject,
+      this.state.isCanecerAdded
+    );
+
+    // this.state.patientDataObject = patient;
+    // this.state.cancerInfo = patient.cancerList;
+    // this.setState({
+    //   patientDataObject: patient,
+    //   cancerInfo: patient.cancerList,
+    //   showAddCancerDialog: false
+    // });
+    // this.createNewCancerArray();
+    // this.sendNewCancerToPreview();
+  }
+
+  refresEditedhCancerList(cancer) {
+    const index = this.state.patientDataObject.cancerList.findIndex(
+      e => e.tumorNo == cancer.tumorNo
+    );
+    this.state.patientDataObject.cancerList[index] = cancer;
+    var cancerlist = this.state.cancerInfo;
+    cancerlist[index] = cancer;
+
+    Object.assign(this.state.patientDataObject.cancerList, cancerlist);
+    Object.assign(this.state.cancerInfo, cancerlist);
+
+    this.setState({
+      patientDataObject: this.state.patientDataObject,
+      cancerInfo: this.state.patientDataObject.cancerList
+    });
+    this.recordEditedData();
+  }
+  closeCancerDialog() {
+    this.setState({
+      showAddCancerDialog: false
+    });
+  }
+
+  closeCancerEditDialog() {
+    this.setState({
+      showEditCancerDialog: false
+    });
   }
 
   // Values set in here will be displayed in the 'select' boxes in the Edit dialog
@@ -1034,7 +1140,7 @@ class CancerInfo extends React.Component {
     console.log("loadDataToEditDialog TUmorNo : " + id);
     console.log(
       "loadDataToEditDialog TUmorNo : " +
-      this.state.selectedPersonData.personCID
+        this.state.selectedPersonData.personCID
     );
     //ToDu
     // save the changed row in to an array , this will be compaired with the original data in the review.
@@ -1087,7 +1193,7 @@ class CancerInfo extends React.Component {
 
     console.log(
       "siteEditDlg behaviourcodesFromDb' diagSourceFromDbFromDb" +
-      this.state.diagSourceFromDb
+        this.state.diagSourceFromDb
     );
   }
   setCurrentSource() {
@@ -1278,11 +1384,14 @@ class CancerInfo extends React.Component {
   /* Diagnostic Date values START*/
   handleMonthPickedDiag = selectedEditMonth => {
     console.log("Month Picked : " + selectedEditMonth);
-    this.setState({
-      selectedEditMonth: selectedEditMonth != "Month" ? selectedEditMonth : ""
-    }, () => {
-      this.calculateAgeOfDiag();
-    });
+    this.setState(
+      {
+        selectedEditMonth: selectedEditMonth != "Month" ? selectedEditMonth : ""
+      },
+      () => {
+        this.calculateAgeOfDiag();
+      }
+    );
   };
   handleYearPickedDiag = (selectedEditYear, e) => {
     console.log("handleYearPicked : " + selectedEditYear);
@@ -1307,11 +1416,14 @@ class CancerInfo extends React.Component {
 
   handleDatePickedDiag = selectedEditDate => {
     console.log("Date    Picked : " + selectedEditDate);
-    this.setState({
-      selectedEditDate: selectedEditDate != "Day" ? selectedEditDate : ""
-    }, () => {
-      this.calculateAgeOfDiag();
-    });
+    this.setState(
+      {
+        selectedEditDate: selectedEditDate != "Day" ? selectedEditDate : ""
+      },
+      () => {
+        this.calculateAgeOfDiag();
+      }
+    );
 
     // this.calculateAgeOfDiag();
   };
@@ -1324,26 +1436,34 @@ class CancerInfo extends React.Component {
       this.state.selectedEditMonth != "" &&
       this.state.selectedEditDate != ""
     ) {
-      var dob = this.convertToGetDate(this.state.selectedPersonData.dateOfBirth);
+      var dob = this.convertToGetDate(
+        this.state.selectedPersonData.dateOfBirth
+      );
       // var currentDeathDate = this.convertToGetDate(this.state.selectedPersonData.dateOfDeath);
       //  new Date(        this.convertDateFormat(this.state.selectedPersonData.dateOfBirth)      );
 
       this.setState({
-        dateOfDiagFromDb: this.state.selectedEditYear + this.state.selectedEditMonth + this.state.selectedEditDate
+        dateOfDiagFromDb:
+          this.state.selectedEditYear +
+          this.state.selectedEditMonth +
+          this.state.selectedEditDate
       });
       // var dodiag = new Date(this.convertDateFormat(this.state.dateOfDiagFromDb));
-      var dodiag = this.getDate(this.state.selectedEditDate, this.state.selectedEditMonth, this.state.selectedEditYear);
+      var dodiag = this.getDate(
+        this.state.selectedEditDate,
+        this.state.selectedEditMonth,
+        this.state.selectedEditYear
+      );
 
-      // 
+      //
       console.log("In didupdate NOT NULL dob : " + dob);
       console.log("In didupdate NOT NULL DIAG DATE : " + dodiag);
 
       // var dt1 = Math.floor((dodiag - dob) / 31536000000);
-      var dt1 = this.getAge(dob, dodiag)
+      var dt1 = this.getAge(dob, dodiag);
 
       console.log("In didupdate NOT NULL DIAG DATE : " + dt1);
       // this.state.ageDiagnosisFromDb = dt1
-
 
       this.setState({
         ageDiagnosisFromDb: dt1
@@ -1353,10 +1473,8 @@ class CancerInfo extends React.Component {
 
       this.state.enableSaveButton = true;
     }
-  }
+  };
   getAge = (birthDateLocal, dateOfDiagLocal) => {
-
-
     var curYear = birthDateLocal.getFullYear();
     var dobYear = dateOfDiagLocal.getFullYear();
     var age = dobYear - curYear;
@@ -1378,7 +1496,7 @@ class CancerInfo extends React.Component {
     }
 
     return age;
-  }
+  };
   /* Diagnostic Date values END*/
 
   setDiagSource(event) {
@@ -1414,7 +1532,7 @@ class CancerInfo extends React.Component {
   closeDialog() {
     console.log(
       "CloseDialog Only when Add Cancer save----------------------------" +
-      this.props.values.ageOfDigColumn
+        this.props.values.ageOfDigColumn
     );
 
     this.state.showAddCancer = false;
@@ -1479,8 +1597,9 @@ class CancerInfo extends React.Component {
         <PersonRow
           key={cancer.id}
           rowId={i}
+          tumorId={cancer.tumorNo}
           cancerInfo={cancer}
-          handleShow={this.handleShow}
+          handleShow={this.handleShowEditCancer}
         />
       );
     });
@@ -1516,6 +1635,23 @@ class CancerInfo extends React.Component {
           Informatics.”{" "}
         </p>
         {/* Modal for Editing New Cancer - START*/}
+        {this.state.showAddCancerDialog ? (
+          <AddCancer
+            patientData={this.state.patientData}
+            showAddCancerDialog={this.state.showAddCancerDialog}
+            onSaveCancer={this.refreshCancerList.bind(this)}
+            oncCloseCancer={this.closeCancerDialog.bind(this)}
+          />
+        ) : null}
+        {this.state.showEditCancerDialog ? (
+          <EditCancer
+            cancer={this.state.cancer}
+            patientData={this.state.patientData}
+            showEditCancerDialog={this.state.showEditCancerDialog}
+            onSaveCancer={this.refresEditedhCancerList.bind(this)}
+            onCloseCancer={this.closeCancerEditDialog.bind(this)}
+          />
+        ) : null}
         <div>
           <Modal
             backdrop={false}
@@ -1624,7 +1760,7 @@ class CancerInfo extends React.Component {
                         </option>
                       );
                     })
-                      // <option >{"Hospital Rec"}</option>
+                    // <option >{"Hospital Rec"}</option>
                     }
                   </select>
                 </div>
@@ -1916,7 +2052,7 @@ class CancerInfo extends React.Component {
                         </option>
                       );
                     })
-                      // <option >{"Hospital Rec"}</option>
+                    // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>
@@ -2124,6 +2260,7 @@ const PersonRow = props => {
 
       <td>{props.cancerInfo.site.description}</td>
       <td>{props.cancerInfo.lateral.description}</td>
+      <td>{props.cancerInfo.histology}</td>
       <td>
         {/*   // Remove comment */}
         {/* { props.cancerInfo.histology.code } */}
@@ -2132,10 +2269,10 @@ const PersonRow = props => {
       <td>
         {props.cancerInfo.dateOfDiagnosis != null
           ? props.cancerInfo.dateOfDiagnosis.slice(4, 6) +
-          "/" +
-          props.cancerInfo.dateOfDiagnosis.slice(6, 8) +
-          "/" +
-          props.cancerInfo.dateOfDiagnosis.slice(0, 4)
+            "/" +
+            props.cancerInfo.dateOfDiagnosis.slice(6, 8) +
+            "/" +
+            props.cancerInfo.dateOfDiagnosis.slice(0, 4)
           : "N/A"}
       </td>
       <td>{props.cancerInfo.ageDiagnosis}</td>
@@ -2150,7 +2287,11 @@ const PersonRow = props => {
           { props.cancerInfo.issuetype }
         </td> */}
       <td>
-        <Button bsSize="small" onClick={() => props.handleShow(props.rowId)}>
+        <Button
+          bsSize="small"
+          onClick={() => props.handleShow(props.tumorId, props.rowId)}
+        >
+          {" "}
           Edit
         </Button>
       </td>
