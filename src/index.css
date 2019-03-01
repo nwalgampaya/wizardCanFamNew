@@ -353,6 +353,17 @@ label {
   font-size: 18px;
 }
 
+th.last-name *,
+td.last-name {
+  font-weight: bold;
+  color: #aa0000;
+}
+
+th.numeric,
+td.numeric {
+  text-align: right !important;
+}
+
 .TFtable {
   border-collapse: collapse;
   /* 	border: #dae5f4 8px solid; */
@@ -398,6 +409,7 @@ td.numeric {
 .TFtable tr th {
   background-color: #f5f5f5;
 }
+
 .form-control-modal {
   display: block;
   width: 100%;
@@ -893,4 +905,29 @@ td.numeric {
 .reviewStyle {
   padding-left: 30px;
   padding-top: 20px;
+}
+.PRtable {
+  border-collapse: collapse;
+  /* 	border: #dae5f4 8px solid; */
+  margin: auto;
+  width: 95%;
+}
+
+.PRtable td,
+th {
+  border: 1px solid #dee2e6;
+  text-align: center !important;
+}
+
+.PRtable tr {
+  background: #ecf1f9;
+}
+/*  Define the background color for all the ODD background rows  */
+.PRtable tr:nth-child(odd) {
+  background: #f0eeec;
+  /* background: #f8f8f8;*/
+}
+/*  Define the background color for all the EVEN background rows  */
+.PRtable tr:nth-child(even) {
+  background: white;
 }

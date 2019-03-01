@@ -496,9 +496,10 @@ class CancerInfo extends React.Component {
   //capture edited records and compair with the original data
   recordEditedData(editedCancer) {
     //this.state.cancerInfoEdited.push(cancer);
-    this.state.cancerInfoEdited[this.state.tumorNo] = [
-      ...this.state.cancerInfo[this.state.tumorNo]
-    ];
+    // this.state.cancerInfoEdited[this.state.tumorNo] = [
+    //   ...this.state.cancerInfo[this.state.tumorNo]
+    // ];
+
     this.state.isNewCancer = false;
 
     this.state.newCancerArr.map((values, i) => {
@@ -513,7 +514,7 @@ class CancerInfo extends React.Component {
     this.createEditedArray(editedCancer);
     // Conditioning only to display edited cancers in preview , to avoid New cancer displayed as edited
     if (!this.state.isNewCancer) {
-      this.getChangedFieldsOnly();
+      this.getChangedFieldsOnly(editedCancer);
     }
 
     // var eq = JSON(this.state.cancerInfoEdited) == JSON(this.state.cancerInfo);
@@ -533,187 +534,139 @@ class CancerInfo extends React.Component {
       values.issuetype = "";
       values.risk = "";
     });
+
     this.state.isArrayEmpty = true;
   }
 
   // This arrary "changedParameters" is declared to capture only the changed values from the Edit dialog.
   //ToDO
   createEditedArray(editedCancer) {
+    var cancerEdited = new Object();
+
     let cancerBeforeEdited = this.state.cancerInfoCopy.find(
       cancer => cancer.tumorNo == editedCancer.tumorNo
     );
+    cancerEdited.tumorNo = editedCancer.tumorNo;
 
     if (cancerBeforeEdited.site.code != editedCancer.site.code) {
-      this.setSiteDataForEditDialog(editedCancer);
-      // this.state.cancerInfoEdited[this.state.tumorNo].location= 44
+      cancerEdited.site = editedCancer.site.code;
     }
     if (cancerBeforeEdited.lateral.code != editedCancer.lateral.code) {
       console.log("lateral changed ***********" + this.state.lateralFromDb);
-      this.setLateralDataForEditDialog(editedCancer);
+      cancerEdited.lateral = editedCancer.lateral.description;
     }
 
     if (cancerBeforeEdited.histology != editedCancer.histology) {
-      this.setHistoDataForEditDialog(editedCancer);
+      cancerEdited.histology = editedCancer.histology;
     }
     if (cancerBeforeEdited.behaviour.code != editedCancer.behaviour.code) {
-      console.log(
-        "lateral changed ***********" + this.state.behaviourcodesFromDb
-      );
-      this.setbehaviourDataForEditDialog(editedCancer);
+      cancerEdited.behaviour = editedCancer.behaviour.description;
     }
 
-    if (
-      this.state.cancerInfoCopy[this.state.tumorNo].dateOfDiagnosis !=
-      this.state.selectedEditYear +
-        this.state.selectedEditMonth +
-        this.state.selectedEditDate
-    ) {
-      console.log("IN createEditedArray : ");
-      this.state.dateOfDiagFromDb =
-        this.state.selectedEditYear +
-        this.state.selectedEditMonth +
-        this.state.selectedEditDate;
-      console.log("IN createEditedArray : " + this.state.dateOfDiagFromDb);
-
-      this.setDODForEditDialog();
-      // this.state.patientDataValue.dateOfBirth = (this.state.patientDataValue.dateOfBirth == '' ? '' : (this.state.currentDOB));
-    }
-    if (
-      this.state.cancerInfoCopy[this.state.tumorNo].ageDiagnosis !=
-      this.state.ageDiagnosisFromDb
-    ) {
-      console.log(
-        "lateral changed ***********" + this.state.ageDiagnosisFromDb
-      );
-      this.setAODDataForEditDialog();
-    }
     if (cancerBeforeEdited.diagSource.id != editedCancer.diagSource.id) {
-      console.log(
-        "Diag Source changed ***********" + this.state.diagSourceFromDb
-      );
-      this.setDiagSourdeDataForEditDialog(editedCancer);
+      cancerEdited.diagSource = editedCancer.diagSource.description;
     }
     if (cancerBeforeEdited.tissue.code != editedCancer.tissue.code) {
-      console.log("tissue changed ***********" + this.state.tissueFromDb);
-      this.setTissueDataForEditDialog(editedCancer);
+      cancerEdited.tissue = editedCancer.tissue.description;
     }
 
-    console.log("in " + this.state.siteEditDlg);
-    console.log(
-      "in handleSave age afterin handleSave age after" +
-        this.state.cancerInfo[this.state.tumorNo].site.id
-    );
-    console.log(
-      "in handleSave age afterin changedParameters age after" +
-        this.state.cancerInfoCopy[this.state.tumorNo].site.code
-    );
-    // console.log("in handleSave age afterin handleSave age after" + this.state.cancerInfoEdited[this.state.tumorNo].site.description)
-    console.log("in handleSave age tumor No" + this.state.tumorNo);
-
-    // console.log("in handleSave complaints after" + this.state.cancerInfoEdited[this.state.tumorNo].complaints)
-    // console.log("in handleSave location after" + this.state.cancerInfoEdited[this.state.tumorNo].location  )
+    if (cancerBeforeEdited.dateOfDiagnosis != editedCancer.dateOfDiagnosis) {
+      cancerEdited.dateOfDiagnosis = editedCancer.dateOfDiagnosis;
+    }
+    if (cancerBeforeEdited.ageDiagnosis != editedCancer.ageDiagnosis) {
+      cancerEdited.ageDiagnosis = editedCancer.ageDiagnosis;
+    }
+    this.state.cancerInfoEdited.push(cancerEdited);
   }
 
-  getChangedFieldsOnly() {
-    if (
-      JSON.stringify(this.state.cancerInfoEdited[this.state.tumorNo]) ==
-      JSON.stringify(this.state.cancerInfo[this.state.tumorNo])
-    ) {
-      console.log("if equal");
-    } else {
-      this.state.isCancerEdited = true;
-      console.log("Not equal : " + this.state.tumorNo);
-      console.log(
-        "Not equal nn" + this.state.cancerInfo[this.state.tumorNo].age
-      );
-      console.log(
-        "Not equal ed  :" + this.state.cancerInfoEdited[this.state.tumorNo].age
-      );
+  getChangedFieldsOnly(cancerEditedParam) {
+    /** Looping to get all the parameters of the object "cancerInfoEdited" using param (***)
+     * Creating a new Object every time the save is pressed - if not it will update to the same last object every time
+     *  This will capture all the changed fields in the Edit dialog box and put into the 'arrayEditedData'
+     *  Complex Array ====> (arrayEditedData [arrayEditedParam{Object cancerInfo}]) **/
+    // this.state.arrayEditedData[this.state.tumorNo] = [...this.state.arrayEditedData[this.state.tumorNo]];
 
-      /** Looping to get all the parameters of the object "cancerInfoEdited" using param (***)
-       * Creating a new Object every time the save is pressed - if not it will update to the same last object every time
-       *  This will capture all the changed fields in the Edit dialog box and put into the 'arrayEditedData'
-       *  Complex Array ====> (arrayEditedData [arrayEditedParam{Object cancerInfo}]) **/
-      // this.state.arrayEditedData[this.state.tumorNo] = [...this.state.arrayEditedData[this.state.tumorNo]];
-
-      /**  This will be in play when back is pressed in "Preview" screen, will add new records on top of previous values. **/
-      if (this.props.arrayEditedData != undefined) {
-        this.state.arrayEditedData = this.props.arrayEditedData;
-        // this.setState((prevState, props) => ({
-        //   arrayEditedData: [this.state.arrayEditedData,...prevState.arrayEditedData]
-        // }));
-      }
-
-      var EditedParam = new Array();
-      for (var param in this.state.cancerInfoEdited[this.state.tumorNo]) {
-        var changeCol = new Object();
-        // console.log(param + ':: ' + this.state.cancerInfo[this.state.tumorNo][param]);
-        // console.log(param + ':: ' + this.state.cancerInfoEdited[this.state.tumorNo][param]);
-        changeCol.column = param;
-        changeCol.previousVal = this.state.cancerInfoCopy[this.state.tumorNo][
-          param
-        ];
-        changeCol.newVal = this.state.cancerInfoEdited[this.state.tumorNo][
-          param
-        ];
-
-        if (param == "site") {
-          changeCol.column = "Site";
-          changeCol.previousVal = changeCol.previousVal.code;
-          console.log(
-            "--------------------------------" + changeCol.previousVal
-          );
-        }
-        if (param == "lateral") {
-          changeCol.column = "Lateral";
-          changeCol.previousVal = changeCol.previousVal.description;
-        }
-        if (param == "histology") {
-          changeCol.column = "Histology";
-          changeCol.previousVal = changeCol.previousVal.code;
-        }
-        if (param == "behaviour") {
-          changeCol.column = "Behaviour";
-          console.log(
-            "--------------------------------" + changeCol.previousVal
-          );
-          changeCol.previousVal = changeCol.previousVal.description;
-        }
-        if (param == "ageDiagnosis") {
-          changeCol.column = "Age Of Diagnosis";
-          console.log(
-            "--------------------------------" + changeCol.previousVal
-          );
-          changeCol.previousVal = changeCol.previousVal;
-        }
-        if (param == "diagSource") {
-          changeCol.column = "Source";
-          console.log(
-            "--------------------------------" + changeCol.previousVal
-          );
-          changeCol.previousVal = changeCol.previousVal.description;
-        }
-        if (param == "tissue") {
-          changeCol.column = "Tissue";
-          console.log(
-            "--------------------------------" + changeCol.previousVal
-          );
-          changeCol.previousVal = changeCol.previousVal.description;
-        }
-
-        console.log("PARAM edited" + param);
-        EditedParam[this.state.editedRecordCount] = changeCol;
-        this.state.editedRecordCount++;
-      }
-
-      // EditedParam = this.setLiveDateInfoForPreview(
-      //   this.state.editedRecordCount,
-      //   EditedParam
-      // );
-      // console.log("before i /////////////////////////////// : " )
-
-      this.state.arrayEditedData[this.state.tumorNo] = EditedParam;
+    /**  This will be in play when back is pressed in "Preview" screen, will add new records on top of previous values. **/
+    if (this.props.arrayEditedData != undefined) {
+      this.state.arrayEditedData = this.props.arrayEditedData;
+      // this.setState((prevState, props) => ({
+      //   arrayEditedData: [this.state.arrayEditedData,...prevState.arrayEditedData]
+      // }));
     }
+    this.state.isCancerEdited = true;
+    let cancerOriginal = this.state.cancerInfoCopy.find(
+      cancerOrg => cancerOrg.tumorNo == cancerEditedParam.tumorNo
+    );
+    let cancerEdited = this.state.cancerInfoEdited.find(
+      cancerOrg => cancerOrg.tumorNo == cancerEditedParam.tumorNo
+    );
+
+    var EditedParam = new Array();
+    for (var param in cancerEdited) {
+      var changeCol = new Object();
+      // console.log(param + ':: ' + this.state.cancerInfo[this.state.tumorNo][param]);
+      // console.log(param + ':: ' + this.state.cancerInfoEdited[this.state.tumorNo][param]);
+      changeCol.column = param; //add Tumor No
+      changeCol.previousVal = cancerOriginal[param];
+      changeCol.newVal = cancerEdited[param];
+
+      if (param == "site") {
+        changeCol.column = "Site";
+        changeCol.previousVal = changeCol.previousVal.code;
+        console.log("--------------------------------" + changeCol.previousVal);
+      }
+      if (param == "lateral") {
+        changeCol.column = "Lateral";
+        changeCol.previousVal = changeCol.previousVal.description;
+      }
+      if (param == "histology") {
+        changeCol.column = "Histology";
+        changeCol.previousVal = changeCol.previousVal;
+      }
+      if (param == "behaviour") {
+        changeCol.column = "Behaviour";
+        console.log("--------------------------------" + changeCol.previousVal);
+        changeCol.previousVal = changeCol.previousVal.description;
+      }
+      if (param == "ageDiagnosis") {
+        changeCol.column = "Age Of Diagnosis";
+        console.log("--------------------------------" + changeCol.previousVal);
+        changeCol.previousVal = changeCol.previousVal;
+      }
+      if (param == "diagSource") {
+        changeCol.column = "Source";
+        console.log("--------------------------------" + changeCol.previousVal);
+        changeCol.previousVal = changeCol.previousVal.description;
+      }
+      if (param == "tissue") {
+        changeCol.column = "Tissue";
+        console.log("--------------------------------" + changeCol.previousVal);
+        changeCol.previousVal = changeCol.previousVal.description;
+      }
+
+      console.log("PARAM edited" + param);
+      EditedParam[this.state.editedRecordCount] = changeCol;
+      this.state.editedRecordCount++;
+    }
+
+    const index = this.state.arrayEditedData.findIndex(EditedParam => {
+      return EditedParam.some(item => {
+        //^^if (^^^^
+        if (item.column == "tumorNo")
+          return item.previousVal === cancerEditedParam.tumorNo;
+      });
+    });
+
+    if (index != -1) {
+      this.state.arrayEditedData[index] = EditedParam;
+    } else {
+      this.state.arrayEditedData.push(EditedParam);
+    }
+    // const index = this.state.arrayEditedData.findIndex(
+    //   e => e.tumorNo == cancer.tumorNo
+    // );
+    //
+
     this.sendEditedCancerToPreview();
   }
   setLiveDateInfoForPreview(editedRecordCount, EditedParam) {
@@ -774,29 +727,6 @@ class CancerInfo extends React.Component {
     );
   }
 
-  // ToDo remove this function since the same can be achived with the function setParamDescANDId
-  // setHistoCodeANDDesc(code){
-  //     this.state.histocodesData.map((values,i)=>{
-  //       if(values.code== code){
-  //             console.log("siteData : "+ values.description);
-  //             this.state.cancerInfo[this.state.tumorNo].site.description = values.description
-  //             this.state.cancerInfo[this.state.tumorNo].site.id = values.id
-  //         }
-  //     })
-  // }
-
-  // ToDo can be removed
-  // setLateralCodeANDId(description){
-  //     this.state.latralcodeData.map((values,i)=>{
-  //         // console.log("siteData : "+ values.id);
-  //         if(values.description== description){
-  //           console.log("lateralData : "+ values.description);
-  //           this.state.cancerInfo[this.state.tumorNo].lateral.code = values.code
-  //           this.state.cancerInfo[this.state.tumorNo].lateral.id = values.id
-  //       }
-  //     })
-  //   }
-
   setParamCodeANDId(description, dataFromFetch) {
     var fieldValues;
     dataFromFetch.map((values, i) => {
@@ -817,56 +747,6 @@ class CancerInfo extends React.Component {
       }
     });
     return fieldValues;
-  }
-  setSiteDataForEditDialog(editedCancer) {
-    this.state.cancerInfoEdited[this.state.tumorNo].site =
-      editedCancer.site.code;
-  }
-  setLateralDataForEditDialog(editedCancer) {
-    this.state.cancerInfoEdited[this.state.tumorNo].lateral =
-      editedCancer.lateral.description;
-  }
-  setHistoDataForEditDialog(editedCancer) {
-    this.state.cancerInfoEdited[this.state.tumorNo].histology =
-      editedCancer.histology;
-    // this.setHistoCodeANDDesc(this.state.cancerInfo[this.state.tumorNo].histology.code)
-  }
-  setbehaviourDataForEditDialog(editedCancer) {
-    this.state.cancerInfoEdited[this.state.tumorNo].behaviour =
-      editedCancer.behaviour.description;
-    // this.setParamCodeANDId(this.state.cancerInfo[this.state.tumorNo].behaviour.description,this.state.behaviourcodesData)
-  }
-  setDODForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].dateOfDiagnosis = this.state.dateOfDiagFromDb;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].dateOfDiagnosis = this.state.dateOfDiagFromDb;
-  }
-  setAODDataForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].ageDiagnosis = this.state.ageDiagnosisFromDb;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].ageDiagnosis = this.state.ageDiagnosisFromDb;
-    // this.setParamCodeANDId(this.state.cancerInfo[this.state.tumorNo].behaviour.description,this.state.behaviourcodesData)
-
-    // var fieldValues = this.setParamCodeANDId(this.state.cancerInfo[this.state.tumorNo].behaviour.description, this.state.behaviourcodesData)
-
-    // this.state.cancerInfo[this.state.tumorNo].behaviour.code = fieldValues.code
-    // this.state.cancerInfo[this.state.tumorNo].behaviour.id = fieldValues.id
-  }
-  setDiagSourdeDataForEditDialog(editedCancer) {
-    this.state.cancerInfoEdited[this.state.tumorNo].diagSource =
-      editedCancer.diagSource.description;
-    // this.setDiagSourceCodeANDId(this.state.cancerInfo[this.state.tumorNo].diagSource.description,this.state.diagSourceData)
-  }
-  setTissueDataForEditDialog(editedCancer) {
-    this.state.cancerInfoEdited[this.state.tumorNo].tissue =
-      editedCancer.tissue.description;
-    // this.setParamCodeANDId(this.state.cancerInfo[this.state.tumorNo].tissue.description,this.state.tissueData)
   }
 
   handleCloseAddCancer() {
@@ -1019,7 +899,6 @@ class CancerInfo extends React.Component {
       showEditCancerDialog: false
     });
   }
-
   // Values set in here will be displayed in the 'select' boxes in the Edit dialog
   loadDataToEditDialog(id) {
     this.setState({ cancerInfoCopy: this.state.selectedPersonData.cancerList });
@@ -1087,387 +966,12 @@ class CancerInfo extends React.Component {
       "setCurrentSource  setCurrentSource setCurrentSourcsetCurrentSource"
     );
   }
-  /**START --  Add Cancer Dialog - Handle functions */
-  setIdANDDescForAddDialog(dataField, code, dataFromFetch) {
-    dataFromFetch.map((values, i) => {
-      if (values.code == code) {
-        console.log("siteData : " + values.description);
-        dataField.description = values.description;
-        dataField.id = values.id;
-        dataField.code = values.code;
-      }
-    });
-  }
-  setIdANDcodeForAddDialog(dataField, description, dataFromFetch) {
-    dataFromFetch.map((values, i) => {
-      if (values.description == description) {
-        console.log("siteData : " + values.description);
-        dataField.description = values.description;
-        dataField.id = values.id;
-        dataField.code = values.code;
-      }
-    });
-  }
 
-  setSiteNewOnChange(event) {
-    // console.log("Site :" + value);
-    console.log("Site :" + event.target.value);
-    // siteEditDlg: event.target.value,
-    this.setState({
-      newSiteValue: event.target.value.toUpperCase()
-    });
-
-    if (event.target.value != "") {
-      this.state.enableSaveButton = true;
-    }
-    //  onChange={e => this.setState({ siteEditDlg: e.target.value.toUpperCase() })}
-  }
-  setSiteNew(value) {
-    console.log("setSiteNew setSiteNew setSiteNew: " + value);
-    this.setState({
-      newSiteValue: value
-    });
-    if (value != "") {
-      this.state.enableSaveButton = true;
-    }
-    // this.setIdANDDescForAddDialog(this.state.newSite, event.target.value, this.state.siteData)
-  }
-  setLateralNew(event) {
-    this.setState({
-      newLateralListValue: event.target.value
-    });
-    this.setIdANDcodeForAddDialog(
-      this.state.newLateral,
-      event.target.value,
-      this.state.latralcodeData
-    );
-  }
-  setHistologyNew(event) {
-    this.setState({
-      newHistocodesValue: event.target.value
-    });
-    this.setIdANDDescForAddDialog(
-      this.state.newHisto,
-      event.target.value,
-      this.state.histocodesData
-    );
-  }
-  setbehaviourcodesNew(event) {
-    this.setState({
-      newBehaviourcodesValue: event.target.value
-    });
-    this.setIdANDcodeForAddDialog(
-      this.state.newBehavior,
-      event.target.value,
-      this.state.behaviourcodesData
-    );
-  }
-  setDiagSourceNew(event) {
-    this.setState({
-      newDiagSourceValue: event.target.value
-    });
-    this.setIdANDcodeForAddDialog(
-      this.state.newSource,
-      event.target.value,
-      this.state.diagSourceData
-    );
-  }
-  setTissueNew(event) {
-    this.setState({
-      newTissueValue: event.target.value
-    });
-    this.setIdANDcodeForAddDialog(
-      this.state.newTissue,
-      event.target.value,
-      this.state.tissueData
-    );
-  }
-
-  /**END --  Add Cancer Dialog - Handle functions */
-
-  createNewCancerArray() {
-    this.state.isCanecerAdded = true;
-    this.state.newCancerModalId = Math.floor(Math.random() * 10);
-
-    // var newCancerObject = new Object;
-    this.state.newCancerObject.patientPersonID = this.state.patientDataObject.personID;
-    // this.state.newCancerArr[i] = cloneDeep(this.state.cancerInfo[i]);
-    // this.state.newCancerObject.id=3334;
-    this.state.newCancerObject.tumorNo = Math.floor(Math.random() * 10);
-    // this.state.newCancerObject.ageDiagnosis = 99;
-    this.state.newCancerObject.site = this.state.newSite;
-
-    // this.state.newCancerObject.tumorNo =44;
-    this.state.newCancerObject.lateral = this.state.newLateral;
-    // Remove comment
-    // this.state.newCancerObject.histology = this.state.newHisto;
-    this.state.newCancerObject.behaviour = this.state.newBehavior;
-    // console.log("this.state.newCancerObject.behaviour " + this.state.newCancerObject.behaviour.description)
-    // console.log("this.state.newCancerObject.behaviour " + this.state.newCancerObject.behaviour.code)
-    this.state.newCancerObject.diagSource = this.state.newSource;
-    this.state.newCancerObject.tissue = this.state.newTissue;
-    this.state.newCancerObject.dateOfDiagnosis = "20180101";
-    this.state.newCancerObject.ageDiagnosis = "88";
-
-    // this.state.newCancerArr[this.state.newCancerObject.tumorNo] =this.state.newCancerObject ;
-    this.state.newCancerArr.push(this.state.newCancerObject);
-
-    this.state.cancerInfo.push(this.state.newCancerObject);
-  }
-
-  setSiteOnChange(event) {
-    // console.log("Site :" + value);
-    console.log("Site :" + event.target.value);
-    // siteEditDlg: event.target.value,
-    this.setState({
-      siteEditDlg: event.target.value.toUpperCase()
-    });
-
-    if (event.target.value != "") {
-      this.state.enableSaveButton = true;
-    }
-    //  onChange={e => this.setState({ siteEditDlg: e.target.value.toUpperCase() })}
-  }
-
-  setSite(value) {
-    console.log("Site :" + value);
-    // console.log("Site :" + event.target.value);
-    // siteEditDlg: event.target.value,
-    this.setState({
-      siteEditDlg: value
-    });
-
-    if (value != "") {
-      this.state.enableSaveButton = true;
-    }
-    // this.enableSaveInEditDialog("siteEditDlg", event);
-  }
-  setLateral(event) {
-    this.setState({
-      lateralFromDb: event.target.value
-    });
-
-    this.enableSaveInEditDialog("lateralFromDb", event);
-  }
-  setHistology(event) {
-    this.setState({
-      histocodesFromDb: event.target.value
-    });
-
-    this.enableSaveInEditDialog("histocodesFromDb", event);
-  }
-  setbehaviourcodes(event) {
-    this.setState({
-      behaviourcodesFromDb: event.target.value
-    });
-
-    this.enableSaveInEditDialog("behaviourcodesFromDb", event);
-  }
-
-  setDateOfDiag() {
-    console.log("called setDateOfDiag ");
-  }
-  /* Diagnostic Date values START*/
-  handleMonthPickedDiag = selectedEditMonth => {
-    console.log("Month Picked : " + selectedEditMonth);
-    this.setState(
-      {
-        selectedEditMonth: selectedEditMonth != "Month" ? selectedEditMonth : ""
-      },
-      () => {
-        this.calculateAgeOfDiag();
-      }
-    );
-  };
-  handleYearPickedDiag = (selectedEditYear, e) => {
-    console.log("handleYearPicked : " + selectedEditYear);
-    this.setState({
-      selectedEditYear: selectedEditYear != "Year" ? selectedEditYear : ""
-      // }, () => {
-      //   this.calculateAgeOfDiag();
-    });
-    this.setState(
-      {
-        ageDiagnosisFromDb: this.state.ageDiagnosisFromDb
-      },
-      () => {
-        this.calculateAgeOfDiag();
-      }
-    );
-    // this.calculateAgeOfDiag();
-
-    // if(handleYearPickedDiag!=''    handleMonthPickedDiag!=''    handleDatePickedDiag!='')
-    // this.state.ageDiagnosisFromDb = 22
-  };
-
-  handleDatePickedDiag = selectedEditDate => {
-    console.log("Date    Picked : " + selectedEditDate);
-    this.setState(
-      {
-        selectedEditDate: selectedEditDate != "Day" ? selectedEditDate : ""
-      },
-      () => {
-        this.calculateAgeOfDiag();
-      }
-    );
-
-    // this.calculateAgeOfDiag();
-  };
-
-  calculateAgeOfDiag = () => {
-    console.log("In calculateAgeOfDiag: " + dob);
-
-    if (
-      this.state.selectedEditYear != "" &&
-      this.state.selectedEditMonth != "" &&
-      this.state.selectedEditDate != ""
-    ) {
-      var dob = this.convertToGetDate(
-        this.state.selectedPersonData.dateOfBirth
-      );
-      // var currentDeathDate = this.convertToGetDate(this.state.selectedPersonData.dateOfDeath);
-      //  new Date(        this.convertDateFormat(this.state.selectedPersonData.dateOfBirth)      );
-
-      this.setState({
-        dateOfDiagFromDb:
-          this.state.selectedEditYear +
-          this.state.selectedEditMonth +
-          this.state.selectedEditDate
-      });
-      // var dodiag = new Date(this.convertDateFormat(this.state.dateOfDiagFromDb));
-      var dodiag = this.getDate(
-        this.state.selectedEditDate,
-        this.state.selectedEditMonth,
-        this.state.selectedEditYear
-      );
-
-      //
-      console.log("In didupdate NOT NULL dob : " + dob);
-      console.log("In didupdate NOT NULL DIAG DATE : " + dodiag);
-
-      // var dt1 = Math.floor((dodiag - dob) / 31536000000);
-      var dt1 = this.getAge(dob, dodiag);
-
-      console.log("In didupdate NOT NULL DIAG DATE : " + dt1);
-      // this.state.ageDiagnosisFromDb = dt1
-
-      this.setState({
-        ageDiagnosisFromDb: dt1
-        // }, () => {
-        //   this.getAge(dob, dodiag);
-      });
-
-      this.state.enableSaveButton = true;
-    }
-  };
-  getAge = (birthDateLocal, dateOfDiagLocal) => {
-    var curYear = birthDateLocal.getFullYear();
-    var dobYear = dateOfDiagLocal.getFullYear();
-    var age = dobYear - curYear;
-
-    var curMonth = birthDateLocal.getMonth();
-    var dobMonth = dateOfDiagLocal.getMonth();
-    if (dobMonth > curMonth) {
-      // this year can't be counted!
-      age;
-    } else if (dobMonth == curMonth) {
-      // same month? check for day
-
-      var curDay = birthDateLocal.getDate();
-      var dobDay = dateOfDiagLocal.getDate();
-      if (dobDay > curDay) {
-        // this year can't be counted!
-        age;
-      }
-    }
-
-    return age;
-  };
-  /* Diagnostic Date values END*/
-
-  setDiagSource(event) {
-    this.setState({
-      diagSourceFromDb: event.target.value
-    });
-
-    this.enableSaveInEditDialog("diagSourceFromDb", event);
-  }
-  setTissue(event) {
-    this.setState({
-      tissueFromDb: event.target.value
-    });
-
-    this.enableSaveInEditDialog("diagSourceFromDb", event);
-  }
-  enableSaveInEditDialog(fieldName, event) {
-    if (fieldName != event.target.value) {
-      this.state.enableSaveButton = true;
-    } else {
-      this.state.enableSaveButton = false;
-    }
-  }
-  setCurrentAge(event) {
-    // event.preventDefault(); ageDiagnosisFromDb
-    console.log(" column Name : " + event.target.value);
-    this.setState({
-      ageDiagnosisFromDb: event.target.value
-    });
-
-    this.enableSaveInEditDialog("ageDiagnosisFromDb", event);
-  }
-  closeDialog() {
-    console.log(
-      "CloseDialog Only when Add Cancer save----------------------------" +
-        this.props.values.ageOfDigColumn
-    );
-
-    this.state.showAddCancer = false;
-  }
-  convertDateFormat(date) {
-    var formatDatestr = date;
-    // console.log( "year: "+ str.slice(0,4) )
-    // console.log( "mon: "+ str.slice(4,6) )
-    // console.log( "date: "+ str.slice(6,8) )
-
-    // formatDatestr = formatDatestr!=null ? formatDatestr : 0;
-    if (formatDatestr != null)
-      formatDatestr =
-        formatDatestr.slice(4, 6) +
-        "/" +
-        formatDatestr.slice(6, 8) +
-        "/" +
-        formatDatestr.slice(0, 4);
-    else formatDatestr = "N/A";
-
-    return formatDatestr;
-  }
   componentDidUpdate(prevProps) {
     console.log("In didupdate");
 
     const { success: wasSuccess = false } = prevProps.status || {};
     const { success: isSuccess = false } = this.props.status || {};
-
-    // console.log("dateOfDiagFromDb componentWillMount: " + this.state.dateOfDiagFromDb)
-    // if (this.state.dateOfDiagFromDb != '') {
-    //   this.setState({
-    //     dodExist: true,
-
-    //   });
-    //   this.state.ageDiagnosisFromDb = new Date(this.state.dateOfDiagFromDb) - new Date(this.state.selectedPersonData.dateOfBirth);
-    //   // this.setState.dodExist = true;
-    //   console.log("dateOfDiagFromDb : " + this.state.dateOfDiagFromDb)
-    //   console.log("ageDiagnosisFromDb : " + this.state.ageDiagnosisFromDb)
-    //   console.log("selectedPersonData.dateOfBirth : " + this.state.selectedPersonData.dateOfBirth)
-
-    // }
-
-    if (isSuccess) {
-      console.log("In didupdate IF");
-      // this.state.showAddCancer=false;
-
-      this.closeDialog();
-      // this.htmlForm.submit();
-    }
   }
   render() {
     const modelSizeStyle = { width: "800px", height: "800px" };
@@ -1489,11 +993,14 @@ class CancerInfo extends React.Component {
         />
       );
     });
-
+    var style = {
+      marginBottom: "8px",
+      fontWeight: "bold"
+    };
     return (
       <div>
         <HeaderPanel patientDetials={this.state.patientData} />
-        Cancer Information
+        <p> Cancer Information</p>
         <table className="TFtable">
           <tbody>
             <tr>
@@ -1538,602 +1045,7 @@ class CancerInfo extends React.Component {
             onCloseCancer={this.closeCancerEditDialog.bind(this)}
           />
         ) : null}
-        <div>
-          <Modal
-            backdrop={false}
-            show={this.state.show}
-            onHide={this.handleClose}
-            keyboard={false}
-            selectedid={this.state.selectedId}
-          >
-            <Modal.Header closeButton={false}>
-              <Modal.Title>
-                <div className="modalHeader">Cancer Edit</div>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              {/* value= {}this.state.data[].name */}
-              {/* Condition for the value is needed to render the element at the the initial load */}
-              {/* <input type="text" onChange={this.handleTxtChange}  value = {this.state.selectedId=='' ? this.state.cancerInfo[0].age : this.state.cancerInfo[this.state.selectedId].age}/> */}
-
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Site:</div>
-                <div className="col-sm-5 control-margin">
-                  {/* <Autocomplete
-                    wrapperStyle={{ width: "100%" }}
-                    inputProps={{
-                      style: {
-                        width: "100%",
-                        height: "42px",
-                        border: "1px solid #e6e6e6",
-                        padding: "0 35px 0 19px",
-                        color: "#999",
-                        bordeRadius: "4px"
-                      },
-                      placeholder: "Enter Family ID"
-                    }}
-                    wrapperStyle={{ width: "100%" }}
-                    className="form-control-modal"
-                    items={this.state.siteData}
-                    shouldItemRender={(item, value) =>
-                      item.code.toUpperCase().indexOf(value.toUpperCase()) > -1
-                    }
-                    getItemValue={item => item.code}
-                    // shouldItemRender={(item, value) => item.indexOf(value) > -1}
-                    // getItemValue={item => item}
-                    renderItem={(item, highlighted) => (
-                      <div
-                        key={item.id}
-                        style={{
-                          backgroundColor: highlighted ? "#eee" : "transparent"
-                        }}
-                      >
-                        {item.code + " || " + item.description}
-                      </div>
-                    )}
-                    value={this.state.siteEditDlg}
-                    //   onChange={this.setFamilyValue.bind(this)}
-                    // onChange={e => this.setState({ value: e.target.value })}
-                    onChange={this.setSiteOnChange.bind(this)}
-                    // onChange={e => this.setState({ siteEditDlg: e.target.value.toUpperCase() })}setSiteOnChange
-                    onSelect={this.setSite.bind(this)}
-                    //   onSelect={value => this.setState({ value })}
-                    //   on
-                  /> */}
-                  {/* disabled={this.state.isAlive} */}
-                  <select
-                    /**disabled={this.state.isAlive}**/ className="form-control dorp-box"
-                    defaultValue={this.state.siteEditDlg}
-                    onChange={this.setSiteOnChange.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    {this.state.siteData.map((siteGroup, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.siteGroup = siteGroup.description;
-                      return (
-                        <option
-                          key={siteGroup.value}
-                          defaultValue={this.state.siteEditDlg}
-                        >
-                          {siteGroup.code}
-                          {/* + " || " + siteGroup.description */}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Lateral:</div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    /**disabled={this.state.isAlive}**/ className="form-control-modal"
-                    value={this.state.lateralFromDb}
-                    onChange={this.setLateral.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    {this.state.latralcodeData.map((lateralList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.lateralList = lateralList.description;
-                      return (
-                        <option
-                          key={lateralList.value}
-                          defaultValue={this.state.lateralFromDb}
-                        >
-                          {lateralList.description}
-                        </option>
-                      );
-                    })
-                    // <option >{"Hospital Rec"}</option>
-                    }
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Histology:</div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    /**disabled={this.state.isAlive}**/ className="form-control-modal"
-                    value={this.state.histocodesFromDb}
-                    onChange={this.setHistology.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    {this.state.histocodesData.map((histocodesList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.histocodesList = histocodesList.description;
-                      return (
-                        <option
-                          key={histocodesList.value}
-                          defaultValue={this.state.histocodesFromDb}
-                        >
-                          {
-                            histocodesList.code /*+" | "+histocodesList.description*/
-                          }
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Behaviour:</div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    /**disabled={this.state.isAlive}**/ className="form-control-modal"
-                    value={this.state.behaviourcodesFromDb}
-                    onChange={this.setbehaviourcodes.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    {this.state.behaviourcodesData.map(
-                      (behaviourcodesList, i) => {
-                        // console.log("location ID :  " + siteGroup.id);
-
-                        this.state.behaviourcodesList =
-                          behaviourcodesList.description;
-                        return (
-                          <option
-                            key={behaviourcodesList.value}
-                            defaultValue={this.state.behaviourcodesFromDb}
-                          >
-                            {behaviourcodesList.description}
-                          </option>
-                        );
-                      }
-                    )}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">
-                  Date Of Diagnosis:
-                </div>
-                <div className="col-sm-5 control-margin">
-                  <DateSelect
-                    onPropertyChange={this.setDateOfDiag}
-                    isAlive={false}
-                    dateOfDiagFromDb={this.state.dateOfDiagFromDb}
-                    value={this.state.currentDOB}
-                    name="diagDateColumn"
-                    onSelectYear={this.handleYearPickedDiag}
-                    onSelectMonth={this.handleMonthPickedDiag}
-                    onSelectDate={this.handleDatePickedDiag}
-                    name="dateOfDiagFromDb"
-                  />
-
-                  {/* <DatePicker
-                                                    onChange={this.oncurrentDOBChange}
-                                                    value={this.state.currentDOB}
-                                                /> */}
-                  <div className="validationMsg">
-                    {/* <Error name="currentdobColumn" /> */}
-                  </div>
-                  <span className="help-block">
-                    {validation.dateOfDiagFromDb.message}
-                  </span>
-
-                  {/* <DatePicker
-                    // onChange={this.oncurrentDOBChange}
-                    value={this.state.currentDOB}
-                  /> */}
-                </div>
-              </div>
-              {/* "{validation.ageDiagnosisFromDb.isInvalid && 'has-error'}"  */}
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Age Of Diagnosis:</div>
-                {/* console.log("dod EXIST" + this.state.dodExist) */}
-                {/* {this.setState.dateOfDiagFromDb != '' ? this.state.dodExist = true : this.state.dodExist = false} */}
-                <div
-                  className="col-sm-4 control-margin"
-                  disabled={console.log(
-                    "dod EXIST" + this.state.dateOfDiagFromDb
-                  )}
-                >
-                  <input
-                    className="form-control-modal"
-                    disabled={this.state.dateOfDiagFromDb != "" ? true : false}
-                    false="text"
-                    placeholder="age"
-                    value={this.state.ageDiagnosisFromDb}
-                    onChange={this.setCurrentAge.bind(this)}
-                    name="ageDiagnosisFromDb"
-                  />
-                </div>
-
-                <span className="help-block">
-                  {validation.ageDiagnosisFromDb.message}
-                </span>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Source:</div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    disabled={this.state.isAlive}
-                    className="form-control-modal"
-                    value={this.state.diagSourceFromDb}
-                    onChange={this.setDiagSource.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    {this.state.diagSourceData.map((diagSourceList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.diagSourceList = diagSourceList.description;
-                      return (
-                        <option
-                          key={diagSourceList.value}
-                          defaultValue={this.state.diagSourceFromDb}
-                        >
-                          {diagSourceList.description}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Tissue:</div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    disabled={this.state.isAlive}
-                    className="form-control-modal"
-                    value={this.state.tissueFromDb}
-                    onChange={this.setTissue.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    {this.state.tissueData.map((tissueList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.tissueList = tissueList.description;
-                      return (
-                        <option
-                          key={tissueList.value}
-                          defaultValue={this.state.tissueFromDb}
-                        >
-                          {tissueList.description}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <br />
-                <br />
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button className="btn btn-primary" onClick={this.handleClose}>
-                Close
-              </Button>
-              <Button
-                className="btn btn-primary"
-                disabled={!this.state.enableSaveButton}
-                onClick={this.handleSaveEditCancer}
-              >
-                Save
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </div>
-        {/* Modal for Editing New Cancer - END*/}
-        {/* Modal for Adding New Cancer - START*/}
-        <Modal
-          backdrop={false}
-          show={this.state.showAddCancer}
-          onHide={this.handleCloseAddCancer}
-          keyboard={false}
-          selectedid={this.state.selectedId}
-        >
-          {/* onSubmit={this.props.handleSubmit} */}
-          <Form>
-            <Modal.Header closeButton={false}>
-              <Modal.Title>
-                <div className="modalHeader">Add Cancer</div>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              {/* value= {}this.state.data[].name */}
-              {/* Condition for the value is needed to render the element at the the initial load */}
-              {/* <input type="text" onChange={this.handleTxtChange}  value = {this.state.selectedId=='' ? this.state.cancerInfo[0].age : this.state.cancerInfo[this.state.selectedId].age}/> */}
-
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
-                  Site:
-                </div>
-                <div className="col-sm-5 control-margin">
-                  {/* <Autocomplete
-                    items={this.state.siteData}
-                    shouldItemRender={(item, value) =>
-                      item.code.toUpperCase().indexOf(value.toUpperCase()) > -1
-                    }
-                    getItemValue={item => item.code}
-                    // shouldItemRender={(item, value) => item.indexOf(value) > -1}
-                    // getItemValue={item => item}
-                    renderItem={(item, highlighted) => (
-                      <div
-                        key={item.id}
-                        style={{
-                          backgroundColor: highlighted ? "#eee" : "transparent"
-                        }}
-                      >
-                        {item.code + " || " + item.description}
-                      </div>
-                    )}
-                    value={this.state.newSiteValue}
-                    //   onChange={this.setFamilyValue.bind(this)}
-                    // onChange={e => this.setState({ value: e.target.value })}
-                    onChange={this.setSiteNewOnChange.bind(this)}
-                    // onChange={e => this.setState({ siteEditDlg: e.target.value.toUpperCase() })}setSiteOnChange
-                    onSelect={this.setSiteNew.bind(this)}
-                    //   onSelect={value => this.setState({ value })}
-                    //   on
-                  /> */}
-                  <select
-                    /**disabled={this.state.isAlive}**/ className="form-control dorp-box"
-                    value={this.state.newSiteValue}
-                    onChange={this.setSiteNew.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    <option>{"Choose One"}</option>
-                    {this.state.siteData.map((siteGroup, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.siteGroup = siteGroup.description;
-                      return (
-                        <option
-                          key={siteGroup.value}
-                          defaultValue={siteGroup.id}
-                        >
-                          {siteGroup.code /*+" | "+siteGroup.description*/}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
-                  Lateral:
-                </div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    required="true"
-                    disabled={this.state.isAlive}
-                    className="form-control-modal"
-                    value={this.state.newLateralListValue}
-                    onChange={this.setLateralNew.bind(this)}
-                    name="newLateralColumn"
-                  >
-                    <option>{"Choose One"}</option>
-                    {this.state.latralcodeData.map((lateralList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.lateralList = lateralList.description;
-                      return (
-                        <option
-                          key={lateralList.value}
-                          defaultValue={lateralList.id}
-                        >
-                          {lateralList.description}
-                        </option>
-                      );
-                    })
-                    // <option >{"Hospital Rec"}</option>
-                    }
-                    }
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
-                  Histology:
-                </div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    disabled={this.state.isAlive}
-                    className="form-control-modal"
-                    value={this.state.newHistocodesValue}
-                    onChange={this.setHistologyNew.bind(this)}
-                    name="newHistoColumn"
-                  >
-                    <option>{"Choose One"}</option>
-                    {this.state.histocodesData.map((histocodesList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.histocodesList = histocodesList.description;
-                      return (
-                        <option
-                          key={histocodesList.value}
-                          defaultValue={histocodesList.id}
-                        >
-                          {
-                            histocodesList.code /*+" | "+histocodesList.description*/
-                          }
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
-                  Behaviour:
-                </div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    disabled={this.state.isAlive}
-                    className="form-control-modal"
-                    value={this.state.newBehaviourcodesValue}
-                    onChange={this.setbehaviourcodesNew.bind(this)}
-                    name="newBehaviorColumn"
-                  >
-                    <option>{"Choose One"}</option>
-                    {this.state.behaviourcodesData.map(
-                      (behaviourcodesList, i) => {
-                        // console.log("location ID :  " + siteGroup.id);
-
-                        this.state.behaviourcodesList =
-                          behaviourcodesList.description;
-                        return (
-                          <option
-                            key={behaviourcodesList.value}
-                            defaultValue={behaviourcodesList.id}
-                          >
-                            {behaviourcodesList.description}
-                          </option>
-                        );
-                      }
-                    )}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required">
-                  Date Of Diagnosis:
-                </div>
-                <div className="col-sm-4">
-                  <DateSelect
-                    isAlive={false}
-                    dateOfDiagFromDb={this.state.dateOfDiagFromDb}
-                    value={this.state.currentDOB}
-                    name="diagDateNewColumn"
-                    onSelectYear={this.handleYearPickedDiag}
-                    onSelectMonth={this.handleMonthPickedDiag}
-                    onSelectDate={this.handleDatePickedDiag}
-                  />
-
-                  {/* <DatePicker
-                    // onChange={this.oncurrentDOBChange}
-                    value={this.state.currentDOB}
-                  /> */}
-                </div>
-              </div>
-              <div className="row form-check form-check-inline ">
-                <div className="col-sm-5 asteric-required control-margin">
-                  Age Of Diagnosis:
-                </div>
-                <div className="col-sm-4 control-margin">
-                  <Field
-                    classNAme="form-control-modal"
-                    type="text"
-                    placeholder="age"
-                    name="ageDiagnosisFromDb"
-                  />
-                  <div className="inline-error">
-                    {touched.ageDiagnosisFromDb &&
-                      errors.ageDiagnosisFromDb && (
-                        <p>{errors.ageDiagnosisFromDb}</p>
-                      )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
-                  Source:
-                </div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    disabled={this.state.isAlive}
-                    className="form-control-modal "
-                    value={this.state.newDiagSourceValue}
-                    onChange={this.setDiagSourceNew.bind(this)}
-                    name="newSourceColumn"
-                  >
-                    <option>{"Choose One"}</option>
-                    {this.state.diagSourceData.map((diagSourceList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.diagSourceList = diagSourceList.description;
-                      return (
-                        <option
-                          key={diagSourceList.value}
-                          defaultValue={diagSourceList.id}
-                        >
-                          {diagSourceList.description}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
-                  Tissue:
-                </div>
-                <div className="col-sm-5 control-margin">
-                  <select
-                    disabled={this.state.isAlive}
-                    className="form-control-modal"
-                    value={this.state.newTissueValue}
-                    onChange={this.setTissueNew.bind(this)}
-                    name="currentDeathColumn"
-                  >
-                    <option>{"Choose One"}</option>
-                    {this.state.tissueData.map((tissueList, i) => {
-                      // console.log("location ID :  " + siteGroup.id);
-
-                      this.state.tissueList = tissueList.description;
-                      return (
-                        <option
-                          key={tissueList.value}
-                          defaultValue={tissueList.id}
-                        >
-                          {tissueList.description}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              {/* <hr /> */}
-            </Modal.Body>
-            <Modal.Footer>
-              {/* <button type="submit">submit</button>
-                    <button type="submit" onClick={this.handleCloseAddCancer} >Close</button> */}
-
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={this.handleCloseAddCancer}
-              >
-                Close
-              </button>
-              {/* <Button onClick={this.handleCloseAddCancer} >Close</Button> */}
-              {/* <button  disabled={isSubmitting}>Save</button> */}
-              {/* <button  type= "submit" disabled={isSubmitting}>Save</button> */}
-              {/* <Button disabled= {!this.state.enableSaveButton} onClick={this.handleSave}>Save</Button> */}
-
-              <Button
-                className="btn btn-primary"
-                onClick={this.handleSaveAddCancer}
-              >
-                Save
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal>
-        {/* Modal for Adding New Cancer END*/}
+        <div />
       </div>
     );
   }
@@ -2147,10 +1059,7 @@ const PersonRow = props => {
       <td>{props.cancerInfo.site.description}</td>
       <td>{props.cancerInfo.lateral.description}</td>
       <td>{props.cancerInfo.histology}</td>
-      <td>
-        {/*   // Remove comment */}
-        {/* { props.cancerInfo.histology.code } */}
-      </td>
+
       <td>{props.cancerInfo.behaviour.description}</td>
       <td>
         {props.cancerInfo.dateOfDiagnosis != null

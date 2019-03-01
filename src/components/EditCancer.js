@@ -104,8 +104,8 @@ export default class EditCancer extends React.Component {
       selectedDay: "",
       dateOfDiagnosis: "",
       showEditCancerDialog: this.props.showEditCancerDialog,
-      cancer: this.props.cancer,
       enableSaveButton: false,
+      cancer: this.props.cancer,
       validation: this.validator.valid()
     };
     //this.setLateral = this.setLateral.bind(this);
@@ -114,7 +114,7 @@ export default class EditCancer extends React.Component {
     this.submitted = false;
     this.state.dateOfDiagnosis = this.props.cancer.dateOfDiagnosis;
     this.patientData = this.props.patientData;
-    this.cancer = this.props.cancer;
+    //this.cancer = this.props.cancer;
 
     if (
       this.patientData.dateOfDeath != null &&
@@ -244,10 +244,50 @@ export default class EditCancer extends React.Component {
     this.setState({ validation });
     this.submitted = true;
 
+    console.log(
+      "edited before PROPS cancer this.cancer " +
+        "\n" +
+        "site :" +
+        this.props.cancer.site.code +
+        "\n" +
+        "lateral :" +
+        this.props.cancer.lateral.description +
+        "\n" +
+        "behaviour :" +
+        this.props.cancer.behaviour.description +
+        "\n" +
+        "tissue :" +
+        this.props.cancer.tissue.description +
+        "\n" +
+        "diagsource :" +
+        this.props.cancer.diagSource.description
+    );
+
+    console.log(
+      "edited before STATE cancer this.cancer " +
+        "\n" +
+        "site :" +
+        this.state.cancer.site.code +
+        "\n" +
+        "lateral :" +
+        "\n" +
+        this.state.cancer.lateral.description +
+        "\n" +
+        "behaviour :" +
+        "\n" +
+        this.state.cancer.behaviour.description +
+        "\n" +
+        "tissue :" +
+        this.state.cancer.tissue.description +
+        "\n" +
+        "diagsource :" +
+        this.state.cancer.diagSource.description
+    );
+
     if (validation.isValid) {
       this.setState({ showEditCancerDialog: false });
       this.setState({ validation });
-      this.props.onSaveCancer(this.cancer);
+      this.props.onSaveCancer(this.state.cancer);
       this.props.onCloseCancer();
 
       // handle actual form submission here
@@ -309,23 +349,6 @@ export default class EditCancer extends React.Component {
     }
   };
 
-  // setLateral = e => {
-  //   let cancerLocal = Object.assign({}, this.state.cancer);
-
-  //   // this.state.latralcodeData.map.bind(this);
-  //   this.state.latralcodeData.map(lateralParam => {
-  //     if (e.target.value == lateralParam.code) {
-  //       cancerLocal.lateral = lateralParam;
-  //       //this.state.lateral = lateralParam;
-
-  //       () =>
-  //         this.setState({
-  //           cancer: cancerLocal,
-  //           lateral: cancerLocal.lateralParam
-  //         });
-  //     }
-  //   });
-  // };
   setLateral = e => {
     let cancerLocal = Object.assign({}, this.state.cancer);
     let selectedObj = this.state.latralcodeData.find(

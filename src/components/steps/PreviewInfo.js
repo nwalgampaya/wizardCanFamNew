@@ -33,7 +33,7 @@ export default class PreviewInfo extends React.Component {
   createTablePersonDetails() {
     if (this.props.isCanFamEdited) {
       return (
-        <table className="Ptable">
+        <table className="PRtable">
           <tbody>
             <tr>
               <th>Column Name</th>
@@ -70,10 +70,14 @@ export default class PreviewInfo extends React.Component {
   }
 
   createNewCancerUI() {
+    var style = {
+      marginBottom: "8px",
+      fontWeight: "bold"
+    };
     if (this.props.isCanecerAdded) {
       return (
         <div>
-          <h4>Added Cancer Details</h4>
+          <p style={style}>Added Cancer Details</p>
           {this.createCancerFields()}
         </div>
       );
@@ -85,7 +89,7 @@ export default class PreviewInfo extends React.Component {
     // || this.props.isCancerEdited
     // if(this.props.isCanecerAdded ){
     return this.props.newCancerArr.map((values, i) => (
-      <table className="CancerAddTab">
+      <table className="PRtable">
         <tbody>
           <tr>
             <th>Column Name</th>
@@ -101,10 +105,7 @@ export default class PreviewInfo extends React.Component {
           </tr>
           <tr>
             <td>Histology</td>
-            <td>
-              {/* // Remove comment */}
-              {/* {values.histology.code} */}
-            </td>
+            <td>{values.histology}</td>
           </tr>
           <tr>
             <td>Behavior</td>
@@ -112,11 +113,11 @@ export default class PreviewInfo extends React.Component {
           </tr>
           <tr>
             <td>Date Of Diagnosis</td>
-            <td>{/* {values.site.code} */}</td>
+            <td>{values.dateOfDiagnosis /* {values.site.code} */}</td>
           </tr>
           <tr>
             <td>Age Of Diagnosis</td>
-            <td>{/* {values.lateral.code} */}</td>
+            <td>{values.ageDiagnosis /* {values.lateral.code} */}</td>
           </tr>
           <tr>
             <td>Source</td>
@@ -132,10 +133,14 @@ export default class PreviewInfo extends React.Component {
   }
 
   createEditedCancerUI() {
+    var style = {
+      marginBottom: "8px",
+      fontWeight: "bold"
+    };
     if (this.props.isCancerEdited) {
       return (
         <div>
-          <h4 className="reviewStyle">Updated Cancer Details |</h4>
+          <p style={style}>Updated Cancer Details |</p>
           {this.showCancerEditedFields()}
         </div>
       );
@@ -154,7 +159,7 @@ export default class PreviewInfo extends React.Component {
     // if(this.props.isCancerEdited){
     return this.props.arrayEditedData.map(
       (values, i) => (
-        <table className="CancerPreviewTabs">
+        <table className="PRtable">
           <tbody>
             <tr>
               <th>Column Name</th>
@@ -220,7 +225,7 @@ export default class PreviewInfo extends React.Component {
     ) {
       return (
         <div>
-          <table className="CancerPreviewTabs">
+          <table className="PRtable">
             <tbody>
               <tr>
                 <th>Column Name</th>
@@ -239,10 +244,14 @@ export default class PreviewInfo extends React.Component {
     }
   }
   revievBeforreSave() {
+    var style = {
+      marginBottom: "8px",
+      fontWeight: "bold"
+    };
     if (this.props.isCanecerAdded || this.props.isCancerEdited) {
       return (
         <div>
-          <h4 className="reviewStyle"> Review Details </h4>
+          <p style={style}> Review Details </p>
           <div>
             <p>
               {" "}
