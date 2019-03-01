@@ -259,7 +259,7 @@ export default class EditCancer extends React.Component {
     // // alert("Saving" + this.state.cancerInfo[this.state.selectedId].age)
     // this.setState({ showAddCancer: false });
   }
-  setTissue(e) {
+  setTissue = e => {
     let cancerLocal = Object.assign({}, this.state.cancer);
     let selectedObj = this.state.tissueData.find(
       tissue => tissue.code == e.target.value
@@ -274,9 +274,9 @@ export default class EditCancer extends React.Component {
     if (e.target.value != "") {
       this.state.enableSaveButton = true;
     }
-  }
+  };
 
-  setSite(e) {
+  setSite = e => {
     let cancerLocal = Object.assign({}, this.state.cancer);
     let selectedObj = this.state.siteData.find(
       site => site.code == e.target.value
@@ -291,9 +291,9 @@ export default class EditCancer extends React.Component {
     if (e.target.value != "") {
       this.state.enableSaveButton = true;
     }
-  }
+  };
 
-  setDiagSource(e) {
+  setDiagSource = e => {
     let cancerLocal = Object.assign({}, this.state.cancer);
     let selectedObj = this.state.diagSourceData.find(
       diagSource => diagSource.id == e.target.value
@@ -307,22 +307,7 @@ export default class EditCancer extends React.Component {
     if (e.target.value != "") {
       this.state.enableSaveButton = true;
     }
-  }
-  setBehaviour(e) {
-    let cancerLocal = Object.assign({}, this.state.cancer);
-    let selectedObj = this.state.behaviourcodesData.find(
-      behaviour => behaviour.code == e.target.value
-    );
-    cancerLocal.behaviour = selectedObj;
-    let target = Object.assign(this.state.cancer, cancerLocal);
-    this.setState({
-      cancer: target,
-      behaviour: selectedObj
-    });
-    if (e.target.value != "") {
-      this.state.enableSaveButton = true;
-    }
-  }
+  };
 
   // setLateral = e => {
   //   let cancerLocal = Object.assign({}, this.state.cancer);
@@ -357,6 +342,22 @@ export default class EditCancer extends React.Component {
       this.state.enableSaveButton = true;
     }
     // this.state.latralcodeData.map.bind(this);
+  };
+
+  setBehaviour = e => {
+    let cancerLocal = Object.assign({}, this.state.cancer);
+    let selectedObj = this.state.behaviourcodesData.find(
+      behaviour => behaviour.code == e.target.value
+    );
+    cancerLocal.behaviour = selectedObj;
+    let target = Object.assign(this.state.cancer, cancerLocal);
+    this.setState({
+      cancer: target,
+      behaviour: selectedObj
+    });
+    if (e.target.value != "") {
+      this.state.enableSaveButton = true;
+    }
   };
   setHistology = e => {
     let cancerLocal = Object.assign({}, this.state.cancer);

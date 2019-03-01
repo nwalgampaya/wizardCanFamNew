@@ -70,13 +70,7 @@ class CancerInfo extends React.Component {
       //Edit Modal Dialog variables
       isArrayEmpty: false,
       // cancerInfoEdited:[{id:'',age:'',complaints:''}],
-      cancerInfoEdited: [
-        {
-          id: "",
-          site: { id: "", code: "", description: "" },
-          complaints: ""
-        }
-      ],
+      cancerInfoEdited: [{}],
       // cancerInfoEdited: new  Object,
       tumorNo: "",
       siteData: [],
@@ -500,44 +494,23 @@ class CancerInfo extends React.Component {
     }
   };
   //capture edited records and compair with the original data
-  recordEditedData() {
-    // this.state.cancerInfoEdited = this.state.cancerInfo;
-    // this.state.cancerInfoEdited[this.state.tumorNo] = JSON.parse(JSON.stringify(this.state.cancerInfo));
+  recordEditedData(editedCancer) {
+    //this.state.cancerInfoEdited.push(cancer);
     this.state.cancerInfoEdited[this.state.tumorNo] = [
       ...this.state.cancerInfo[this.state.tumorNo]
     ];
-    // this.state.changedParameters[this.state.tumorNo] = [...this.state.cancerInfo[this.state.tumorNo]];
-    // this.state.changedParameters[this.state.tumorNo] = JSON.parse(JSON.stringify(this.state.cancerInfo));
-    // this.state.changedParameters[this.state.tumorNo] = cloneDeep(this.state.cancerInfo[this.state.tumorNo]);
-    // this.state.cancerInfoCopy[this.state.tumorNo] = cloneDeep(this.state.cancerInfo[this.state.tumorNo]);
-    // this.state.cancerInfoCopy = this.props.patientDataValue.cancerList;
-
-    // this.setState({ changedParameters:JSON.parse(JSON.stringify(this.state.cancerInfo)) });
-    if (!this.state.isArrayEmpty) {
-      // this.makeEmptyArray();
-    }
-
-    // Condition added To avoid displaying changes in Newly added cancers in "Updated Cancer Details" section in 'Preview' screen
-    console.log(
-      "TUMORNO EQUAL " + this.state.cancerInfo[this.state.tumorNo].tumorNo
-    );
-    console.log("TUMORNO EQUAL " + this.state.newCancerObject.tumorNo);
-    // console.log("TUMORNO EQUAL " + this.state.cancerInfoCopy.tumorNo)
     this.state.isNewCancer = false;
-    // Looping through New Cancer Array ,
-    // When displaying the changed values in 'Preview' screen, to avoid displaying new records as edited
-    // newTumerNoArr
+
     this.state.newCancerArr.map((values, i) => {
       console.log("tumor_no : " + values.tumorNo);
       if (values.tumorNo == this.state.cancerInfo[this.state.tumorNo].tumorNo) {
         this.state.isNewCancer = true;
       }
     });
-    console.log("isNewCancer : " + this.state.isNewCancer);
-    //Set the parameter isNewCancer true if the "newCancerArr" map has new elements from above loop. else set false
+
     this.setState({ isNewCancer: this.state.isNewCancer });
 
-    this.createEditedArray();
+    this.createEditedArray(editedCancer);
     // Conditioning only to display edited cancers in preview , to avoid New cancer displayed as edited
     if (!this.state.isNewCancer) {
       this.getChangedFieldsOnly();
@@ -565,44 +538,28 @@ class CancerInfo extends React.Component {
 
   // This arrary "changedParameters" is declared to capture only the changed values from the Edit dialog.
   //ToDO
-  createEditedArray() {
-    // console.log("in handleSave tumorNo early"  + this.state.cancerInfoEdited[this.state.tumorNo].site.code)
-
-    // console.log("in handleSave tumorNo before"  + this.state.cancerInfoEdited[this.state.tumorNo].site.code)
-    console.log(
-      "in handleSave tumorNo before" +
-        this.state.cancerInfo[this.state.tumorNo].site.code
+  createEditedArray(editedCancer) {
+    let cancerBeforeEdited = this.state.cancerInfoCopy.find(
+      cancer => cancer.tumorNo == editedCancer.tumorNo
     );
 
-    // if(this.state.siteEditDlg!="undefined"){
-    if (
-      this.state.cancerInfoCopy[this.state.tumorNo].site.code !=
-      this.state.siteEditDlg
-    ) {
-      this.setSiteDataForEditDialog();
+    if (cancerBeforeEdited.site.code != editedCancer.site.code) {
+      this.setSiteDataForEditDialog(editedCancer);
       // this.state.cancerInfoEdited[this.state.tumorNo].location= 44
     }
-    if (
-      this.state.cancerInfoCopy[this.state.tumorNo].lateral.description !=
-      this.state.lateralFromDb
-    ) {
+    if (cancerBeforeEdited.lateral.code != editedCancer.lateral.code) {
       console.log("lateral changed ***********" + this.state.lateralFromDb);
-      this.setLateralDataForEditDialog();
+      this.setLateralDataForEditDialog(editedCancer);
     }
 
-    // TODo uncomment code after histology values added to the patient data
-    // if(this.state.cancerInfoCopy[this.state.tumorNo].histology.code != this.state.histocodesFromDb){
-    //   console.log("lateral changed ***********" + this.state.histocodesFromDb)
-    //   this.setHistoDataForEditDialog();
-    // }
-    if (
-      this.state.cancerInfoCopy[this.state.tumorNo].behaviour.description !=
-      this.state.behaviourcodesFromDb
-    ) {
+    if (cancerBeforeEdited.histology != editedCancer.histology) {
+      this.setHistoDataForEditDialog(editedCancer);
+    }
+    if (cancerBeforeEdited.behaviour.code != editedCancer.behaviour.code) {
       console.log(
         "lateral changed ***********" + this.state.behaviourcodesFromDb
       );
-      this.setbehaviourDataForEditDialog();
+      this.setbehaviourDataForEditDialog(editedCancer);
     }
 
     if (
@@ -630,21 +587,15 @@ class CancerInfo extends React.Component {
       );
       this.setAODDataForEditDialog();
     }
-    if (
-      this.state.cancerInfoCopy[this.state.tumorNo].diagSource.description !=
-      this.state.diagSourceFromDb
-    ) {
+    if (cancerBeforeEdited.diagSource.id != editedCancer.diagSource.id) {
       console.log(
         "Diag Source changed ***********" + this.state.diagSourceFromDb
       );
-      this.setDiagSourdeDataForEditDialog();
+      this.setDiagSourdeDataForEditDialog(editedCancer);
     }
-    if (
-      this.state.cancerInfoCopy[this.state.tumorNo].tissue.description !=
-      this.state.tissueFromDb
-    ) {
+    if (cancerBeforeEdited.tissue.code != editedCancer.tissue.code) {
       console.log("tissue changed ***********" + this.state.tissueFromDb);
-      this.setTissueDataForEditDialog();
+      this.setTissueDataForEditDialog(editedCancer);
     }
 
     console.log("in " + this.state.siteEditDlg);
@@ -808,7 +759,7 @@ class CancerInfo extends React.Component {
     });
 
     // Sending the modified patient object to be saved to main page(cancerFamily)
-    this.state.patientDataObject.cancerList = this.state.cancerInfo;
+    //this.state.patientDataObject.cancerList = this.state.cancerInfo;
 
     console.log(
       "patientDataObject IntGender : " + this.state.patientDataObject.intGender
@@ -867,68 +818,23 @@ class CancerInfo extends React.Component {
     });
     return fieldValues;
   }
-  setSiteDataForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].site.code = this.state.siteEditDlg;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].site = this.state.siteEditDlg;
-    var fieldValues = this.setParamDescANDId(
-      this.state.cancerInfo[this.state.tumorNo].site.code,
-      this.state.siteData
-    );
-    this.state.cancerInfo[this.state.tumorNo].site.description =
-      fieldValues.description;
-    this.state.cancerInfo[this.state.tumorNo].site.id = fieldValues.id;
+  setSiteDataForEditDialog(editedCancer) {
+    this.state.cancerInfoEdited[this.state.tumorNo].site =
+      editedCancer.site.code;
   }
-  setLateralDataForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].lateral.description = this.state.lateralFromDb;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].lateral = this.state.lateralFromDb;
-    var fieldValues = this.setParamCodeANDId(
-      this.state.cancerInfo[this.state.tumorNo].lateral.description,
-      this.state.latralcodeData
-    );
-
-    this.state.cancerInfo[this.state.tumorNo].lateral.code = fieldValues.code;
-    this.state.cancerInfo[this.state.tumorNo].lateral.id = fieldValues.id;
+  setLateralDataForEditDialog(editedCancer) {
+    this.state.cancerInfoEdited[this.state.tumorNo].lateral =
+      editedCancer.lateral.description;
   }
-  setHistoDataForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].histology.code = this.state.histocodesFromDb;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].histology = this.state.histocodesFromDb;
+  setHistoDataForEditDialog(editedCancer) {
+    this.state.cancerInfoEdited[this.state.tumorNo].histology =
+      editedCancer.histology;
     // this.setHistoCodeANDDesc(this.state.cancerInfo[this.state.tumorNo].histology.code)
-    var fieldValues = this.setParamDescANDId(
-      this.state.cancerInfo[this.state.tumorNo].site.code,
-      this.state.siteData
-    );
-    this.state.cancerInfo[this.state.tumorNo].histology.description =
-      fieldValues.description;
-    this.state.cancerInfo[this.state.tumorNo].histology.id = fieldValues.id;
   }
-  setbehaviourDataForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].behaviour.description = this.state.behaviourcodesFromDb;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].behaviour = this.state.behaviourcodesFromDb;
+  setbehaviourDataForEditDialog(editedCancer) {
+    this.state.cancerInfoEdited[this.state.tumorNo].behaviour =
+      editedCancer.behaviour.description;
     // this.setParamCodeANDId(this.state.cancerInfo[this.state.tumorNo].behaviour.description,this.state.behaviourcodesData)
-
-    var fieldValues = this.setParamCodeANDId(
-      this.state.cancerInfo[this.state.tumorNo].behaviour.description,
-      this.state.behaviourcodesData
-    );
-
-    this.state.cancerInfo[this.state.tumorNo].behaviour.code = fieldValues.code;
-    this.state.cancerInfo[this.state.tumorNo].behaviour.id = fieldValues.id;
   }
   setDODForEditDialog() {
     this.state.cancerInfo[
@@ -952,39 +858,15 @@ class CancerInfo extends React.Component {
     // this.state.cancerInfo[this.state.tumorNo].behaviour.code = fieldValues.code
     // this.state.cancerInfo[this.state.tumorNo].behaviour.id = fieldValues.id
   }
-  setDiagSourdeDataForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].diagSource.description = this.state.diagSourceFromDb;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].diagSource = this.state.diagSourceFromDb;
+  setDiagSourdeDataForEditDialog(editedCancer) {
+    this.state.cancerInfoEdited[this.state.tumorNo].diagSource =
+      editedCancer.diagSource.description;
     // this.setDiagSourceCodeANDId(this.state.cancerInfo[this.state.tumorNo].diagSource.description,this.state.diagSourceData)
-    var fieldValues = this.setParamCodeANDId(
-      this.state.cancerInfo[this.state.tumorNo].diagSource.description,
-      this.state.diagSourceData
-    );
-
-    this.state.cancerInfo[this.state.tumorNo].diagSource.code =
-      fieldValues.code;
-    this.state.cancerInfo[this.state.tumorNo].diagSource.id = fieldValues.id;
   }
-  setTissueDataForEditDialog() {
-    this.state.cancerInfo[
-      this.state.tumorNo
-    ].tissue.description = this.state.tissueFromDb;
-    this.state.cancerInfoEdited[
-      this.state.tumorNo
-    ].tissue = this.state.tissueFromDb;
+  setTissueDataForEditDialog(editedCancer) {
+    this.state.cancerInfoEdited[this.state.tumorNo].tissue =
+      editedCancer.tissue.description;
     // this.setParamCodeANDId(this.state.cancerInfo[this.state.tumorNo].tissue.description,this.state.tissueData)
-
-    var fieldValues = this.setParamCodeANDId(
-      this.state.cancerInfo[this.state.tumorNo].tissue.description,
-      this.state.tissueData
-    );
-
-    this.state.cancerInfo[this.state.tumorNo].tissue.code = fieldValues.code;
-    this.state.cancerInfo[this.state.tumorNo].tissue.id = fieldValues.id;
   }
 
   handleCloseAddCancer() {
@@ -1116,11 +998,15 @@ class CancerInfo extends React.Component {
     Object.assign(this.state.patientDataObject.cancerList, cancerlist);
     Object.assign(this.state.cancerInfo, cancerlist);
 
-    this.setState({
-      patientDataObject: this.state.patientDataObject,
-      cancerInfo: this.state.patientDataObject.cancerList
-    });
-    this.recordEditedData();
+    this.setState(
+      {
+        patientDataObject: this.state.patientDataObject,
+        cancerInfo: this.state.patientDataObject.cancerList
+      },
+      () => {
+        this.recordEditedData(cancer);
+      }
+    );
   }
   closeCancerDialog() {
     this.setState({
