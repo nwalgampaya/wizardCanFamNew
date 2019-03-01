@@ -1,0 +1,849 @@
+/* body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+} */
+
+body {
+  /* background: rgba(145, 162, 189, 0.63) url(../img/header-vector.png) top right no-repeat; */
+  color: rgb(23, 54, 93);
+  font-family: "museo_sans_rounded300";
+  font-size: 16px;
+  line-height: 1.5;
+  background: url("../src/img/dna4x.jpg") repeat;
+}
+
+/* input {
+  font-size: 13px;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 2px #e9e9e9;
+  border: 1px solid #aeaeae;
+  line-height: 16px;
+  padding: 6px 10px 5px;
+}
+.react-date-picker__inputGroup__input {
+  min-width: 0.54em !important;
+  height: 100% !important;
+  position: relative !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 2px 2px #e9e9e9 !important;
+  border: 1px solid #aeaeae !important;
+  line-height: 16px !important;
+  padding: 6px 10px !important;
+} */
+.react-date-picker__wrapper {
+  width: 250px !important;
+  padding: 4px !important;
+  margin-top: 1px !important;
+  z-index: 99999 !important;
+  background: #fff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #f9f9f9 !important;
+}
+/*img {  
+max-width: 100% !important;  
+}*/
+.content_body_wrapper {
+  /* padding-bottom: 9px; */
+  margin-bottom: 15px;
+  margin-top: 15px;
+  background: #fff;
+  /* border-top-right-radius: 7px; */
+  /* border-bottom-left-radius: 7px; */
+  /* border-bottom-right-radius: 7px; */
+  /* box-shadow: 1px 1px 3px #aaa; */
+}
+
+.content_body {
+  border: 1px solid #eee;
+  /* border-radius: 8px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  /* -webkit-box-shadow: 1px 1px 3px #aaa; */
+  /* -moz-box-shadow: 1px 1px 3px #aaa; */
+  /* box-shadow: 0 0px 0 5px rgba(0,0,0,.1), 0px 1px 1px rgba(0,0,0,.35); */
+  /* -webkit-border-radius: 2px; */
+  /* -moz-border-radius: 2px; */
+  /* border-radius: 2px; */
+  background: #fff;
+  /* border-top-right-radius: 7px; */
+  /* border-bottom-left-radius: 7px; */
+  /* border-bottom-right-radius: 7px; */
+  /* box-shadow: 1px 1px 3px #aaa; */
+}
+
+table {
+  width: 100%;
+  /*table-layout: fixed;*/
+}
+
+.img-responsive2 {
+  width: 100%;
+}
+table > tr {
+  width: 100%;
+}
+
+.header {
+  min-height: 110px;
+  background-color: white;
+  box-shadow: 1px 1px 3px #aaa;
+}
+
+.form-horizontal .control-label {
+  text-align: left !important;
+}
+
+.header .logo {
+}
+.pull-left {
+  float: left;
+}
+
+.header .top_menu {
+}
+.pull-right {
+  float: right;
+}
+.control-margin {
+  margin-bottom: 10px;
+  font-size: 16px;
+  /* font-weight: bold; */
+}
+
+.control-margin-bottom15 {
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.control-margin-lbl {
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.control-margin-lbl-top {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.control-margin-lbl-select {
+  margin-top: 0px;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  /* margin-right: 100px; */
+  margin-bottom: 20px;
+  box-shadow: 1px 1px 3px #aaa;
+}
+.form-group {
+  margin-bottom: 0px;
+}
+input[type="checkbox"],
+input[type="radio"],
+input.radio,
+input.checkbox {
+  vertical-align: text-top;
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  top: 2px;
+}
+
+label {
+  font-weight: 400;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.validationMsg {
+  float: left;
+  text-align: left;
+  color: #6d7f52;
+  list-style: circle;
+  font-family: "Lucida Sans", "Helvetica", "Sans-serif", "sans";
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+.inline-error > ul {
+  display: inline-block;
+  position: relative;
+  list-style-type: none;
+  padding: 0.5em;
+  margin: 0.5em 0.5em 0px 0px;
+  background: #fff none repeat scroll 0% 0%;
+  color: #000;
+  min-height: 16px;
+  border-width: 1px 1px 1px 29px;
+  border-style: solid;
+  border-color: #e00;
+  -moz-border-top-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  border-image: none;
+  box-shadow: 0px 4px 5px #ccc;
+}
+
+.inline-error > ul::before {
+  /* content: url("../img/error.png"); */
+  display: block;
+  position: absolute;
+  left: -20px;
+  top: 7px;
+}
+
+.inline-error > ul::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -21px;
+  top: -6px;
+  border-style: solid;
+  border-width: 0px 6px 6px;
+  border-color: transparent transparent #e00;
+}
+.radio-inline-x {
+  position: relative;
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 15px;
+  margin-bottom: 0;
+  font-weight: 400;
+  vertical-align: middle;
+  cursor: pointer;
+  padding-top: 0px;
+}
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.date-table {
+  /* border: 1px solid black; */
+  /* border-collapse: collapse; */
+  display: flex;
+  width: 450px;
+
+  /* style: width:50% */
+}
+.img-banner {
+  margin: auto;
+  display: block;
+}
+.btn-primaryOverWrite {
+  color: #666;
+  /* background-color: #007bff; */
+  /* border-color: #007bff; */
+  background-color: #cfc7b8;
+  font-family: "Muli-SemiBold";
+  /* height: 35px;
+  width: 100px; */
+  padding: 6px 10px;
+}
+.btnOverWrite {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 1.7rem;
+  line-height: 1.5;
+  border-radius: 0.4rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+  color: #666;
+  /* background-color: #007bff; */
+  /* border-color: #007bff; */
+  background-color: #cfc7b8;
+  font-family: "Muli-SemiBold";
+  height: 35px;
+  width: 100px;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0em;
+  font-size: 1.7rem;
+  line-height: 1.5;
+  border-radius: 0.4rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn-cancer {
+  color: rgb(46, 41, 41);
+  /* background-color: #007bff; */
+
+  border: 2px solid gray;
+  background-color: white;
+  font-family: "Muli-SemiBold";
+  height: 35px;
+  width: 100px;
+  margin-top: 10px;
+}
+
+.welcome-para {
+  font-weight: bold;
+  text-align: center;
+}
+.form-control-Search {
+  height: 42px;
+  border: none;
+  border: 2px solid #e6e6e6;
+  border-radius: 2px;
+  width: 350px;
+  color: #666;
+  padding: 0 35px 0 19px;
+  text-align: center;
+}
+
+.form-holder-search {
+  text-align: center;
+}
+
+.panel-header-left {
+  border-bottom: 2px solid #e9e0cf;
+  font-size: 18px;
+}
+
+.TFtable {
+  border-collapse: collapse;
+  /* 	border: #dae5f4 8px solid; */
+  margin: auto;
+}
+
+.TFtable td,
+th {
+  border: 1px solid #dee2e6;
+  text-align: center !important;
+}
+
+.TFtable tr {
+  background: #ecf1f9;
+}
+/*  Define the background color for all the ODD background rows  */
+.TFtable tr:nth-child(odd) {
+  background: #f0eeec;
+  /* background: #f8f8f8;*/
+}
+/*  Define the background color for all the EVEN background rows  */
+.TFtable tr:nth-child(even) {
+  background: white;
+}
+
+th.last-name *,
+td.last-name {
+  font-weight: bold;
+  color: #aa0000;
+}
+
+th.numeric,
+td.numeric {
+  text-align: right !important;
+}
+
+.TFtable tr th {
+  background-position: right;
+  background-repeat: no-repeat;
+  background: #f5f5f5;
+}
+
+.TFtable tr th {
+  background-color: #f5f5f5;
+}
+.form-control-modal {
+  display: block;
+  width: 100%;
+  height: 42px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #999;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.modalHeader {
+  font-size: 18px;
+  font-weight: bold;
+}
+.form-control {
+  height: 42px;
+  border: 1px solid #e6e6e6;
+  width: 100%;
+  background: 0 0;
+  padding: 0 35px 0 19px;
+  color: #999;
+}
+.form-control:focus {
+  border-color: #8eb852;
+}
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}
+.form-control::-moz-placeholder {
+  color: #999;
+}
+.existingDetails {
+  background-color: #f9f6f1;
+  border: 2px solid #e6e6e6;
+  border-radius: 1px;
+}
+.spanText {
+  color: #999;
+}
+
+.Ptable {
+  width: 100%;
+  border-collapse: collapse;
+}
+.Ptable td {
+  padding: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.Ptable th {
+  padding: 6px;
+  border: 1px solid #dee2e6;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+.Ptable tr {
+  background: #ecf1f9;
+}
+
+/*  Define the background color for all the ODD background rows  */
+.Ptable tr:nth-child(odd) {
+  background: white;
+  /* background: #f8f8f8;*/
+}
+/*  Define the background color for all the EVEN background rows  */
+.Ptable tr:nth-child(even) {
+  background: #dff0d8;
+}
+th.last-name *,
+td.last-name {
+  font-weight: bold;
+  color: #aa0000;
+}
+th.numeric,
+td.numeric {
+  text-align: right !important;
+}
+.Ptable tr th {
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.Ptable tr.changed {
+  background-color: #fff7ea;
+}
+.changed {
+  color: chocolate;
+}
+
+.chooseImage {
+  border: 0px;
+  background: transparent;
+  cursor: pointer;
+}
+.inline-error > ul {
+  display: inline-block;
+  position: relative;
+  list-style-type: none;
+  padding: 0.5em;
+  background: #fff none repeat scroll 0% 0%;
+  color: #000;
+  min-height: 16px;
+  border-width: 1px 1px 1px 29px;
+  border-style: solid;
+  border-color: #e00;
+  border-image: none;
+  box-shadow: 0px 4px 5px #ccc;
+  margin: auto;
+  margin-top: 5px;
+}
+
+.inline-error > ul::before {
+  content: url("./img/error.png");
+  display: block;
+  position: absolute;
+  left: -20px;
+  top: 7px;
+}
+
+.inline-error > ul::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -21px;
+  top: -6px;
+  border-style: solid;
+  border-width: 0px 6px 6px;
+  border-color: transparent transparent #e00;
+}
+
+.inline-error.ng-hide-add.ng-hide-add-active > ul {
+  border-color: #bad405;
+}
+
+.ng-hide-add-active > ul {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 0.5s linear;
+}
+
+.inline-error.ng-hide-add.ng-hide-add-active > ul:before {
+  content: url("./img/success-icon.png");
+}
+.inline-error.ng-hide-add.ng-hide-add-active > ul:after {
+  border-bottom-color: #bad405;
+}
+.inline-error.ng-hide-add.ng-hide-add-active {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+}
+.inline-error.ng-hide-remove.ng-hide-remove-active {
+  /** border-color : #bad405;*/
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+  /**content : url(../images/success-icon.png);*/
+}
+
+h3 {
+  font-family: muli-semibold;
+  font-size: 22px;
+  color: #453e79;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  padding: 5px 15px;
+  display: inline-block;
+  border: 1px solid #dad8e4;
+}
+p {
+  font-family: muli-semibold;
+  font-size: 20px;
+  color: #6d7f52;
+  text-align: center;
+  margin-bottom: 26px;
+}
+.boxPreview {
+  border-top: #e8e7e7 2px solid;
+  border-right: #e8e7e7 2px solid;
+  border-bottom: #ccc 1px solid;
+  border-left: #ccc 1px solid;
+}
+.headerPanelPreview {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: normal;
+  height: 50px;
+  background-color: #f8f6f4;
+  padding-top: 10px;
+}
+.box {
+  border-top: #e8e7e7 2px solid;
+  border-right: #e8e7e7 2px solid;
+  border-bottom: #ccc 1px solid;
+  border-left: #ccc 1px solid;
+}
+.headerPanel1 {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: normal;
+  background-color: #f5f0f0;
+}
+.headerPanel1Div {
+  border-bottom: 1px dashed #dfcaca;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: normal;
+}
+.headerPanel1Span {
+  color: #555;
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: normal;
+  display: inline;
+  background-color: #f5f0f0;
+  color: green;
+}
+.headerPanel2 {
+  border-bottom: 1px dashed #dfcaca;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: normal;
+  font-weight: normal;
+}
+.headerPanel2Span {
+  color: #555;
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: normal;
+  display: inline;
+  background-color: #f5f0f0;
+}
+.headerPanel3 {
+  border-bottom: 1px dashed #dfcaca;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: normal;
+}
+.headerPanel3Span {
+  color: #555;
+  margin-left: 10px;
+  font-size: 16px;
+  display: inline;
+  background-color: #f5f0f0;
+  font-weight: normal;
+}
+.margin20 {
+  margin-bottom: 20px;
+}
+.marginMinus20 {
+  margin-bottom: -20px;
+}
+.margin15 {
+  margin-bottom: 15px;
+}
+.modal-dialog {
+  width: 800px;
+}
+
+/* for Add cancer table */
+.CancerAddTab {
+  width: 100%;
+  border-collapse: collapse;
+}
+.CancerAddTab td {
+  padding: 6px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+}
+
+.CancerAddTab th {
+  padding: 6px;
+  border: 1px solid #dee2e6;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+.CancerAddTab tr {
+  background: #f0f2f5;
+}
+
+/*  Define the background color for all the ODD background rows  */
+.CancerAddTab tr:nth-child(odd) {
+  background: white;
+  /* background: #f8f8f8;*/
+}
+/*  Define the background color for all the EVEN background rows  */
+.CancerAddTab tr:nth-child(even) {
+  background: #e0e2e0dc;
+}
+th.last-name *,
+td.last-name {
+  font-weight: bold;
+  color: #aa0000;
+}
+th.numeric,
+td.numeric {
+  text-align: right !important;
+}
+.CancerAddTab tr th {
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.CancerAddTab tr.changed {
+  background-color: #fff7ea;
+}
+.changed {
+  color: chocolate;
+}
+/* for Add cancer table */
+
+/* for Add cancer table */
+.CancerEditTab {
+  width: 100%;
+  border-collapse: collapse;
+}
+.CancerEditTab td {
+  padding: 6px;
+  text-align: center;
+  /* border: 1px solid #dee2e6; */
+}
+
+.CancerEditTab th {
+  padding: 6px;
+  border: 1px solid #dee2e6;
+  /* border-color: grey; */
+  background: #f0eeec;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+.CancerEditTab tr {
+  /* background: #f0f2f5; */
+}
+
+/*  Define the background color for all the ODD background rows  */
+.CancerEditTab tr:nth-child(odd) {
+  background: #f0f2f5;
+
+  /* background: #f8f8f8;*/
+}
+/*  Define the background color for all the EVEN background rows  */
+.CancerEditTab tr:nth-child(even) {
+  background: white;
+}
+th.last-name *,
+td.last-name {
+  font-weight: bold;
+  color: #004aaa;
+}
+th.numeric,
+td.numeric {
+  text-align: right !important;
+}
+.CancerEditTab tr th {
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.CancerEditTab tr.changed {
+  background-color: #004aaa;
+  /* CancerPreviewTabs */
+}
+.changed {
+  color: chocolate;
+}
+/* for Add cancer table */
+/* for Preview screen table */
+.CancerPreviewTabs {
+  border-collapse: collapse;
+  /* 	border: #dae5f4 8px solid; */
+  margin: auto;
+  width: 95%;
+}
+
+.CancerPreviewTabs td,
+th {
+  border: 1px solid #dee2e6;
+  text-align: center !important;
+}
+
+.CancerPreviewTabs tr {
+  background: #ecf1f9;
+}
+/*  Define the background color for all the ODD background rows  */
+.CancerPreviewTabs tr:nth-child(odd) {
+  background: #ddeaf8;
+  /* background: #f8f8f8;*/
+}
+/*  Define the background color for all the EVEN background rows  */
+.CancerPreviewTabs tr:nth-child(even) {
+  background: white;
+}
+
+th.last-name *,
+td.last-name {
+  font-weight: bold;
+  color: #aa0000;
+}
+
+th.numeric,
+td.numeric {
+  text-align: right !important;
+}
+
+.CancerPreviewTabs tr th {
+  background-position: right;
+  background-repeat: no-repeat;
+  background: #f5f5f5;
+}
+
+.CancerPreviewTabs tr th {
+  /* background-color: #c1e4ff; */
+  color: black;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 8px;
+  padding-right: 30px;
+  background-color: #c1e4ff;
+  border-bottom: 1px solid #0079d6;
+  border: 1px solid #2873ad;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.form-control-modal {
+  display: block;
+  width: 100%;
+  height: 42px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #999;
+  background-color: rgb(255, 255, 255);
+  background-image: none;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+/* for Preview screen table */
+.reviewStyle {
+  padding-left: 30px;
+  padding-top: 20px;
+}

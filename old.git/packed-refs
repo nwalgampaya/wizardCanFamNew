@@ -1,0 +1,8 @@
+# pack-refs with: peeled fully-peeled sorted 
+e77f4311d68fd00ceb33e9e65002d3ddbaf7959d refs/remotes/origin/master
+8c900c8ce557d266163face3830619d536a38cae refs/tags/20181213BEFOREMERGE
+548569e67512470410d8e6d629afa5acab69f60c refs/tags/2018Dec10BeforeArrangingFlow
+79101926bb2fd5cbc8fe3668a5bad576fa7c5a43 refs/tags/2019-2-21AfterIFix-JSONERR-
+1de814d0a1a543c08447c3f0ae74d34f3ecd261e refs/tags/20190226-BeforeModelSeperate
+c42fd1fbf34b33b2c8252052057f334320f00edd refs/tags/20190228-EDIT-Validation
+9fdda759bf928a3a69ff5a8aff930c1330a61ae0 refs/tags/20190301-BeforeDialogMerge
