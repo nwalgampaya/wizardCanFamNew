@@ -104,6 +104,7 @@ export default class AddCancer extends React.Component {
       selectedDay: "",
       dateOfDiagnosis: "",
       cancer: {
+        patientPersonID: "",
         tumorNo: "",
         site: new Object(),
         lateral: new Object(),
@@ -181,6 +182,8 @@ export default class AddCancer extends React.Component {
   };
 
   calculateAgeOfDiag() {
+    console.log("in age calc start")
+
     let cancerLocal = Object.assign({}, this.state.cancer);
     if (
       this.state.selectedDay != "" &&
@@ -188,11 +191,13 @@ export default class AddCancer extends React.Component {
       this.state.selectedYear != "" &&
       this.state.selectedYear != "9999"
     ) {
+      console.log("in age calc")
       var dateOfDiagn =
         this.state.selectedDay +
         this.state.selectedMonth +
         this.state.selectedYear;
       this.setState({ dateOfDiagnosis: dateOfDiagn });
+      console.log("in age calc " + this.state.dateOfDiagnosis);
 
       cancerLocal.dateOfDiagnosis = dateOfDiagn;
 
@@ -252,6 +257,12 @@ export default class AddCancer extends React.Component {
     );
     this.state.cancer.tumorNo = this.state.cancer.tumorNo + 1;
   }
+  setPatientPersonId() {
+    console.log("PATIENT NO : " + this.props.patientData.personID)
+    this.state.cancer.patientPersonID = this.patientData.personID;
+
+  }
+
   handleSaveAddCancer(event) {
     console.log(" Adding a cancer");
     event.preventDefault();
@@ -262,6 +273,7 @@ export default class AddCancer extends React.Component {
 
     if (validation.isValid) {
       this.setTumorNo();
+      this.setPatientPersonId()
       var addedList = [...this.patientData.cancerList, this.state.cancer];
       this.patientData.cancerList = addedList;
       this.setState({ showAddCancerDialog: false });
@@ -622,7 +634,7 @@ export default class AddCancer extends React.Component {
                         </option>
                       );
                     })
-                    // <option >{"Hospital Rec"}</option>
+                      // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>
@@ -743,7 +755,7 @@ export default class AddCancer extends React.Component {
               </div>
 
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Age Of Diagnosis:</div>
+                <div className="col-sm-5 control-margin asteric-required">Age Of Diagnosis:</div>
                 <div className="col-sm-4 control-margin">
                   <input
                     className="form-control-modal"
@@ -772,7 +784,7 @@ export default class AddCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Source:</div>
+                <div className="col-sm-5 control-margin asteric-required">Source:</div>
                 <div className="col-sm-5 control-margin">
                   <select
                     className="form-control-modal"
@@ -803,7 +815,7 @@ export default class AddCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">Tissue:</div>
+                <div className="col-sm-5 control-margin asteric-required">Tissue:</div>
                 <div className="col-sm-5 control-margin">
                   <select
                     className="form-control-modal"

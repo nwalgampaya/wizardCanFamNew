@@ -22,6 +22,7 @@ import DateSelect from "./util/DateSelect";
 import FamilySaveInfo from "./steps/FamilySaveInfo";
 import DeathDateSelect from "./util/DeathDateSelect";
 import HeaderPanel from "./HeaderPanel";
+import FamilyFinish from "./steps/FamilyFinish";
 
 // import FormValidator from './validator/FormValidator';
 
@@ -2633,7 +2634,9 @@ class CancerFamilyReg extends React.Component {
         </Wizard.Page>
         {/* Pages for the Family flow END                 */}
         <Wizard.Page>
-          <div>Last {/* Page 9 */}</div>
+          {/* <div>Last </div> */}
+          <FamilyFinish />
+
         </Wizard.Page>
       </Wizard>
       // </Wizard.Page>

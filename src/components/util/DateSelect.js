@@ -50,7 +50,7 @@ export default class DateSelect extends React.Component {
     var date = date;
     // "03/22/2004"
     // 03222004
-
+    console.log(" convertDateToString " + date);
     date = date.replace("/", "");
     console.log(" convertDateToString " + date);
     date = date.substr(5, 4) + date.substr(0, 4);
@@ -72,14 +72,15 @@ export default class DateSelect extends React.Component {
     console.log("REGX MATCH :" + dateOfDiagFromDb);
 
     // var res =
-    if (
-      dateOfDiagFromDb.match(/[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/)
-    ) {
-      console.log("REGX MATCH FOUND");
-      this.setDatePicker(this.convertDateToString(dateOfDiagFromDb));
-    } else {
-      this.setDatePicker(dateOfDiagFromDb);
-    }
+    // if (
+    //   dateOfDiagFromDb.match(/[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/)
+    // ) {
+    //   console.log("REGX MATCH FOUND");
+    //   this.setDatePicker(this.convertDateToString(dateOfDiagFromDb));
+    // } else {
+    //   this.setDatePicker(dateOfDiagFromDb);
+    // }
+    this.setDatePicker(dateOfDiagFromDb);
 
     // this.state.dateOfDiagFromDb = this.props.dateOfDiagFromDb;
     // EditDate = this.props.dateOfDiagFromDb + "";
@@ -93,13 +94,22 @@ export default class DateSelect extends React.Component {
   }
 
   setDatePicker(dateOfDiagFromDb) {
-    console.log("PICKER VALUES year : " + dateOfDiagFromDb.substr(0, 4));
-    console.log("PICKER VALUES mnth: " + dateOfDiagFromDb.substr(4, 2));
-    console.log("PICKER VALUES date: " + dateOfDiagFromDb.substr(6, 2));
+    // console.log("PICKER VALUES year : " + dateOfDiagFromDb.substr(0, 4));
+    console.log("PICKER VALUES mnth: " + this.state.selectedEditMonth);
+    // console.log("PICKER VALUES date: " + dateOfDiagFromDb.substr(6, 2));
 
-    this.setState({ selectedEditYear: dateOfDiagFromDb.substr(0, 4) });
-    this.setState({ selectedEditMonth: dateOfDiagFromDb.substr(4, 2) });
-    this.setState({ selectedEditDate: dateOfDiagFromDb.substr(6, 2) });
+    // this.setState({ selectedEditYear: dateOfDiagFromDb.substr(0, 4) });
+    // this.setState({ selectedEditMonth: dateOfDiagFromDb.substr(4, 2) });
+    // this.setState({ selectedEditDate: dateOfDiagFromDb.substr(6, 2) });
+
+    this.state.selectedEditYear = dateOfDiagFromDb.substr(0, 4);
+    this.state.selectedEditMonth = dateOfDiagFromDb.substr(4, 2) == '' ? "10" : dateOfDiagFromDb.substr(4, 2);
+    this.state.selectedEditDate = dateOfDiagFromDb.substr(6, 2) == '' ? "12" : dateOfDiagFromDb.substr(6, 2);
+
+    console.log("PICKER VALUES year : " + this.state.selectedEditYear.substr(0, 4));
+    console.log("PICKER VALUES mnth: " + this.state.selectedEditMonth.substr(4, 2));
+    console.log("PICKER VALUES date: " + this.state.selectedEditDate.substr(6, 2));
+
   }
 
   componentDidMount() {
@@ -199,7 +209,7 @@ export default class DateSelect extends React.Component {
               );
             })
 
-            // <option >{"Hospital Rec"}</option>
+              // <option >{"Hospital Rec"}</option>
             }
           </select>
         </div>
@@ -218,7 +228,7 @@ export default class DateSelect extends React.Component {
               return <option key={i} /*value={ageGroup}*/>{value}</option>;
             })
 
-            // <option >{"Hospital Rec"}</option>
+              // <option >{"Hospital Rec"}</option>
             }
           </select>
         </div>

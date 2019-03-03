@@ -91,7 +91,7 @@ export default class EditCancer extends React.Component {
       ageDiagnosis: this.props.cancer.ageDiagnosis,
       tissue: this.props.cancer.tissue,
       diagSource: this.props.cancer.diagSource,
-      isAgeCalculated: false,
+      isAgeCalculated: true, //false
 
       existingDeathDate: null,
       isExistingDeathDate: false,
@@ -151,6 +151,13 @@ export default class EditCancer extends React.Component {
         this.calculateAgeOfDiag();
       }
     );
+    if (this.state.selectedDay != "") {
+      this.state.enableSaveButton = true;
+    }
+
+    // () => {
+    // this.calculateAgeOfDiag();
+    // }
   };
   handleYearPickedDiag = (selectedYear, e) => {
     console.log("handleYearPicked : " + selectedYear);
@@ -162,6 +169,10 @@ export default class EditCancer extends React.Component {
         this.calculateAgeOfDiag();
       }
     );
+    if (this.state.selectedDay != "") {
+      this.state.enableSaveButton = true;
+    }
+    // this.calculateAgeOfDiag();
   };
 
   calculateAgeOfDiag() {
@@ -177,7 +188,7 @@ export default class EditCancer extends React.Component {
         this.state.selectedMonth +
         this.state.selectedYear;
       this.setState({ dateOfDiagnosis: dateOfDiagn });
-
+      console.log("dateOfDiagnosis calculateAgeOf : " + this.state.dateOfDiagnosis)
       cancerLocal.dateOfDiagnosis = dateOfDiagn;
 
       if (this.state.isExistingBirthDate) {
@@ -218,6 +229,9 @@ export default class EditCancer extends React.Component {
         this.calculateAgeOfDiag();
       }
     );
+    if (this.state.selectedDay != "") {
+      this.state.enableSaveButton = true;
+    }
 
     // this.calculateAgeOfDiag();
   };
@@ -246,42 +260,42 @@ export default class EditCancer extends React.Component {
 
     console.log(
       "edited before PROPS cancer this.cancer " +
-        "\n" +
-        "site :" +
-        this.props.cancer.site.code +
-        "\n" +
-        "lateral :" +
-        this.props.cancer.lateral.description +
-        "\n" +
-        "behaviour :" +
-        this.props.cancer.behaviour.description +
-        "\n" +
-        "tissue :" +
-        this.props.cancer.tissue.description +
-        "\n" +
-        "diagsource :" +
-        this.props.cancer.diagSource.description
+      "\n" +
+      "site :" +
+      this.props.cancer.site.code +
+      "\n" +
+      "lateral :" +
+      this.props.cancer.lateral.description +
+      "\n" +
+      "behaviour :" +
+      this.props.cancer.behaviour.description +
+      "\n" +
+      "tissue :" +
+      this.props.cancer.tissue.description +
+      "\n" +
+      "diagsource :" +
+      this.props.cancer.diagSource.description
     );
 
     console.log(
       "edited before STATE cancer this.cancer " +
-        "\n" +
-        "site :" +
-        this.state.cancer.site.code +
-        "\n" +
-        "lateral :" +
-        "\n" +
-        this.state.cancer.lateral.description +
-        "\n" +
-        "behaviour :" +
-        "\n" +
-        this.state.cancer.behaviour.description +
-        "\n" +
-        "tissue :" +
-        this.state.cancer.tissue.description +
-        "\n" +
-        "diagsource :" +
-        this.state.cancer.diagSource.description
+      "\n" +
+      "site :" +
+      this.state.cancer.site.code +
+      "\n" +
+      "lateral :" +
+      "\n" +
+      this.state.cancer.lateral.description +
+      "\n" +
+      "behaviour :" +
+      "\n" +
+      this.state.cancer.behaviour.description +
+      "\n" +
+      "tissue :" +
+      this.state.cancer.tissue.description +
+      "\n" +
+      "diagsource :" +
+      this.state.cancer.diagSource.description
     );
 
     if (validation.isValid) {
@@ -463,9 +477,15 @@ export default class EditCancer extends React.Component {
   getDate(d, m, y) {
     var currentDate;
     if (d == "99" && m != "99" && y != "9999") {
-      currentDate = new Date(15, parseInt(m), parseInt(y));
+      // currentDate = new Date(15, parseInt(m), parseInt(y));
+      currentDate = new Date(parseInt(y), parseInt(m), 15);
+
+    } else if (d != "99" && m == "99" && y != "9999") {
+      // currentDate = new Date(1, 7, parseInt(y));
+      currentDate = new Date(parseInt(y), 7, parseInt(d));
+
     } else if (d == "99" && m == "99" && y != "9999") {
-      currentDate = new Date(1, 7, parseInt(y));
+      currentDate = new Date(parseInt(y), 7, 15);
     } else if (d != "99" && m != "99" && y != "9999") {
       currentDate = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
     }
@@ -568,19 +588,26 @@ export default class EditCancer extends React.Component {
         // this.state.profession.push(data);
       });
 
-    // if (this.state.cancer.dateOfDiagnosis != "") {
-    //   this.setState({
-    //     selectedYear: this.state.cancer.dateOfDiagnosis.substr(0, 4)
-    //   });
-    //   this.setState({
-    //     selectedMonth: this.state.cancer.dateOfDiagnosis.substr(4, 2)
-    //   });
-    //   this.setState({
-    //     selectedDate: this.state.cancer.dateOfDiagnosis.substr(6, 2)
-    //   });
-    //   console.log("selectedEditDate : " + this.state.selectedEditDate);
-    // }
+    if (this.state.cancer.dateOfDiagnosis != "") {
+      this.state.selectedYear = this.state.cancer.dateOfDiagnosis.substr(0, 4);
+      this.state.selectedMonth = this.state.cancer.dateOfDiagnosis.substr(4, 2);
+      this.state.selectedDay = this.state.cancer.dateOfDiagnosis.substr(6, 2);
+      // this.setState({
+      //   selectedYear: this.state.cancer.dateOfDiagnosis.substr(0, 4)
+      // });
+      // this.setState({
+      //   selectedMonth: this.state.cancer.dateOfDiagnosis.substr(4, 2)
+      // });
+      // this.setState({
+      //   selectedDate: this.state.cancer.dateOfDiagnosis.substr(6, 2)
+      // });
+      console.log("selectedEditDate : " + this.state.selectedEditDate);
+    }
   }
+
+  // componentDidUpdate() {
+
+  // }
 
   render() {
     var errorDiv = {
@@ -608,7 +635,7 @@ export default class EditCancer extends React.Component {
           <Form>
             <Modal.Header closeButton={false}>
               <Modal.Title>
-                <div className="modalHeader">Add Cancer</div>
+                <div className="modalHeader">Edit Cancer</div>
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -617,7 +644,7 @@ export default class EditCancer extends React.Component {
               {/* <input type="text" onChange={this.handleTxtChange}  value = {this.state.selectedId=='' ? this.state.cancerInfo[0].age : this.state.cancerInfo[this.state.selectedId].age}/> */}
 
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
+                <div className="col-sm-5 control-margin">
                   Site:
                 </div>
                 <div className="col-sm-5 control-margin">
@@ -676,7 +703,7 @@ export default class EditCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
+                <div className="col-sm-5 control-margin">
                   Lateral:
                 </div>
                 <div className="col-sm-5 control-margin">
@@ -696,7 +723,7 @@ export default class EditCancer extends React.Component {
                         </option>
                       );
                     })
-                    // <option >{"Hospital Rec"}</option>
+                      // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>
@@ -715,7 +742,7 @@ export default class EditCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
+                <div className="col-sm-5 control-margin">
                   Histology:
                 </div>
                 <div className="col-sm-5 control-margin">
@@ -747,7 +774,7 @@ export default class EditCancer extends React.Component {
               </div>
 
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required control-margin">
+                <div className="col-sm-5 control-margin">
                   Behaviour:
                 </div>
                 <div className="col-sm-5 control-margin">
@@ -783,7 +810,7 @@ export default class EditCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 asteric-required">
+                <div className="col-sm-5">
                   Date Of Diagnosis:
                 </div>
                 <div className="col-sm-4 control-margin">
@@ -816,9 +843,12 @@ export default class EditCancer extends React.Component {
 
               <div className="row form-check form-check-inline">
                 <div className="col-sm-5 control-margin">Age Of Diagnosis:</div>
-                <div className="col-sm-4 control-margin">
+                <div className="col-sm-4 control-margin" disabled={console.log(
+                  "dod EXIST" + this.state.dateOfDiagnosis
+                )}>
                   <input
                     className="form-control-modal"
+                    // disabled={this.state.dateOfDiagnosis != "" ? true : false}
                     //disabled={this.state.dateOfDiagFromDb != "" ? false : false}
                     false="text"
                     value={this.state.ageDiagnosis}
