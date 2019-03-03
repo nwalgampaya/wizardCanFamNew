@@ -544,6 +544,8 @@ td.numeric {
   box-shadow: 0px 4px 5px #ccc;
   margin: auto;
   margin-top: 5px;
+
+  transition: visibility 3s, linear;
 }
 .inline-error > ul::before {
   content: url("./img/error.png");
@@ -586,7 +588,7 @@ td.numeric {
 }
 
 .ng-hide-add-active > ul {
-  visibility: hidden;
+  /* visibility: hidden; */
   opacity: 0;
   transition: visibility 1s, opacity 0.5s linear;
 }
@@ -603,6 +605,41 @@ td.numeric {
   transition: 0.5s;
 }
 .inline-error.ng-hide-remove.ng-hide-remove-active {
+  /** border-color : #bad405;*/
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+  /**content : url(../images/success-icon.png);*/
+}
+
+.inline-error-dialog.ng-hide-add-active > ul {
+  border-color: #bad405;
+}
+
+.ng-show-add-active > ul {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
+
+.ng-hide-add-active > ul {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 0.5s linear;
+}
+
+.inline-error-dialog.ng-hide-add.ng-hide-add-active > ul:before {
+  content: url("./img/success-icon.png");
+}
+.inline-error.ng-hide-add.ng-hide-add-active > ul:after {
+  border-bottom-color: #bad405;
+}
+.inline-error-dialog.ng-hide-add.ng-hide-add-active {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  transition: 0.5s;
+}
+.inline-error-dialog.ng-hide-remove.ng-hide-remove-active {
   /** border-color : #bad405;*/
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;

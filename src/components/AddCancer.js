@@ -182,7 +182,7 @@ export default class AddCancer extends React.Component {
   };
 
   calculateAgeOfDiag() {
-    console.log("in age calc start")
+    console.log("in age calc start");
 
     let cancerLocal = Object.assign({}, this.state.cancer);
     if (
@@ -191,7 +191,7 @@ export default class AddCancer extends React.Component {
       this.state.selectedYear != "" &&
       this.state.selectedYear != "9999"
     ) {
-      console.log("in age calc")
+      console.log("in age calc");
       var dateOfDiagn =
         this.state.selectedDay +
         this.state.selectedMonth +
@@ -258,9 +258,8 @@ export default class AddCancer extends React.Component {
     this.state.cancer.tumorNo = this.state.cancer.tumorNo + 1;
   }
   setPatientPersonId() {
-    console.log("PATIENT NO : " + this.props.patientData.personID)
+    console.log("PATIENT NO : " + this.props.patientData.personID);
     this.state.cancer.patientPersonID = this.patientData.personID;
-
   }
 
   handleSaveAddCancer(event) {
@@ -273,7 +272,7 @@ export default class AddCancer extends React.Component {
 
     if (validation.isValid) {
       this.setTumorNo();
-      this.setPatientPersonId()
+      this.setPatientPersonId();
       var addedList = [...this.patientData.cancerList, this.state.cancer];
       this.patientData.cancerList = addedList;
       this.setState({ showAddCancerDialog: false });
@@ -522,14 +521,16 @@ export default class AddCancer extends React.Component {
   }
 
   render() {
+    var inlineclass = "inline-error-dialog ng-show-add-active ";
+    var inlineclasshide = "inline-error-dialog ng-hide-add ng-hide-add-active";
     var errorDiv = {
-      display: "block",
+      //display: "block",
       textAlign: "center",
       marginBottom: "5px",
       width: "100%"
     };
     var errorDivNone = {
-      display: "none"
+      height: "0px"
     };
     let validation = this.submitted // if the form has been submitted at least once
       ? this.validator.validate(this.state) // then check validity every time we render
@@ -603,7 +604,9 @@ export default class AddCancer extends React.Component {
                     })}
                   </select>
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.site.isInvalid ? inlineclass : inlineclasshide
+                    }
                     style={validation.site.isInvalid ? errorDiv : errorDivNone}
                   >
                     <ul>
@@ -634,12 +637,16 @@ export default class AddCancer extends React.Component {
                         </option>
                       );
                     })
-                      // <option >{"Hospital Rec"}</option>
+                    // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.lateral.isInvalid
+                        ? inlineclass
+                        : inlineclasshide
+                    }
                     style={
                       validation.lateral.isInvalid ? errorDiv : errorDivNone
                     }
@@ -674,7 +681,11 @@ export default class AddCancer extends React.Component {
                     })}
                   </select>
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.histology.isInvalid
+                        ? inlineclass
+                        : inlineclasshide
+                    }
                     style={
                       validation.histology.isInvalid ? errorDiv : errorDivNone
                     }
@@ -710,7 +721,11 @@ export default class AddCancer extends React.Component {
                     )}
                   </select>
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.behaviour.isInvalid
+                        ? inlineclass
+                        : inlineclasshide
+                    }
                     style={
                       validation.behaviour.isInvalid ? errorDiv : errorDivNone
                     }
@@ -738,7 +753,11 @@ export default class AddCancer extends React.Component {
                   />
 
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.dateOfDiagnosis.isInvalid
+                        ? inlineclass
+                        : inlineclasshide
+                    }
                     style={
                       validation.dateOfDiagnosis.isInvalid
                         ? errorDiv
@@ -755,7 +774,9 @@ export default class AddCancer extends React.Component {
               </div>
 
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin asteric-required">Age Of Diagnosis:</div>
+                <div className="col-sm-5 control-margin asteric-required">
+                  Age Of Diagnosis:
+                </div>
                 <div className="col-sm-4 control-margin">
                   <input
                     className="form-control-modal"
@@ -768,7 +789,11 @@ export default class AddCancer extends React.Component {
                     disabled={this.state.isAgeCalculated}
                   />
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.ageDiagnosis.isInvalid
+                        ? inlineclass
+                        : inlineclasshide
+                    }
                     style={
                       validation.ageDiagnosis.isInvalid
                         ? errorDiv
@@ -784,7 +809,9 @@ export default class AddCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin asteric-required">Source:</div>
+                <div className="col-sm-5 control-margin asteric-required">
+                  Source:
+                </div>
                 <div className="col-sm-5 control-margin">
                   <select
                     className="form-control-modal"
@@ -801,7 +828,11 @@ export default class AddCancer extends React.Component {
                     })}
                   </select>
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.diagSource.isInvalid
+                        ? inlineclass
+                        : inlineclasshide
+                    }
                     style={
                       validation.diagSource.isInvalid ? errorDiv : errorDivNone
                     }
@@ -815,7 +846,9 @@ export default class AddCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin asteric-required">Tissue:</div>
+                <div className="col-sm-5 control-margin asteric-required">
+                  Tissue:
+                </div>
                 <div className="col-sm-5 control-margin">
                   <select
                     className="form-control-modal"
@@ -832,7 +865,11 @@ export default class AddCancer extends React.Component {
                     })}
                   </select>
                   <div
-                    className="inline-error-dialog"
+                    className={
+                      validation.tissue.isInvalid
+                        ? inlineclass
+                        : inlineclasshide
+                    }
                     style={
                       validation.tissue.isInvalid ? errorDiv : errorDivNone
                     }
