@@ -32,18 +32,26 @@ export default class PreviewInfo extends React.Component {
   }
   createTablePersonDetails() {
     if (this.props.isCanFamEdited) {
+      var style = {
+        marginLeft: "23px",
+        fontWeight: "bold",
+        textAlign: "left"
+      };
       return (
-        <table className="PRtable">
-          <tbody>
-            <tr>
-              <th>Column Name</th>
-              <th>Previous Value</th>
-              <th>New Value</th>
-            </tr>
-            {/* {values.map((val,i)=> */}
-            {this.loopPersonDetails()}
-          </tbody>
-        </table>
+        <div>
+          <p style={style}>Individual Details Updated</p>
+          <table className="PRtable">
+            <tbody>
+              <tr>
+                <th>Column Name</th>
+                <th>Previous Value</th>
+                <th>New Value</th>
+              </tr>
+              {/* {values.map((val,i)=> */}
+              {this.loopPersonDetails()}
+            </tbody>
+          </table>
+        </div>
         //     <div key={i}>
         //        <input type="text" value={el||''} onChange={this.handleChange.bind(this, i)} />
         //        <input type='button' value='remove' onClick={this.removeClick.bind(this, i)}/>
@@ -71,8 +79,9 @@ export default class PreviewInfo extends React.Component {
 
   createNewCancerUI() {
     var style = {
-      marginBottom: "8px",
-      fontWeight: "bold"
+      marginLeft: "23px",
+      fontWeight: "bold",
+      textAlign: "left"
     };
     if (this.props.isCanecerAdded) {
       return (
@@ -134,8 +143,9 @@ export default class PreviewInfo extends React.Component {
 
   createEditedCancerUI() {
     var style = {
-      marginBottom: "8px",
-      fontWeight: "bold"
+      marginLeft: "23px",
+      fontWeight: "bold",
+      textAlign: "left"
     };
     if (this.props.isCancerEdited) {
       return (

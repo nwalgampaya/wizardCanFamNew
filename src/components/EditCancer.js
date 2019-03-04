@@ -184,11 +184,13 @@ export default class EditCancer extends React.Component {
       this.state.selectedYear != "9999"
     ) {
       var dateOfDiagn =
-        this.state.selectedDay +
+        this.state.selectedYear +
         this.state.selectedMonth +
-        this.state.selectedYear;
+        this.state.selectedDay;
       this.setState({ dateOfDiagnosis: dateOfDiagn });
-      console.log("dateOfDiagnosis calculateAgeOf : " + this.state.dateOfDiagnosis)
+      console.log(
+        "dateOfDiagnosis calculateAgeOf : " + this.state.dateOfDiagnosis
+      );
       cancerLocal.dateOfDiagnosis = dateOfDiagn;
 
       if (this.state.isExistingBirthDate) {
@@ -260,42 +262,42 @@ export default class EditCancer extends React.Component {
 
     console.log(
       "edited before PROPS cancer this.cancer " +
-      "\n" +
-      "site :" +
-      this.props.cancer.site.code +
-      "\n" +
-      "lateral :" +
-      this.props.cancer.lateral.description +
-      "\n" +
-      "behaviour :" +
-      this.props.cancer.behaviour.description +
-      "\n" +
-      "tissue :" +
-      this.props.cancer.tissue.description +
-      "\n" +
-      "diagsource :" +
-      this.props.cancer.diagSource.description
+        "\n" +
+        "site :" +
+        this.props.cancer.site.code +
+        "\n" +
+        "lateral :" +
+        this.props.cancer.lateral.description +
+        "\n" +
+        "behaviour :" +
+        this.props.cancer.behaviour.description +
+        "\n" +
+        "tissue :" +
+        this.props.cancer.tissue.description +
+        "\n" +
+        "diagsource :" +
+        this.props.cancer.diagSource.description
     );
 
     console.log(
       "edited before STATE cancer this.cancer " +
-      "\n" +
-      "site :" +
-      this.state.cancer.site.code +
-      "\n" +
-      "lateral :" +
-      "\n" +
-      this.state.cancer.lateral.description +
-      "\n" +
-      "behaviour :" +
-      "\n" +
-      this.state.cancer.behaviour.description +
-      "\n" +
-      "tissue :" +
-      this.state.cancer.tissue.description +
-      "\n" +
-      "diagsource :" +
-      this.state.cancer.diagSource.description
+        "\n" +
+        "site :" +
+        this.state.cancer.site.code +
+        "\n" +
+        "lateral :" +
+        "\n" +
+        this.state.cancer.lateral.description +
+        "\n" +
+        "behaviour :" +
+        "\n" +
+        this.state.cancer.behaviour.description +
+        "\n" +
+        "tissue :" +
+        this.state.cancer.tissue.description +
+        "\n" +
+        "diagsource :" +
+        this.state.cancer.diagSource.description
     );
 
     if (validation.isValid) {
@@ -479,11 +481,9 @@ export default class EditCancer extends React.Component {
     if (d == "99" && m != "99" && y != "9999") {
       // currentDate = new Date(15, parseInt(m), parseInt(y));
       currentDate = new Date(parseInt(y), parseInt(m), 15);
-
     } else if (d != "99" && m == "99" && y != "9999") {
       // currentDate = new Date(1, 7, parseInt(y));
       currentDate = new Date(parseInt(y), 7, parseInt(d));
-
     } else if (d == "99" && m == "99" && y != "9999") {
       currentDate = new Date(parseInt(y), 7, 15);
     } else if (d != "99" && m != "99" && y != "9999") {
@@ -644,9 +644,7 @@ export default class EditCancer extends React.Component {
               {/* <input type="text" onChange={this.handleTxtChange}  value = {this.state.selectedId=='' ? this.state.cancerInfo[0].age : this.state.cancerInfo[this.state.selectedId].age}/> */}
 
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">
-                  Site:
-                </div>
+                <div className="col-sm-5 control-margin">Site:</div>
                 <div className="col-sm-5 control-margin">
                   {/* <Autocomplete
                     items={this.state.siteData}
@@ -703,9 +701,7 @@ export default class EditCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">
-                  Lateral:
-                </div>
+                <div className="col-sm-5 control-margin">Lateral:</div>
                 <div className="col-sm-5 control-margin">
                   <select
                     required="true"
@@ -723,7 +719,7 @@ export default class EditCancer extends React.Component {
                         </option>
                       );
                     })
-                      // <option >{"Hospital Rec"}</option>
+                    // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>
@@ -742,9 +738,7 @@ export default class EditCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">
-                  Histology:
-                </div>
+                <div className="col-sm-5 control-margin">Histology:</div>
                 <div className="col-sm-5 control-margin">
                   <select
                     className="form-control-modal"
@@ -774,9 +768,7 @@ export default class EditCancer extends React.Component {
               </div>
 
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5 control-margin">
-                  Behaviour:
-                </div>
+                <div className="col-sm-5 control-margin">Behaviour:</div>
                 <div className="col-sm-5 control-margin">
                   <select
                     className="form-control-modal"
@@ -810,9 +802,7 @@ export default class EditCancer extends React.Component {
                 </div>
               </div>
               <div className="row form-check form-check-inline">
-                <div className="col-sm-5">
-                  Date Of Diagnosis:
-                </div>
+                <div className="col-sm-5">Date Of Diagnosis:</div>
                 <div className="col-sm-4 control-margin">
                   <DateSelect
                     isAlive={false}
@@ -843,9 +833,12 @@ export default class EditCancer extends React.Component {
 
               <div className="row form-check form-check-inline">
                 <div className="col-sm-5 control-margin">Age Of Diagnosis:</div>
-                <div className="col-sm-4 control-margin" disabled={console.log(
-                  "dod EXIST" + this.state.dateOfDiagnosis
-                )}>
+                <div
+                  className="col-sm-4 control-margin"
+                  disabled={console.log(
+                    "dod EXIST" + this.state.dateOfDiagnosis
+                  )}
+                >
                   <input
                     className="form-control-modal"
                     // disabled={this.state.dateOfDiagnosis != "" ? true : false}

@@ -193,9 +193,9 @@ export default class AddCancer extends React.Component {
     ) {
       console.log("in age calc");
       var dateOfDiagn =
-        this.state.selectedDay +
+        this.state.selectedYear +
         this.state.selectedMonth +
-        this.state.selectedYear;
+        this.state.selectedDay;
       this.setState({ dateOfDiagnosis: dateOfDiagn });
       console.log("in age calc " + this.state.dateOfDiagnosis);
 
@@ -419,9 +419,11 @@ export default class AddCancer extends React.Component {
   getDate(d, m, y) {
     var currentDate;
     if (d == "99" && m != "99" && y != "9999") {
-      currentDate = new Date(15, parseInt(m), parseInt(y));
+      currentDate = new Date(parseInt(y), parseInt(m), 15);
+    } else if (d != "99" && m == "99" && y != "9999") {
+      currentDate = new Date(parseInt(y), 7, parseInt(d));
     } else if (d == "99" && m == "99" && y != "9999") {
-      currentDate = new Date(1, 7, parseInt(y));
+      currentDate = new Date(parseInt(y), 7, 15);
     } else if (d != "99" && m != "99" && y != "9999") {
       currentDate = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
     }
