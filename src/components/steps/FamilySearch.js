@@ -7,8 +7,8 @@ import DatePicker from "react-date-picker";
 export default class FamilySearch extends React.Component {
   constructor(props) {
     super(props);
-    this._id = FamilySearch.incrementId(),
-      this.state = {
+    (this._id = FamilySearch.incrementId()),
+      (this.state = {
         value: "",
         familyData: [],
         individualId: [],
@@ -19,20 +19,19 @@ export default class FamilySearch extends React.Component {
         selectedSrlCode: "",
         familyIdValue: "",
         checkboxObj: {
-          lkdDate: '',
-          patientIDs: ''
-
+          lkdDate: "",
+          patientIDs: ""
         },
         chkBoxId: [],
         apierror: { debugMessage: "", status: "", timestamp: "", message: "" },
         error: false,
         errorMsg: "",
-        isChecked: false,
+        isChecked: false
         // { id:'',
         //   value:'',
 
         // },
-      };
+      });
     this.handleLkd = this.handleLkd.bind(this);
     this.handleSearchGetFamily = this.handleSearchGetFamily.bind(this);
   }
@@ -133,7 +132,7 @@ export default class FamilySearch extends React.Component {
       return (
         <tr>
           <th> Select </th>
-          <th> Individual Id</th>
+          <th> Individual ID</th>
           <th> LKD Date</th>
         </tr>
       );
@@ -162,24 +161,23 @@ export default class FamilySearch extends React.Component {
           {/* <td><input onChange={this.setfamilyId.bind(this)} value={i} type="radio" name="familyId"/></td> */}
           <td>{value.patientIDs}</td>
           <td>{value.lkdDate}</td>
-
         </tr>
       ));
     }
   }
   static incrementId() {
-    if (!this.latestId) this.latestId = 1
-    else this.latestId++
-    return this.latestId
+    if (!this.latestId) this.latestId = 1;
+    else this.latestId++;
+    return this.latestId;
   }
   setCheckBoxValues(event) {
-    var idGen = this._id++
+    var idGen = this._id++;
     console.log("chkBoxId id:" + event.target.value);
     console.log("chkBoxId key:" + event.target.key);
     console.log("chkBoxId id:" + event.target.id);
     console.log("chkBoxId value :" + idGen);
 
-    // Get all the checked values into an array 
+    // Get all the checked values into an array
     this.state.checkboxObj.lkdDate = event.target.value;
     this.state.checkboxObj.patientIDs = event.target.id;
 
@@ -189,13 +187,13 @@ export default class FamilySearch extends React.Component {
     // this.state.chkBoxId[idGen].lkdDate = event.target.value;
 
     if (event.target.value != null) {
-      this.setState({
-        isChecked: true
-      },
+      this.setState(
+        {
+          isChecked: true
+        },
         () => {
           this.onSelectCheckBox();
         }
-
       );
       // this.state.isChked=true;
     }
@@ -210,11 +208,10 @@ export default class FamilySearch extends React.Component {
       }
     }
 
-
     //ToDo remove this code
     this.state.chkBoxId.map((value, i) => {
-      console.log("Selected chkbx values : " + value[i])
-    })
+      console.log("Selected chkbx values : " + value[i]);
+    });
   }
   setFamilyValue(value) {
     console.log("family Id :" + value);
@@ -233,11 +230,20 @@ export default class FamilySearch extends React.Component {
     console.log("ddddddddddddddddddddddd" + str);
     var str2 = "" + str;
     var mnths = {
-
-      Jan: "01", Feb: "02", Mar: "03", Apr: "04", May: "05", Jun: "06", Jul: "07", Aug: "08", Sep: "09", Oct: "10", Nov: "11", Dec: "12"
-    },
+        Jan: "01",
+        Feb: "02",
+        Mar: "03",
+        Apr: "04",
+        May: "05",
+        Jun: "06",
+        Jul: "07",
+        Aug: "08",
+        Sep: "09",
+        Oct: "10",
+        Nov: "11",
+        Dec: "12"
+      },
       date = str2.split(" ");
-
 
     return [date[3], mnths[date[1]], date[2]].join("");
   }
@@ -250,7 +256,11 @@ export default class FamilySearch extends React.Component {
     var familyIdValue = this.state.familyIdValue;
     const urlIndividualId =
       // properties.baseUrl + "patients/family/" + familyIdValue;
-      properties.baseUrl + "/patients/familyId/" + familyIdValue + "?lkd=" + lkdDate;
+      properties.baseUrl +
+      "/patients/familyId/" +
+      familyIdValue +
+      "?lkd=" +
+      lkdDate;
 
     let status;
     fetch(urlIndividualId)
@@ -302,17 +312,15 @@ export default class FamilySearch extends React.Component {
   }
 
   onSelectCheckBox() {
-    this.props.onProceedButton(
-      this.state.isChecked);
+    this.props.onProceedButton(this.state.isChecked);
   }
-
 
   onSelectCancerFamId(e) {
     console.log(" onSelectCancerFamId onSelectCancerFamId ");
     this.props.onFamilySearch(
       this.state.chkBoxId,
       this.state.selectedSrlCode,
-      this.state.sendCurrentLKD,
+      this.state.sendCurrentLKD
     );
   }
 
@@ -441,8 +449,8 @@ export default class FamilySearch extends React.Component {
                 //   onChange={this.setFamilyValue.bind(this)}
                 onChange={e => this.setState({ familyIdValue: e.target.value })}
                 onSelect={this.setFamilyValue.bind(this)}
-              // onSelect={familyIdValue => this.setState({ familyIdValue })}
-              //   on
+                // onSelect={familyIdValue => this.setState({ familyIdValue })}
+                //   on
               />
             </div>
           </div>

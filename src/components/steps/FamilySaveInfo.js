@@ -18,13 +18,14 @@ export default class FamilySaveInfo extends React.Component {
 
   onSaveCancerFamilyID(e) {
     console.log("onSaveCancerFamilyID");
-    this.props.chkBoxId.map((value, i) => (
-      console.log(" patient id map " + value.patientIDs),
-      this.state.PatientLKDDTO.patientIDs[i] = value.patientIDs
-
-    ));
-    this.state.PatientLKDDTO.lkdDate = this.props.currentLKD,
-      this.state.PatientLKDDTO.lkdSource.code = this.props.selectedSrlCode
+    this.props.chkBoxId.map(
+      (value, i) => (
+        console.log(" patient id map " + value.patientIDs),
+        (this.state.PatientLKDDTO.patientIDs[i] = value.patientIDs)
+      )
+    );
+    (this.state.PatientLKDDTO.lkdDate = this.props.currentLKD),
+      (this.state.PatientLKDDTO.lkdSource.code = this.props.selectedSrlCode);
 
     const urlSavefamilyId = properties.baseUrl + "patients/lkd";
 
@@ -63,9 +64,9 @@ export default class FamilySaveInfo extends React.Component {
       <table className="TFtable">
         <tbody>
           <tr>
-            <th>Selected Individual Id</th>
-            <th>Lkd Date Old</th>
-            <th>Lkd Date New</th>
+            <th>Selected Individual ID</th>
+            <th>LKD Date Old</th>
+            <th>LKD Date New</th>
           </tr>
           {this.props.chkBoxId.map((value, i) => (
             <tr key={i}>

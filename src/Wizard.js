@@ -135,10 +135,12 @@ export default class Wizard extends React.Component {
   //   values
   // }))}
 
-  ExitRecord = () =>
+  ExitRecord = () => {
     this.setState(state => ({
       page: 0
     }));
+    window.location.reload();
+  };
 
   logout = () =>
     this.setState(state => ({
@@ -243,7 +245,12 @@ export default class Wizard extends React.Component {
       return onSubmit(values);
     }
   };
-
+  handleKeyDown = (event, callback) => {
+    if (event.key === "Enter" && event.shiftKey === false) {
+      event.preventDefault();
+      callback();
+    }
+  };
   render() {
     // var sectionStyle = {
     //   width: "100%",
@@ -405,12 +412,17 @@ export default class Wizard extends React.Component {
                         style={alignButton}
                         className="btn btn-primary"
                         type="button"
+                        onKeyDown={e => {
+                          {
+                            this.handleKeyDown(e, this.searchPatientInParent);
+                          }
+                        }}
                         onClick={() =>
                           //this.next()
                           this.searchPatientInParent()
                         } /*type="submit"*/
                       >
-                        Search
+                        Search-1
                       </button>
                     )}
 
