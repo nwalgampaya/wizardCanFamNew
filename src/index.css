@@ -10,7 +10,8 @@ body {
   font-family: "museo_sans_rounded300";
   font-size: 16px;
   line-height: 1.5;
-  background: url("../src/img/dna4x.jpg") repeat;
+  /* background: url("../src/img/dna4x.jpg") repeat; */
+  background-color: #f5f5f5;
 }
 
 /* input {

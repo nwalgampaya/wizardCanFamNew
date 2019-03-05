@@ -11,6 +11,7 @@ import { withFormik, Form, Field } from "formik";
 import { properties } from "../properties.js";
 import FormValidator from "./validator/FormValidator";
 import DateSelect from "./util/DateSelect";
+import Autocomplete from "react-autocomplete";
 
 // import React, { Component } from 'react';
 
@@ -25,16 +26,28 @@ export default class EditCancer extends React.Component {
         message: "Site is required."
       },
       {
+        field: "site",
+        method: this.validSite,
+        validWhen: true,
+        message: "Invalid Site."
+      },
+      {
         field: "lateral",
         method: "isEmpty",
         validWhen: false,
         message: "lateral is required"
       },
       {
-        field: "histo",
+        field: "histology",
         method: "isEmpty",
         validWhen: false,
         message: "Histology is required"
+      },
+      {
+        field: "histology",
+        method: this.validHistology,
+        validWhen: true,
+        message: "Invalid Histology."
       },
       {
         field: "behaviour",
@@ -84,9 +97,9 @@ export default class EditCancer extends React.Component {
       behaviourcodesData: [],
       diagSourceData: [],
       tissueData: [],
-      site: this.props.cancer.site,
+      site: "",
       lateral: this.props.cancer.lateral,
-      histo: this.props.cancer.histology,
+      histology: "",
       behaviour: this.props.cancer.behaviour,
       ageDiagnosis: this.props.cancer.ageDiagnosis,
       tissue: this.props.cancer.tissue,
@@ -260,46 +273,6 @@ export default class EditCancer extends React.Component {
     this.setState({ validation });
     this.submitted = true;
 
-    console.log(
-      "edited before PROPS cancer this.cancer " +
-        "\n" +
-        "site :" +
-        this.props.cancer.site.code +
-        "\n" +
-        "lateral :" +
-        this.props.cancer.lateral.description +
-        "\n" +
-        "behaviour :" +
-        this.props.cancer.behaviour.description +
-        "\n" +
-        "tissue :" +
-        this.props.cancer.tissue.description +
-        "\n" +
-        "diagsource :" +
-        this.props.cancer.diagSource.description
-    );
-
-    console.log(
-      "edited before STATE cancer this.cancer " +
-        "\n" +
-        "site :" +
-        this.state.cancer.site.code +
-        "\n" +
-        "lateral :" +
-        "\n" +
-        this.state.cancer.lateral.description +
-        "\n" +
-        "behaviour :" +
-        "\n" +
-        this.state.cancer.behaviour.description +
-        "\n" +
-        "tissue :" +
-        this.state.cancer.tissue.description +
-        "\n" +
-        "diagsource :" +
-        this.state.cancer.diagSource.description
-    );
-
     if (validation.isValid) {
       this.setState({ showEditCancerDialog: false });
       this.setState({ validation });
@@ -362,6 +335,108 @@ export default class EditCancer extends React.Component {
     });
     if (e.target.value != "") {
       this.state.enableSaveButton = true;
+    }
+  };
+  setSiteSelected(e) {
+    let cancerLocal = Object.assign({}, this.state.cancer);
+
+    let selectedObj = this.state.siteData.find(site => site.code == e);
+
+    cancerLocal.site = selectedObj;
+
+    this.setState({
+      cancer: cancerLocal,
+      site: selectedObj.code
+    });
+    if (e != this.state.site) {
+      this.state.enableSaveButton = true;
+    }
+  }
+
+  setSiteChanged(e) {
+    let cancerLocal = Object.assign({}, this.state.cancer);
+    let selectedObj = this.state.siteData.find(
+      site => site.code == e.target.value
+    );
+    if (typeof selectedObj !== "undefined") {
+      cancerLocal.site = selectedObj;
+
+      this.setState({
+        cancer: cancerLocal,
+        site: selectedObj.code
+      });
+    } else {
+      this.setState({
+        site: e.target.value
+      });
+    }
+    if (e.target.value != "") {
+      this.state.enableSaveButton = true;
+    }
+  }
+
+  setHistologySelected(e) {
+    let cancerLocal = Object.assign({}, this.state.cancer);
+
+    let selectedObj = this.state.histocodesData.find(
+      histology => histology.code == e
+    );
+
+    cancerLocal.histology = selectedObj.code;
+
+    this.setState({
+      cancer: cancerLocal,
+      histology: selectedObj.code
+    });
+
+    if (e != this.state.histology) {
+      this.state.enableSaveButton = true;
+    }
+  }
+
+  setHistologyChanged(e) {
+    let cancerLocal = Object.assign({}, this.state.cancer);
+    let selectedObj = this.state.histocodesData.find(
+      histology => histology.code == e.target.value
+    );
+    if (typeof selectedObj !== "undefined") {
+      cancerLocal.histology = selectedObj.code;
+
+      this.setState({
+        cancer: cancerLocal,
+        histology: selectedObj.code
+      });
+    } else {
+      this.setState({
+        histology: e.target.value
+      });
+    }
+    if (e.target.value != "") {
+      this.state.enableSaveButton = true;
+    }
+  }
+
+  validHistology = () => {
+    let selectedObj = this.state.histocodesData.find(
+      histology => histology.code == this.state.histology
+    );
+    if (typeof selectedObj !== "undefined") {
+      return true;
+    }
+    {
+      return false;
+    }
+  };
+
+  validSite = () => {
+    let selectedObj = this.state.siteData.find(
+      site => site.code == this.state.site
+    );
+    if (typeof selectedObj !== "undefined") {
+      return true;
+    }
+    {
+      return false;
     }
   };
 
@@ -499,6 +574,8 @@ export default class EditCancer extends React.Component {
     //setInitialData();
 
     this.state.showAddCancerDialog = this.props.showAddCancerDialog;
+    this.state.histology = this.props.cancer.histology.toString();
+    this.state.site = this.props.cancer.site.code;
     const urlIcdcodes = properties.baseUrl + "icdcodes";
     fetch(urlIcdcodes)
       .then(response => response.json())
@@ -642,52 +719,63 @@ export default class EditCancer extends React.Component {
               {/* value= {}this.state.data[].name */}
               {/* Condition for the value is needed to render the element at the the initial load */}
               {/* <input type="text" onChange={this.handleTxtChange}  value = {this.state.selectedId=='' ? this.state.cancerInfo[0].age : this.state.cancerInfo[this.state.selectedId].age}/> */}
-
               <div className="row form-check form-check-inline">
                 <div className="col-sm-5 control-margin">Site:</div>
                 <div className="col-sm-5 control-margin">
-                  {/* <Autocomplete
+                  <Autocomplete
+                    wrapperStyle={{ width: "100%" }}
+                    inputProps={{
+                      style: {
+                        width: "100%",
+                        height: "42px",
+                        border: "1px solid rgb(233, 211, 211)",
+                        padding: "0 35px 0 19px",
+                        color: "#999",
+                        borderRadius: "4px"
+                      },
+                      placeholder: "Search Site"
+                    }}
+                    wrapperStyle={{ width: "100%" }}
+                    className="form-control"
                     items={this.state.siteData}
                     shouldItemRender={(item, value) =>
                       item.code.toUpperCase().indexOf(value.toUpperCase()) > -1
                     }
                     getItemValue={item => item.code}
-                    // shouldItemRender={(item, value) => item.indexOf(value) > -1}
-                    // getItemValue={item => item}
-                    renderItem={(item, highlighted) => (
+                    renderMenu={(items, value, style) => {
+                      return (
+                        <div
+                          style={{
+                            zIndex: "1",
+                            backgroundColor: "f0eeec",
+                            minWidth: "302.5px",
+                            borderRadius: "3px",
+                            boxShadow: " rgba(0, 0, 0, 0.1) 0px 2px 12px",
+                            background: "rgba(255, 255, 255, 0.9)",
+                            padding: "2px 0px; font-size: 90%",
+                            position: "fixed",
+                            overflow: "auto",
+                            maxHeight: "50%"
+                          }}
+                          children={items}
+                        />
+                      );
+                    }}
+                    renderItem={(item, isHighlighted) => (
                       <div
-                        key={item.id}
                         style={{
-                          backgroundColor: highlighted ? "#eee" : "transparent"
+                          background: isHighlighted ? "#f5f5f5" : "white"
                         }}
+                        key={item.id}
                       >
-                        {item.code + " || " + item.description}
+                        {item.code + "   " + item.description}
                       </div>
                     )}
-                    value={this.state.newSiteValue}
+                    value={this.state.site}
                     //   onChange={this.setFamilyValue.bind(this)}
-                    // onChange={e => this.setState({ value: e.target.value })}
-                    onChange={this.setSiteNewOnChange.bind(this)}
-                    // onChange={e => this.setState({ siteEditDlg: e.target.value.toUpperCase() })}setSiteOnChange
-                    onSelect={this.setSiteNew.bind(this)}
-                    //   onSelect={value => this.setState({ value })}
-                    //   on
-                  /> */}
-                  <select
-                    /**disabled={this.state.isAlive}**/ className="form-control dorp-box"
-                    onChange={this.setSite.bind(this)}
-                    name="currentDeathColumn"
-                    value={this.state.site.code}
-                  >
-                    {/* <option>{"Choose One"}</option> */}
-                    {this.state.siteData.map((siteGroup, i) => {
-                      return (
-                        <option key={i} value={siteGroup.code}>
-                          {siteGroup.code /*+" | "+siteGroup.description*/}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    onChange={this.setSiteChanged.bind(this)}
+                    onSelect={this.setSiteSelected.bind(this)}
+                  />
                   <div
                     className="inline-error-dialog"
                     style={validation.site.isInvalid ? errorDiv : errorDivNone}
@@ -700,6 +788,7 @@ export default class EditCancer extends React.Component {
                   </div>
                 </div>
               </div>
+
               <div className="row form-check form-check-inline">
                 <div className="col-sm-5 control-margin">Lateral:</div>
                 <div className="col-sm-5 control-margin">
@@ -740,33 +829,74 @@ export default class EditCancer extends React.Component {
               <div className="row form-check form-check-inline">
                 <div className="col-sm-5 control-margin">Histology:</div>
                 <div className="col-sm-5 control-margin">
-                  <select
-                    className="form-control-modal"
-                    value={this.state.histo}
-                    onChange={this.setHistology.bind(this)}
-                    name="newHistoColumn"
-                  >
-                    {this.state.histocodesData.map((histocodesList, i) => {
+                  <Autocomplete
+                    wrapperStyle={{ width: "100%" }}
+                    inputProps={{
+                      style: {
+                        width: "100%",
+                        height: "42px",
+                        border: "1px solid rgb(233, 211, 211)",
+                        padding: "0 35px 0 19px",
+                        color: "#999",
+                        borderRadius: "4px"
+                      },
+                      placeholder: "Search Histology Code"
+                    }}
+                    wrapperStyle={{ width: "100%" }}
+                    className="form-control"
+                    items={this.state.histocodesData}
+                    shouldItemRender={(item, value) =>
+                      item.code.indexOf(value) > -1
+                    }
+                    getItemValue={item => item.code.toString()}
+                    renderMenu={(items, value, style) => {
                       return (
-                        <option key={i} value={histocodesList.code}>
-                          {histocodesList.code}
-                        </option>
+                        <div
+                          style={{
+                            zIndex: "1",
+                            backgroundColor: "f0eeec",
+                            minWidth: "302.5px",
+                            borderRadius: "3px",
+                            boxShadow: " rgba(0, 0, 0, 0.1) 0px 2px 12px",
+                            background: "rgba(255, 255, 255, 0.9)",
+                            padding: "2px 0px; font-size: 90%",
+                            position: "fixed",
+                            overflow: "auto",
+                            maxHeight: "50%"
+                          }}
+                          children={items}
+                        />
                       );
-                    })}
-                  </select>
+                    }}
+                    renderItem={(item, isHighlighted) => (
+                      <div
+                        style={{
+                          background: isHighlighted ? "#f5f5f5" : "white"
+                        }}
+                        key={item.id}
+                      >
+                        {item.code + "   " + item.description}
+                      </div>
+                    )}
+                    value={this.state.histology}
+                    //   onChange={this.setFamilyValue.bind(this)}
+                    onChange={this.setHistologyChanged.bind(this)}
+                    onSelect={this.setHistologySelected.bind(this)}
+                  />
                   <div
                     className="inline-error-dialog"
-                    style={validation.histo.isInvalid ? errorDiv : errorDivNone}
+                    style={
+                      validation.histology.isInvalid ? errorDiv : errorDivNone
+                    }
                   >
                     <ul>
                       <li className="validationMsg">
-                        {validation.histo.message}
+                        {validation.histology.message}
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <div className="row form-check form-check-inline">
                 <div className="col-sm-5 control-margin">Behaviour:</div>
                 <div className="col-sm-5 control-margin">
