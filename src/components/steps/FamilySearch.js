@@ -155,7 +155,7 @@ export default class FamilySearch extends React.Component {
               // id={i}
               id={value.patientIDs}
               value={value.lkdDate}
-              name={"individualChkbx" + [i]}
+              name={"individualChkbx"}
               onChange={this.setCheckBoxValues.bind(this)}
             />
           </td>
@@ -171,15 +171,31 @@ export default class FamilySearch extends React.Component {
   setAllCheckBoxValues(event) {
     console.log("is chek : " + event.target.checked);
     this.setState({
-      // isCheckedAll: event.target.checked,
+      isCheckedAll: event.target.checked,
       isChecked: event.target.checked
-    });
-    this.state.chkBoxId.map((value, i) => {
+    },
+      () => {
+        this.onSelectCheckBox();
+      }
+    );
+    this.state.individualId.map((value, i) => {
+      this.state.checkboxObj = new Object();
       console.log("eeeeeeee" + i);
-      var elem = document.getElementById("individualChkbx" + [i]);
+      console.log("eeeeeeee" + value.patientIDs);
+
+      var elem = document.getElementById(value.patientIDs);
       elem.checked = event.target.checked;
       console.log("is chek : " + value.id);
+      this.state.checkboxObj.lkdDate = value.lkdDate;
+      this.state.checkboxObj.patientIDs = value.patientIDs;
 
+      this.state.chkBoxId.push(this.state.checkboxObj);
+
+      // this.setState(
+      //   {
+      //     isChecked: true
+      //   }
+      // );
       // this.state.checkboxObj[i].checked = event.target.checked;
     });
     // this.state.isChecked.id[1] = event.target.checked;
@@ -190,26 +206,63 @@ export default class FamilySearch extends React.Component {
     return this.latestId;
   }
   setCheckBoxValues(event) {
+    this.state.checkboxObj = new Object();
     console.log("chkBoxId id:" + event.target.value);
     console.log("chkBoxId key:" + event.target.key);
     console.log("chkBoxId id:" + event.target.id);
+    console.log("chkBoxId checked:" + event.target.checked);
 
     // Get all the checked values into an array
-    this.state.checkboxObj.lkdDate = event.target.value;
-    this.state.checkboxObj.patientIDs = event.target.id;
+    if (event.target.checked) {
+      this.state.checkboxObj.lkdDate = event.target.value;
+      this.state.checkboxObj.patientIDs = event.target.id;
 
-    this.state.chkBoxId.push(this.state.checkboxObj);
+      this.state.chkBoxId.push(this.state.checkboxObj);
 
-    if (event.target.value != null) {
-      this.setState(
-        {
-          isChecked: true
-        },
-        () => {
-          this.onSelectCheckBox();
+      if (event.target.value != null) {
+        this.setState(
+          {
+            isChecked: event.target.checked
+          },
+          () => {
+            this.onSelectCheckBox();
+          }
+        );
+        // this.state.isChked=true;
+      }
+    } else {
+      var localChkBox = []
+      console.log("*************** setCheckBoxValues ********" + event.target.id)
+      console.log("*************** setCheckBoxValues ********" + this.state.chkBoxId.indexOf(event.target.id))
+
+      for (var i = 0; i < this.state.chkBoxId.length; i++) {
+        console.log("*************** setCheckBoxValues ********" + this.state.chkBoxId[i].patientIDs)
+        if (this.state.chkBoxId[i].patientIDs === event.target.id) {
+          console.log("*************** setCheckBoxValues ********" + this.state.chkBoxId[i].patientIDs)
+
+          // arr.splice(i, 1); 
+          // this.state.chkBoxId.splice(this.state.chkBoxId.indexOf(event.target.id), 1);
+
+          localChkBox = this.state.chkBoxId.splice(i, 1)
+          // this.setState({
+          //   // isCheckedAll: false,
+          //   chkBoxId: this.state.chkBoxId.splice(i, 1)
+          //   // chkBoxId: this.state.chkBoxId
+          //   // isChecked: event.target.checked
+          // })
+
+
         }
-      );
-      // this.state.isChked=true;
+      }
+      this.setState({
+        isCheckedAll: false,
+        chkBoxId: localChkBox,
+        // isChecked: event.target.checked
+      })
+    }
+    if (this.state.chkBoxId.length == 0) {
+      this.state.isChecked = false;
+      this.onSelectCheckBox();
     }
     this.setState({
       chkBoxId: this.state.chkBoxId
@@ -244,19 +297,19 @@ export default class FamilySearch extends React.Component {
     console.log("ddddddddddddddddddddddd" + str);
     var str2 = "" + str;
     var mnths = {
-        Jan: "01",
-        Feb: "02",
-        Mar: "03",
-        Apr: "04",
-        May: "05",
-        Jun: "06",
-        Jul: "07",
-        Aug: "08",
-        Sep: "09",
-        Oct: "10",
-        Nov: "11",
-        Dec: "12"
-      },
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12"
+    },
       date = str2.split(" ");
 
     return [date[3], mnths[date[1]], date[2]].join("");
@@ -464,8 +517,8 @@ export default class FamilySearch extends React.Component {
                 //   onChange={this.setFamilyValue.bind(this)}
                 onChange={e => this.setState({ familyIdValue: e.target.value })}
                 onSelect={this.setFamilyValue.bind(this)}
-                // onSelect={familyIdValue => this.setState({ familyIdValue })}
-                //   on
+              // onSelect={familyIdValue => this.setState({ familyIdValue })}
+              //   on
               />
             </div>
           </div>
@@ -548,7 +601,7 @@ export default class FamilySearch extends React.Component {
           <tbody>
             {this.showSearchTabHeader()}
             <input
-              // checked={this.state.isCheckedAll}
+              checked={this.state.isCheckedAll}
               className="form-check-input"
               type="checkbox"
               // id={i}
