@@ -139,6 +139,22 @@ export default class FamilySearch extends React.Component {
       );
     }
   }
+  showSelectAllChkBx() {
+    if (this.state.isSearched == true) {
+      return (
+        <input
+          checked={this.state.isCheckedAll}
+          className="form-check-input"
+          type="checkbox"
+          // id={i}
+          // id={value.patientIDs}
+          // value={value.lkdDate}
+          name="selectAllChkbx"
+          onChange={this.setAllCheckBoxValues.bind(this)}
+        />
+      )
+    }
+  }
   showFamilyId() {
     console.log("In showFamily");
 
