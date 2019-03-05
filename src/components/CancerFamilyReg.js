@@ -1512,7 +1512,7 @@ class CancerFamilyReg extends React.Component {
       ) {
         if (currentLKDDate > currentDeathDate) {
           errors.currentdodColumn =
-            "LKD Date cannot be greater than the Death Date";
+            "LKD Date cannot be greater than Death Date";
         }
       }
     } else if (this.state.isExistingLKDDate) {
@@ -1523,7 +1523,7 @@ class CancerFamilyReg extends React.Component {
       ) {
         if (existingLKDDate > currentDeathDate) {
           errors.currentdodColumn =
-            "Existing LKD Date cannot be greater than the Death Date";
+            "Existing LKD Date cannot be greater than Death Date";
         }
       }
     }
@@ -1541,7 +1541,7 @@ class CancerFamilyReg extends React.Component {
       ) {
         if (currentBirthDate > currentDeathDate) {
           errors.currentdodColumn =
-            "Death Date should be greater than the Birth Date";
+            "Death Date must be greater than Birth Date";
         }
       }
     } else if (this.state.isExistingBirthDate) {
@@ -1552,7 +1552,7 @@ class CancerFamilyReg extends React.Component {
       ) {
         if (currentBirthDate > currentDeathDate) {
           errors.currentLkdColumn =
-            "Death Date should be greater than the existing Birth Date";
+            "Death Date must be greater than Birth Date";
         }
       }
     }
@@ -1930,7 +1930,7 @@ class CancerFamilyReg extends React.Component {
               this.state.selectedMonthDOB != "" ||
               this.state.selectedYearDOB != ""
             ) {
-              errors.currentdobColumn = "Please enter valid date of birth";
+              errors.currentdobColumn = "Please enter a valid date of birth";
               this.state.isValidBirthDateSelected = false;
             } else {
             }
@@ -1989,7 +1989,7 @@ class CancerFamilyReg extends React.Component {
               this.state.selectedYearLKD != ""
             ) {
               this.state.isValidLKDSelected = false;
-              errors.currentLkdColumn = "Please enter valid LKD Date";
+              errors.currentLkdColumn = "LKD Date is a required field";
             } else {
               this.state.isValidLKDSelected = false;
             }
@@ -2033,7 +2033,7 @@ class CancerFamilyReg extends React.Component {
             ) {
               this.state.isValidDeathSelected = false;
 
-              errors.currentdodColumn = "Please enter valid date of death";
+              errors.currentdodColumn = "Please enter a valid date of death";
             }
             console.log("dod 2: " + this.state.currentLKDA);
             console.log("currentDeath 2: " + this.state.currentDeath);
@@ -2041,13 +2041,13 @@ class CancerFamilyReg extends React.Component {
             if (this.state.currentCourseOfLiveDate == "") {
               if (this.state.currentLKDA != "") {
                 errors.sourceLKDColumn =
-                  "Please specify Source of Last Known Date.";
+                  "Source of Last Known Date is a required field";
               }
             }
             if (this.state.currentSourceOFDeath == "") {
               if (this.state.currentaodeath != "") {
                 errors.currentDeathSourceColumn =
-                  "Please specify Source of Death.";
+                  "Source of Death is a required field";
               }
             }
 

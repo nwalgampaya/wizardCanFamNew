@@ -22,57 +22,56 @@ export default class AddCancer extends React.Component {
         field: "site",
         method: "isEmpty",
         validWhen: false,
-        message: "Site is required."
+        message: "Site is a required field"
       },
       {
         field: "lateral",
         method: "isEmpty",
         validWhen: false,
-        message: "lateral is required"
+        message: "Lateral is a required field"
       },
       {
         field: "histology",
         method: "isEmpty",
         validWhen: false,
-        message: "Histology is required"
+        message: "Histology is a required field"
       },
       {
         field: "behaviour",
         method: "isEmpty",
         validWhen: false,
-        message: "behaviour is required"
+        message: "Behaviour is a required field"
       },
       {
         field: "tissue",
         method: "isEmpty",
         validWhen: false,
-        message: "tissue is required"
+        message: "Tissue is a required field"
       },
       {
         field: "diagSource",
         method: "isEmpty",
         validWhen: false,
-        message: "diagSource is required"
+        message: "Source is a required field"
       },
       {
         field: "dateOfDiagnosis",
         method: "isEmpty",
         validWhen: false,
-        message: "dateOfDiagnosis is required"
-      },
-
-      {
-        field: "dateOfDiagnosis",
-        method: this.validateBirthDate,
-        validWhen: true,
-        message: "Dx Date should be greater than DOB and less than Death Date"
+        message: "Date Of Diagnosis is a required field"
       },
 
       {
         field: "ageDiagnosis",
         method: "isEmpty",
         validWhen: false,
-        message: "ageDiagnosis is required"
+        message: "Age Of Diagnosis is a required field"
+      },
+      {
+        field: "dateOfDiagnosis",
+        method: this.validateBirthDate,
+        validWhen: true,
+        message: "Dx Date should be greater than DOB and less than Death Date"
       }
     ]);
 

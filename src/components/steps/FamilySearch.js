@@ -26,7 +26,8 @@ export default class FamilySearch extends React.Component {
         apierror: { debugMessage: "", status: "", timestamp: "", message: "" },
         error: false,
         errorMsg: "",
-        isChecked: false
+        isChecked: false,
+        isCheckedAll: false
         // { id:'',
         //   value:'',
 
@@ -148,6 +149,7 @@ export default class FamilySearch extends React.Component {
           {/* {i+","+value} */}
           <td>
             <input
+              checked={this.state.isChecked[i]}
               className="form-check-input"
               type="checkbox"
               // id={i}
@@ -164,6 +166,21 @@ export default class FamilySearch extends React.Component {
         </tr>
       ));
     }
+  }
+
+  setAllCheckBoxValues(event) {
+    console.log("is chek : " + event.target.checked);
+    this.setState({
+      // isCheckedAll: event.target.checked,
+      isChecked: event.target.checked
+    });
+
+    this.state.chkBoxId.map((value, i) => {
+      console.log("is chek : " + value);
+
+      this.state.checkboxObj[i] = event.target.checked;
+    });
+    // this.state.isChecked.id[1] = event.target.checked;
   }
   static incrementId() {
     if (!this.latestId) this.latestId = 1;
@@ -283,7 +300,8 @@ export default class FamilySearch extends React.Component {
           });
         } else if (status == 404) {
           console.log(data);
-          this.state.errorMsg = data.apierror.message;
+          this.state.errorMsg = "Patient not found for family " + familyIdValue;
+          // data.apierror.message;
           this.setErrortrue();
           //   this.setState({
           //     errorMsg: data.api(error.message
@@ -532,6 +550,16 @@ export default class FamilySearch extends React.Component {
         <table className="TFtable">
           <tbody>
             {this.showSearchTabHeader()}
+            <input
+              // checked={this.state.isCheckedAll}
+              className="form-check-input"
+              type="checkbox"
+              // id={i}
+              // id={value.patientIDs}
+              // value={value.lkdDate}
+              name="selectAllChkbx"
+              onChange={this.setAllCheckBoxValues.bind(this)}
+            />
             {this.showFamilyId()}
           </tbody>
         </table>

@@ -8,7 +8,7 @@ export default class HeaderPanel extends React.Component {
         <div className="box headerPanel1">
           <div className="headerPanel1Div">
             <span className="headerPanel1Span">
-              Patient ID :{this.props.patientDetials.personCID}
+              Individual ID :{this.props.patientDetials.personCID}
             </span>
           </div>
 

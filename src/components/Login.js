@@ -82,9 +82,7 @@ export default class Login extends React.Component {
           this.props.history.push("/uscportal");
         } else {
           var error = JSON.parse(responseText);
-          this.state.errorMsg =
-            error.apierror.message +
-            ", Please enter correct username & password.";
+          this.state.errorMsg = "Incorrect username and/or password";
           console.log("got api call " + error.apierror.message);
           this.setErrortrue();
           this.state.error = true;

@@ -455,6 +455,8 @@ td.numeric {
   background-color: #f9f6f1;
   border: 2px solid #e6e6e6;
   border-radius: 1px;
+  margin-left: 20px;
+  margin-right: -20px;
 }
 .spanText {
   color: #999;
@@ -692,10 +694,14 @@ p {
   margin-bottom: 5px;
   font-size: 18px;
   font-weight: normal;
-  background-color: #f5f0f0;
+  /* background-color: #f5f0f0; */
+  /* background-color: #ddd; */
+  background-color: rgb(240, 240, 240);
 }
 .headerPanel1Div {
-  border-bottom: 1px dashed #dfcaca;
+  /* border-bottom: 1px dashed #dfcaca; */
+  border-bottom: 1px dashed rgb(240, 240, 240);
+
   margin-bottom: 5px;
   font-size: 18px;
   font-weight: normal;
@@ -710,7 +716,7 @@ p {
   color: green;
 }
 .headerPanel2 {
-  border-bottom: 1px dashed #dfcaca;
+  /* border-bottom: 1px dashed #dfcaca; */
   margin-bottom: 5px;
   font-size: 18px;
   font-weight: normal;
@@ -722,10 +728,12 @@ p {
   font-size: 16px;
   font-weight: normal;
   display: inline;
-  background-color: #f5f0f0;
+  /* background-color: #ddd;
+   */
+  background-color: rgb(240, 240, 240);
 }
 .headerPanel3 {
-  border-bottom: 1px dashed #dfcaca;
+  /* border-bottom: 1px dashed #dfcaca; */
   margin-bottom: 5px;
   font-size: 18px;
   font-weight: normal;
@@ -735,7 +743,7 @@ p {
   margin-left: 10px;
   font-size: 16px;
   display: inline;
-  background-color: #f5f0f0;
+  background-color: rgb(240, 240, 240);
   font-weight: normal;
 }
 .margin20 {

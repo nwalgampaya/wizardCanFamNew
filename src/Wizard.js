@@ -245,12 +245,7 @@ export default class Wizard extends React.Component {
       return onSubmit(values);
     }
   };
-  handleKeyDown = (event, callback) => {
-    if (event.key === "Enter" && event.shiftKey === false) {
-      event.preventDefault();
-      callback();
-    }
-  };
+
   render() {
     // var sectionStyle = {
     //   width: "100%",
@@ -290,7 +285,14 @@ export default class Wizard extends React.Component {
               onSubmit={this.handleSubmit}
             >
               {({ handleSubmit, submitting, values }) => (
-                <form onSubmit={handleSubmit}>
+                <form
+                  onSubmit={handleSubmit}
+                  onKeyPress={event => {
+                    if (event.which === 13 /* Enter */) {
+                      event.preventDefault();
+                    }
+                  }}
+                >
                   {activePage}
                   <br />
                   <div className="buttons">
@@ -335,6 +337,11 @@ export default class Wizard extends React.Component {
                       >
                         {" "}
                         Previous
+                      </button>
+                    )}
+                    {page == 1 && (!this.props.choosePathFamily || page == 6) && (
+                      <button className="invisible" type="button">
+                        Invisible
                       </button>
                     )}
                     {page == 1 ||
@@ -412,17 +419,12 @@ export default class Wizard extends React.Component {
                         style={alignButton}
                         className="btn btn-primary"
                         type="button"
-                        onKeyDown={e => {
-                          {
-                            this.handleKeyDown(e, this.searchPatientInParent);
-                          }
-                        }}
                         onClick={() =>
                           //this.next()
                           this.searchPatientInParent()
                         } /*type="submit"*/
                       >
-                        Search-1
+                        Search
                       </button>
                     )}
 

@@ -60,7 +60,8 @@ export default class Individual extends React.Component {
           this.props.onInsertPatientId(this.state.selectedPersonData);
         } else if (status == 404) {
           console.log(data);
-          this.state.errorMsg = data.apierror.message;
+          this.state.errorMsg = "Please enter a valid Individual ID";
+          // "data.apierror.message";
           this.setErrortrue();
           //   this.setState({
           //     errorMsg: data.api(error.message
@@ -88,8 +89,8 @@ export default class Individual extends React.Component {
       <div>
         <p>
           {" "}
-          Please enter Patient ID to update a participant's follow-up and cancer
-          data{" "}
+          Please enter Individual ID to update a participant's follow-up and
+          cancer data{" "}
         </p>
         <div className="form-holder-search">
           <input
