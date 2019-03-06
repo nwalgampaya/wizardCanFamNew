@@ -445,7 +445,16 @@ export default class Wizard extends React.Component {
                     {(page == 4 ||
                       (page == 7 && this.props.choosePathFamily)) && (
                       <button
-                        /*disabled ={false ? this.props.choosePathFamily: true} */ className=" btnOverWrite pull-right btn-primaryOverWrite"
+                        disabled={
+                          true
+                            ? !(
+                                this.props.isCanecerAdded ||
+                                this.props.isCancerEdited ||
+                                this.props.isCanFamEdited
+                              )
+                            : false
+                        }
+                        className=" btnOverWrite pull-right btn-primaryOverWrite"
                         type="submit"
                       >
                         Save to database
