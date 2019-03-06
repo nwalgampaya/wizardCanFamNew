@@ -202,10 +202,14 @@ export default class PreviewInfo extends React.Component {
   }
 
   createUI() {
-    if (this.props.isCanecerAdded || this.props.isCancerEdited) {
+    if (
+      this.props.isCanecerAdded ||
+      this.props.isCancerEdited ||
+      this.props.isCanFamEdited
+    ) {
       return (
         <div>
-          {/* {this.createTablePersonDetails()}  */}
+          {this.createTablePersonDetails()}
 
           {this.createEditedCancerUI()}
 
@@ -303,7 +307,7 @@ export default class PreviewInfo extends React.Component {
         {this.setHeaderPanel()}
         {this.revievBeforreSave()}
         {this.displayLiveDate()}
-        {this.createTablePersonDetails()}
+        {/* {this.createTablePersonDetails()} */}
 
         {this.createUI()}
 

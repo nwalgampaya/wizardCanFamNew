@@ -1867,6 +1867,9 @@ class CancerFamilyReg extends React.Component {
         onCancerInfoPage={this.onCancerInfoPage.bind(this)}
         onSearchPatient={this.onSearchPatient.bind(this)}
         isChecked={this.state.isChecked}
+        isCanecerAdded={this.state.isCanecerAdded}
+        isCancerEdited={this.state.isCancerEdited}
+        isCanFamEdited={this.state.isCanFamEdited}
         ref={wizardCmp => {
           this.wizardCmp = wizardCmp;
         }}
