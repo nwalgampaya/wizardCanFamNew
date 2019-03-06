@@ -235,19 +235,19 @@ class CancerInfo extends React.Component {
     console.log("locaDoDiag : " + locaDoDiag);
     console.log(
       "In Negative difference: " +
-      Math.floor((locaDoDeath - locaDoDiag) / 31536000000)
+        Math.floor((locaDoDeath - locaDoDiag) / 31536000000)
     );
 
     console.log(
       "In Negative :  dateOfDeath: " +
-      new Date(
-        this.convertDateFormat(this.state.selectedPersonData.dateOfDeath)
-      )
+        new Date(
+          this.convertDateFormat(this.state.selectedPersonData.dateOfDeath)
+        )
     );
 
     console.log(
       "In Negative : dateOfDiagFromDb  : " +
-      new Date(this.convertDateFormat(this.state.dateOfDiagFromDb))
+        new Date(this.convertDateFormat(this.state.dateOfDiagFromDb))
     );
 
     // Math.floor((dodiag - dob) / 31536000000);
@@ -285,11 +285,11 @@ class CancerInfo extends React.Component {
     // }
     console.log(
       "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL" +
-      this.props.editedRecordCount
+        this.props.editedRecordCount
     );
     console.log(
       "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL Length" +
-      this.state.arrayEditedData.length
+        this.state.arrayEditedData.length
     );
 
     // const urlProfession = properties.baseUrl + "practitionerscore/" ;
@@ -324,12 +324,12 @@ class CancerInfo extends React.Component {
     this.state.newCancerModalId = Math.floor(Math.random() * 10);
     console.log(
       "site &&&&&&&&&&&&&&&&&&&&&77 intGender : " +
-      this.props.patientDataValue.intGender
+        this.props.patientDataValue.intGender
     );
 
     console.log(
       "site &&&&&&&&&&&&&&&&&&&&&77" +
-      this.props.patientDataValue.cancerList[0].id
+        this.props.patientDataValue.cancerList[0].id
     );
     // this.state.profession.push(data);
 
@@ -905,7 +905,7 @@ class CancerInfo extends React.Component {
     console.log("loadDataToEditDialog TUmorNo : " + id);
     console.log(
       "loadDataToEditDialog TUmorNo : " +
-      this.state.selectedPersonData.personCID
+        this.state.selectedPersonData.personCID
     );
     //ToDu
     // save the changed row in to an array , this will be compaired with the original data in the review.
@@ -958,7 +958,7 @@ class CancerInfo extends React.Component {
 
     console.log(
       "siteEditDlg behaviourcodesFromDb' diagSourceFromDbFromDb" +
-      this.state.diagSourceFromDb
+        this.state.diagSourceFromDb
     );
   }
   setCurrentSource() {
@@ -1045,7 +1045,7 @@ class CancerInfo extends React.Component {
             onCloseCancer={this.closeCancerEditDialog.bind(this)}
           />
         ) : null}
-        <div />
+        {/* <div /> */}
       </div>
     );
   }
@@ -1064,10 +1064,10 @@ const PersonRow = props => {
       <td>
         {props.cancerInfo.dateOfDiagnosis != null
           ? props.cancerInfo.dateOfDiagnosis.slice(4, 6) +
-          "/" +
-          props.cancerInfo.dateOfDiagnosis.slice(6, 8) +
-          "/" +
-          props.cancerInfo.dateOfDiagnosis.slice(0, 4)
+            "/" +
+            props.cancerInfo.dateOfDiagnosis.slice(6, 8) +
+            "/" +
+            props.cancerInfo.dateOfDiagnosis.slice(0, 4)
           : "N/A"}
       </td>
       <td>{props.cancerInfo.ageDiagnosis}</td>

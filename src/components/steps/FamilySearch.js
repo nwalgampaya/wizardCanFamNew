@@ -132,7 +132,7 @@ export default class FamilySearch extends React.Component {
     if (this.state.isSearched == true) {
       return (
         <tr>
-          <th> Select </th>
+          <th> {this.showSelectAllChkBx()} </th>
           <th> Individual ID</th>
           <th> LKD Date</th>
         </tr>
@@ -140,19 +140,26 @@ export default class FamilySearch extends React.Component {
     }
   }
   showSelectAllChkBx() {
+    const paddingLft = { paddingLeft: "10px" };
     if (this.state.isSearched == true) {
       return (
-        <input
-          checked={this.state.isCheckedAll}
-          className="form-check-input"
-          type="checkbox"
-          // id={i}
-          // id={value.patientIDs}
-          // value={value.lkdDate}
-          name="selectAllChkbx"
-          onChange={this.setAllCheckBoxValues.bind(this)}
-        />
-      )
+        <div className="form-check form-check-inline">
+          {/* <tr> */}
+          <input
+            checked={this.state.isCheckedAll}
+            className="form-check-input"
+            type="checkbox"
+            // id={i}
+            // id={value.patientIDs}
+            // value={value.lkdDate}
+            name="selectAllChkbx"
+            onChange={this.setAllCheckBoxValues.bind(this)}
+          />
+          <nbsp />
+          <label style={paddingLft}>Select All</label>
+          {/* </tr> */}
+        </div>
+      );
     }
   }
   showFamilyId() {
@@ -186,14 +193,17 @@ export default class FamilySearch extends React.Component {
 
   setAllCheckBoxValues(event) {
     console.log("is chek : " + event.target.checked);
-    this.setState({
-      isCheckedAll: event.target.checked,
-      isChecked: event.target.checked
-    },
+    this.state.chkBoxId = new Array();
+    this.setState(
+      {
+        isCheckedAll: event.target.checked,
+        isChecked: event.target.checked
+      },
       () => {
         this.onSelectCheckBox();
       }
     );
+
     this.state.individualId.map((value, i) => {
       this.state.checkboxObj = new Object();
       console.log("eeeeeeee" + i);
@@ -205,7 +215,13 @@ export default class FamilySearch extends React.Component {
       this.state.checkboxObj.lkdDate = value.lkdDate;
       this.state.checkboxObj.patientIDs = value.patientIDs;
 
-      this.state.chkBoxId.push(this.state.checkboxObj);
+      if (event.target.checked) {
+        this.state.chkBoxId.push(this.state.checkboxObj);
+        // } else {
+        //   this.setState({
+        // chkBoxId: []
+        //   });
+      }
 
       // this.setState(
       //   {
@@ -244,37 +260,52 @@ export default class FamilySearch extends React.Component {
             this.onSelectCheckBox();
           }
         );
+
         // this.state.isChked=true;
       }
+      if (this.state.chkBoxId.length == this.state.individualId.length) {
+        this.setState({
+          isCheckedAll: true
+        });
+      }
     } else {
-      var localChkBox = []
-      console.log("*************** setCheckBoxValues ********" + event.target.id)
-      console.log("*************** setCheckBoxValues ********" + this.state.chkBoxId.indexOf(event.target.id))
+      var localChkBox = [];
+      console.log(
+        "*************** setCheckBoxValues ********" + event.target.id
+      );
+      console.log(
+        "*************** setCheckBoxValues ********" +
+          this.state.chkBoxId.indexOf(event.target.id)
+      );
 
       for (var i = 0; i < this.state.chkBoxId.length; i++) {
-        console.log("*************** setCheckBoxValues ********" + this.state.chkBoxId[i].patientIDs)
+        console.log(
+          "*************** setCheckBoxValues ********" +
+            this.state.chkBoxId[i].patientIDs
+        );
         if (this.state.chkBoxId[i].patientIDs === event.target.id) {
-          console.log("*************** setCheckBoxValues ********" + this.state.chkBoxId[i].patientIDs)
+          console.log(
+            "*************** setCheckBoxValues ********" +
+              this.state.chkBoxId[i].patientIDs
+          );
 
-          // arr.splice(i, 1); 
+          // arr.splice(i, 1);
           // this.state.chkBoxId.splice(this.state.chkBoxId.indexOf(event.target.id), 1);
 
-          localChkBox = this.state.chkBoxId.splice(i, 1)
+          localChkBox = this.state.chkBoxId.splice(i, 1);
           // this.setState({
           //   // isCheckedAll: false,
           //   chkBoxId: this.state.chkBoxId.splice(i, 1)
           //   // chkBoxId: this.state.chkBoxId
           //   // isChecked: event.target.checked
           // })
-
-
         }
       }
       this.setState({
         isCheckedAll: false,
-        chkBoxId: localChkBox,
+        chkBoxId: localChkBox
         // isChecked: event.target.checked
-      })
+      });
     }
     if (this.state.chkBoxId.length == 0) {
       this.state.isChecked = false;
@@ -313,19 +344,19 @@ export default class FamilySearch extends React.Component {
     console.log("ddddddddddddddddddddddd" + str);
     var str2 = "" + str;
     var mnths = {
-      Jan: "01",
-      Feb: "02",
-      Mar: "03",
-      Apr: "04",
-      May: "05",
-      Jun: "06",
-      Jul: "07",
-      Aug: "08",
-      Sep: "09",
-      Oct: "10",
-      Nov: "11",
-      Dec: "12"
-    },
+        Jan: "01",
+        Feb: "02",
+        Mar: "03",
+        Apr: "04",
+        May: "05",
+        Jun: "06",
+        Jul: "07",
+        Aug: "08",
+        Sep: "09",
+        Oct: "10",
+        Nov: "11",
+        Dec: "12"
+      },
       date = str2.split(" ");
 
     return [date[3], mnths[date[1]], date[2]].join("");
@@ -533,8 +564,8 @@ export default class FamilySearch extends React.Component {
                 //   onChange={this.setFamilyValue.bind(this)}
                 onChange={e => this.setState({ familyIdValue: e.target.value })}
                 onSelect={this.setFamilyValue.bind(this)}
-              // onSelect={familyIdValue => this.setState({ familyIdValue })}
-              //   on
+                // onSelect={familyIdValue => this.setState({ familyIdValue })}
+                //   on
               />
             </div>
           </div>
@@ -612,11 +643,11 @@ export default class FamilySearch extends React.Component {
             </button>
           </div>
         </div>
-
+        {/* {this.showSelectAllChkBx()} */}
         <table className="TFtable">
           <tbody>
             {this.showSearchTabHeader()}
-            <input
+            {/* <input
               checked={this.state.isCheckedAll}
               className="form-check-input"
               type="checkbox"
@@ -625,7 +656,8 @@ export default class FamilySearch extends React.Component {
               // value={value.lkdDate}
               name="selectAllChkbx"
               onChange={this.setAllCheckBoxValues.bind(this)}
-            />
+            /> */}
+
             {this.showFamilyId()}
           </tbody>
         </table>
