@@ -156,6 +156,26 @@ export default class PreviewInfo extends React.Component {
       );
     }
   }
+
+  setDataType() {
+
+  }
+  convertToGetDate(date) {
+    var formatDatestr = date;
+
+    if (formatDatestr != null) {
+      var year = formatDatestr.slice(0, 4);
+      var month = formatDatestr.slice(4, 6);
+      var date = formatDatestr.slice(6, 8);
+
+      formatDatestr = month + "/" + date + "/" + year;
+    } else formatDatestr = "N/A";
+    console.log("formatDatestr : " + formatDatestr);
+
+
+    return formatDatestr;
+  }
+
   showCancerEditedFields() {
     this.state.editedRecordCount = this.props.editedRecordCount;
     console.log("&&&&&&&&&&&&&&&&&&&&&&&  :" + this.props.editedRecordCount);

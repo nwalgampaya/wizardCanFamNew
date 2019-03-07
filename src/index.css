@@ -272,6 +272,11 @@ label {
   width: 100px; */
   padding: 6px 10px;
 }
+.btn-primaryOverWrite:focus, .btn-primaryOverWrite:active, .btn-primaryOverWrite.active, .open>.dropdown-toggle.btn-primaryOverWrite ,.btn-primaryOverWrite:active:focus{
+  color: #fff;
+  background-color: #fff;
+  border-color: #285e8e; /*set the color you want here*/
+}
 .btnOverWrite {
   display: inline-block;
   font-weight: 400;

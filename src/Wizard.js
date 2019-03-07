@@ -305,14 +305,14 @@ export default class Wizard extends React.Component {
                     {/* {isLastPage && ( */}
                     {((page == 8 && this.props.choosePathFamily) ||
                       page == 5) && (
-                      <button
-                        className="btn btn-primary pull-right"
-                        type="button"
-                        onClick={this.endSession}
-                      >
-                        Finish
+                        <button
+                          className="btn btn-primary pull-right"
+                          type="button"
+                          onClick={this.endSession}
+                        >
+                          Finish
                       </button>
-                    )}
+                      )}
                     {/* {page > 0 && (
                       <button className="btn btn-primary" styles={{ float: 'left', paddingLeft: '10px' }} type="button" onClick={this.previous}>
                         Previous
@@ -422,7 +422,7 @@ export default class Wizard extends React.Component {
                         className="btn btn-primary pull-right"
                         type="submit"
                       >
-                        Proceed-s
+                        Proceed
                       </button>
                     )}
                     {/* Need to be type of submit in order to get the formik validation. */}
@@ -444,22 +444,25 @@ export default class Wizard extends React.Component {
                     {/* TODo add condition to disable save button when nothing edited or new added */}
                     {(page == 4 ||
                       (page == 7 && this.props.choosePathFamily)) && (
-                      <button
-                        disabled={
-                          true
-                            ? !(
+                        <button
+                          disabled={
+                            true
+                              ? ((page == 4) && !(
                                 this.props.isCanecerAdded ||
                                 this.props.isCancerEdited ||
                                 this.props.isCanFamEdited
-                              )
-                            : false
-                        }
-                        className=" btnOverWrite pull-right btn-primaryOverWrite"
-                        type="submit"
-                      >
-                        Save to database
+                              ))
+                              : false
+                          }
+                          //  background-color: #cfc7b8;
+                          // btnOverWrite btn-primaryOverWrite
+                          // className="btn btn-primary pull-right"
+                          className="btnOverWrite btn-primaryOverWrite pull-right btn-disabled"
+                          type="submit"
+                        >
+                          Save to database
                       </button>
-                    )}
+                      )}
 
                     {/* {!page == 0 && !page == 1 && !isLastPage && <button className="btn btn-primary pull-right " type="submit">  Next  </button>} */}
                     {/* {page == 1 && (<button className="btn btn-primary pull-right" type="submit" disabled={submitting}>
