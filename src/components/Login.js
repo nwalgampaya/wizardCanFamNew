@@ -22,6 +22,7 @@ export default class Login extends React.Component {
   }
 
   handleSubmit = event => {
+    console.log("handlesubmit")
     var payload = {
       username: this.state.username,
       password: this.state.password
@@ -53,7 +54,16 @@ export default class Login extends React.Component {
   setErrortrue() {
     this.setState({ error: true });
   }
-  login(user, e) {
+  onSubmit() {
+    console.log("in LOGIN submit" + this.state.username)
+
+    var payload = {
+      username: this.state.username,
+      password: this.state.password
+    };
+    this.login(payload)
+  }
+  login(user) {
     console.log("patientId getPatientDetails");
 
     const urlLogin = properties.baseUrl + "login/";
@@ -79,11 +89,11 @@ export default class Login extends React.Component {
         if (responseText === "true") {
           console.log("got api call " + responseText);
           this.setErrortrue();
-          this.props.history.push("/uscportal");
+          // this.props.history.push("/uscportal");
         } else {
           var error = JSON.parse(responseText);
           this.state.errorMsg = "Incorrect username and/or password";
-          console.log("got api call " + error.apierror.message);
+          console.log("else got api call " + error.apierror.message);
           this.setErrortrue();
           this.state.error = true;
           // e.preventDefault();
@@ -178,17 +188,18 @@ export default class Login extends React.Component {
               </ul>
             </div>
 
-            <div className="form-group" style={userDiv}>
+            {/* <div className="form-group" style={userDiv}>
               <div className="col-sm-5 control-margin" />
               <div className="col-sm-4  control-margin" style={loginDiv}>
                 <input
                   className="btn btn-primary"
+                  // type="button"
                   type="submit"
                   disabled={!this.validateForm()}
                   value="Login"
                 />
               </div>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

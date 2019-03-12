@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Login from './Login';
 import FormikApp from "./CancerFamilyReg"
 const Routes = () => (
-    <Router >
-        {/* <Router basename="/usc_test"> */}
+    <Router basename="/usc_test">
+        {/* <Router > */}
         <div>
             <Route exact path="/" component={Login} />
             <Route path="/uscportal" component={FormikApp} />

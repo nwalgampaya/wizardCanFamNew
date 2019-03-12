@@ -17,8 +17,8 @@ import Routes from "./components/Routes";
 const template = (
   // <MyDate/>
   // <BootstrapDialogOld/>
-  <Routes />
-  //<FormikApp/>
+  // <Routes />
+  <FormikApp />
   // <AddCancerModal/>
   // <DateSelect />
   // <CancerInfo/>
