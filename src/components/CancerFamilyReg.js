@@ -1487,6 +1487,11 @@ class CancerFamilyReg extends React.Component {
   handleChooseOption = chooseTheFamily => {
     this.setState({ choosePathFamily: chooseTheFamily });
   };
+
+  handleIncorrectCred = incorrectCred => {
+    console.log("handle incorrectCred :")
+    this.setState({ incorrectCred: incorrectCred });
+  };
   // choosePath(){
   //    console.log("choose path : " + this.state.choosePathFamily)
   //         if(this.state.choosePathFamily){
@@ -1871,12 +1876,13 @@ class CancerFamilyReg extends React.Component {
         isCanecerAdded={this.state.isCanecerAdded}
         isCancerEdited={this.state.isCancerEdited}
         isCanFamEdited={this.state.isCanFamEdited}
+        incorrectCred={this.state.incorrectCred}
         ref={wizardCmp => {
           this.wizardCmp = wizardCmp;
         }}
       >
         <Wizard.Page>
-          <Login ref={this.child} onSubmit={this.onSubmit.bind(this)} />
+          <Login ref={this.child} onSubmit={this.onSubmit.bind(this)} onIncorrectCred={this.handleIncorrectCred} />
         </Wizard.Page>
         {/* Page 0 */}
         <Wizard.Page>

@@ -16,6 +16,10 @@ import Styles from "./Styles";
 
 import "./App.css";
 import "./index.css";
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+
 export default class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
@@ -119,10 +123,21 @@ export default class Wizard extends React.Component {
         }));
       } else {
         console.log("NEZT : " + this.state.page);
+
         this.setState(state => ({
           page: Math.min(state.page + 1, this.props.children.length - 1),
           values
         }));
+
+        async values => {
+          await sleep(3000)
+          if (this.state.page == 0 && this.props.incorrectCred) {
+            this.setState(state => ({
+              page: 0,
+              values
+            }));
+          }
+        }
         // if (this.state.page == 1) {
         //   window.location.reload();
         // }
@@ -133,6 +148,8 @@ export default class Wizard extends React.Component {
     }
     // }
   };
+
+
   // this.setState(state => ({
   //   page: Math.min(state.page + 1, this.props.children.length - 1),
   //   values

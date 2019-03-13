@@ -3,6 +3,7 @@ import React from "react";
 import { properties } from "../properties.js";
 import Routes from "./Routes";
 import { Redirect } from "react-router-dom";
+import FormValidator from "./validator/FormValidator.js";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -22,15 +23,18 @@ export default class Login extends React.Component {
   }
 
   handleSubmit = event => {
-    console.log("handlesubmit")
+    console.log("LogIn handlesubmit")
     var payload = {
       username: this.state.username,
       password: this.state.password
     };
     this.login(payload, event);
+    console.log("test rere" + this.state.error);
 
     if (this.state.error) {
       event.preventDefault();
+      console.log("In if test rere" + this.state.error);
+
     }
     event.preventDefault();
     console.log("test rere");
@@ -52,7 +56,9 @@ export default class Login extends React.Component {
     this.setState({ error: false });
   }
   setErrortrue() {
+
     this.setState({ error: true });
+    console.log("setErrortrue" + this.state.error);
   }
   onSubmit() {
     console.log("in LOGIN submit" + this.state.username)
@@ -63,7 +69,7 @@ export default class Login extends React.Component {
     };
     this.login(payload)
   }
-  login(user) {
+  login(user, event) {
     console.log("patientId getPatientDetails");
 
     const urlLogin = properties.baseUrl + "login/";
@@ -94,9 +100,10 @@ export default class Login extends React.Component {
           var error = JSON.parse(responseText);
           this.state.errorMsg = "Incorrect username and/or password";
           console.log("else got api call " + error.apierror.message);
+          // this.state.error = true;
           this.setErrortrue();
-          this.state.error = true;
-          // e.preventDefault();
+          this.props.onIncorrectCred(true);
+          event.preventDefault();
         }
       })
 
