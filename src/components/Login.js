@@ -147,62 +147,62 @@ export default class Login extends React.Component {
     var flex = {};
 
     return (
-      <div className="container">
-        <div className="content_body centered" style={alignHeight}>
-          <div className="welcome-para">
-            <p>WELCOME TO THE USC CCFR INFORMATICS DATA PORTAL</p>
+      // <div className="container">
+      <div className="content_body centered" style={alignHeight}>
+        <div className="welcome-para">
+          <p>WELCOME TO THE USC CCFR INFORMATICS DATA PORTAL</p>
+        </div>
+
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group" style={userDiv}>
+            <div className="col-sm-5 control-margin">Username:</div>
+            <div className="col-sm-4  control-margin">
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.username}
+                name="demo1"
+                onChange={this.handleChangeUserName}
+                style={alignStyle}
+              />
+            </div>
           </div>
 
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group" style={userDiv}>
-              <div className="col-sm-5 control-margin">Username:</div>
-              <div className="col-sm-4  control-margin">
-                <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.username}
-                  name="demo1"
-                  onChange={this.handleChangeUserName}
-                  style={alignStyle}
-                />
-              </div>
+          <div className="form-group" style={passDiv}>
+            <div className="col-sm-5 control-margin">Password:</div>
+            <div className="col-sm-4  control-margin " style={passWordStyle}>
+              <input
+                type="password"
+                className="form-control"
+                value={this.state.password}
+                name="demo1"
+                onChange={this.handleChangePassword}
+                style={alignStyle}
+              />
             </div>
+          </div>
 
-            <div className="form-group" style={passDiv}>
-              <div className="col-sm-5 control-margin">Password:</div>
-              <div className="col-sm-4  control-margin " style={passWordStyle}>
-                <input
-                  type="password"
-                  className="form-control"
-                  value={this.state.password}
-                  name="demo1"
-                  onChange={this.handleChangePassword}
-                  style={alignStyle}
-                />
-              </div>
+          <div className="inline-error" style={errorDiv}>
+            <ul>
+              <li className="validationMsg">{this.state.errorMsg}</li>
+            </ul>
+          </div>
+
+          <div className="form-group" style={userDiv}>
+            <div className="col-sm-5 control-margin" />
+            <div className="col-sm-4  control-margin" style={loginDiv}>
+              <input
+                className="btn btn-primary"
+                // type="button"
+                type="submit"
+                disabled={!this.validateForm()}
+                value="Login"
+              />
             </div>
-
-            <div className="inline-error" style={errorDiv}>
-              <ul>
-                <li className="validationMsg">{this.state.errorMsg}</li>
-              </ul>
-            </div>
-
-            {/* <div className="form-group" style={userDiv}>
-              <div className="col-sm-5 control-margin" />
-              <div className="col-sm-4  control-margin" style={loginDiv}>
-                <input
-                  className="btn btn-primary"
-                  // type="button"
-                  type="submit"
-                  disabled={!this.validateForm()}
-                  value="Login"
-                />
-              </div>
-            </div> */}
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
+      // </div>
     );
   }
 }

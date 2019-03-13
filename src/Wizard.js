@@ -138,19 +138,18 @@ export default class Wizard extends React.Component {
   //   values
   // }))}
 
+
   ExitRecord = () => {
-    window.location.reload();
-    var exitPage = 1
-    this.setState(state => ({
-      page: exitPage
-    }));
-    this.next()
+    // const { onExitRecord } = this.props;
+    sessionStorage.setItem("reloading", "true");
+    document.location.reload(true);
+
+
   };
 
-  logout = () =>
-    this.setState(state => ({
-      page: 0
-    }));
+  logout = () => {
+    window.location.reload();
+  };
   previous = () => {
     const { onCancerInfoPage } = this.props;
 
@@ -195,6 +194,17 @@ export default class Wizard extends React.Component {
   //     page: Math.max(state.page - 1, 0)
   //   }))
 
+  componentDidMount() {
+
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading) {
+      sessionStorage.removeItem("reloading");
+      this.setState(state => ({
+        page: 2
+      }));
+    }
+
+  }
   endSession = () => {
     this.setState(state => ({
       // page: Math.max(state.page + 1, 0)
@@ -469,16 +479,7 @@ export default class Wizard extends React.Component {
                           Save to database
                       </button>
                       )}
-                    {page == 0 && (
-                      <button
-                        style={alignButton}
-                        className="btn btn-primary"
-                        type="submit"
 
-                      >
-                        Login
-                        </button>
-                    )}
                     {/* {!page == 0 && !page == 1 && !isLastPage && <button className="btn btn-primary pull-right " type="submit">  Next  </button>} */}
                     {/* {page == 1 && (<button className="btn btn-primary pull-right" type="submit" disabled={submitting}>
                       Start</button>
