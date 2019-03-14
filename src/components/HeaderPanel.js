@@ -14,10 +14,10 @@ export default class HeaderPanel extends React.Component {
 
         <div className="headerPanel2">
           <span className="headerPanel2Span">
-            <b>Person ID </b> : {this.props.patientDetials.personID}&nbsp;
-            <b>Family ID </b> {this.props.patientDetials.familyID}&nbsp;
-            <b>MotherID </b> : {this.props.patientDetials.motherID} &nbsp;
-            <b>FatherID </b> :{this.props.patientDetials.fatherID}&nbsp;
+            <b>Person ID </b> : {this.props.patientDetials.personID}&nbsp;&nbsp;
+            <b>Family ID </b> : {this.props.patientDetials.familyID}&nbsp;&nbsp;
+            <b>MotherID </b> : {this.props.patientDetials.motherID} &nbsp;&nbsp;
+            <b>FatherID </b> :{this.props.patientDetials.fatherID}&nbsp;&nbsp;
             <b>TwinID </b> : {this.props.patientDetials.twinID}
           </span>
         </div>
@@ -29,8 +29,8 @@ export default class HeaderPanel extends React.Component {
             {this.props.patientDetials.blood.description}
           </span>
           <span className="headerPanel3Span">
-            <b>BUCCAL_SALIVA </b>
-            {this.props.patientDetials.buccalSalvia.description}
+            <b>BUCCAL_SALIVA </b> :
+            &nbsp;{this.props.patientDetials.buccalSalvia.description}
           </span>
         </div>
         <div className="headerPanel3">

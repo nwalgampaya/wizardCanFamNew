@@ -947,18 +947,24 @@ class CancerFamilyReg extends React.Component {
       var dt1 = parseInt(patientData.dateOfDeath.substring(6));
       var mon1 = parseInt(patientData.dateOfDeath.substring(4, 6));
       var yr1 = parseInt(patientData.dateOfDeath.substring(0, 4));
-      var date1 = new Date(yr1, mon1 - 1, dt1);
-      this.state.existingDeathDate = date1;
-      this.state.isExistingDeathDate = true;
+      if (yr1 != '9999') {
+
+        var date1 = this.getDate(dt1, mon1, yr1);
+        this.state.existingDeathDate = date1;
+        this.state.isExistingDeathDate = true;
+      }
     }
 
     if (patientData.liveDate != null && patientData.liveDate.length == 8) {
       var dt1 = parseInt(patientData.liveDate.substring(6));
       var mon1 = parseInt(patientData.liveDate.substring(4, 6));
       var yr1 = parseInt(patientData.liveDate.substring(0, 4));
-      var date1 = new Date(yr1, mon1 - 1, dt1);
-      this.state.existingLKDDate = date1;
-      this.state.isExistingLKDDate = true;
+      if (yr1 != '9999') {
+
+        var date1 = this.getDate(dt1, mon1, yr1);
+        this.state.existingLKDDate = date1;
+        this.state.isExistingLKDDate = true;
+      }
     }
 
     if (
@@ -968,9 +974,12 @@ class CancerFamilyReg extends React.Component {
       var dt1 = parseInt(patientData.dateOfBirth.substring(6));
       var mon1 = parseInt(patientData.dateOfBirth.substring(4, 6));
       var yr1 = parseInt(patientData.dateOfBirth.substring(0, 4));
-      var date1 = new Date(yr1, mon1 - 1, dt1);
-      this.state.existingBirthDate = date1;
-      this.state.isExistingBirthDate = true;
+      if (yr1 != '9999') {
+
+        var date1 = this.getDate(dt1, mon1, yr1);
+        this.state.existingBirthDate = date1;
+        this.state.isExistingBirthDate = true;
+      }
     }
     console.log("existing lkd" + this.state.existingLKDDate);
 
@@ -1549,7 +1558,7 @@ class CancerFamilyReg extends React.Component {
         typeof currentBirthDate !== "undefined"
       ) {
         if (currentBirthDate > currentDeathDate) {
-          errors.currentLkdColumn =
+          errors.currentdodColumn =
             "Death Date must be greater than Birth Date";
         }
       }
@@ -1571,7 +1580,7 @@ class CancerFamilyReg extends React.Component {
         typeof currentBirthDate !== "undefined"
       ) {
         if (currentBirthDate > currentLKDDate) {
-          errors.currentLkdColumn = "LKD Date should be less than birth date";
+          errors.currentLkdColumn = "LKD Date must be greater than birth date";
         }
       }
     } else if (this.state.isExistingBirthDate) {
@@ -1582,7 +1591,7 @@ class CancerFamilyReg extends React.Component {
       ) {
         if (currentBirthDate > currentLKDDate) {
           errors.currentLkdColumn =
-            "LKD Date should be less than existing birth date";
+            "LKD Date must be greater than existing birth date";
         }
       }
     }
@@ -1660,11 +1669,40 @@ class CancerFamilyReg extends React.Component {
   }
 
   validateBirthDate(d, m, y, errors) {
-    var currentDate = this.getDate(d, m, y);
+    var currentBirthDate = this.getDate(d, m, y);
     var today = new Date();
 
-    if (currentDate > today)
-      errors.currentdobColumn = "Date Of Birth should be lessthan todays date";
+    if (currentBirthDate > today) {
+      errors.currentdobColumn = "Date Of Birth must be less than todays date";
+    }
+    else if (this.state.isValidLKDSelected) {
+      var currentLKDDate = this.getDate(
+        this.state.selectedDateLKD,
+        this.state.selectedMonthLKD,
+        this.state.selectedYearLKD
+      );
+
+      if (
+        typeof currentLKDDate !== "undefined" &&
+        typeof currentBirthDate !== "undefined"
+      ) {
+        if (currentBirthDate > currentLKDDate) {
+          errors.currentLkdColumn = "LKD Date must be greater than birth date";
+        }
+      }
+    } else if (this.state.isExistingLKDDate) {
+      var existingLKDDate = this.state.existingLKDDate;
+      if (
+        typeof existingLKDDate !== "undefined" &&
+        typeof currentBirthDate !== "undefined"
+      ) {
+        if (currentBirthDate > existingLKDDate) {
+          errors.currentdobColumn =
+            "Existing LKD Date must be greater than current birth date";
+        }
+      }
+    }
+
   }
   getAge(today, substracted) {
     var curYear = today.getFullYear();
@@ -1696,9 +1734,9 @@ class CancerFamilyReg extends React.Component {
     if (d == "99" && m != "99" && y != "9999") {
       currentDate = new Date(parseInt(y), parseInt(m), 15);
     } else if (d != "99" && m == "99" && y != "9999") {
-      currentDate = new Date(parseInt(y), 7, parseInt(d));
+      currentDate = new Date(parseInt(y), 6, parseInt(d));
     } else if (d == "99" && m == "99" && y != "9999") {
-      currentDate = new Date(parseInt(y), 7, 1);
+      currentDate = new Date(parseInt(y), 6, 1);
     } else if (d != "99" && m != "99" && y != "9999") {
       currentDate = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
     }
@@ -1804,7 +1842,10 @@ class CancerFamilyReg extends React.Component {
     // let validation = this.submitted ?                         // if the form has been submitted at least once
     //     this.validator.validate(this.state) :   // then check validity every time we render
     //     this.state.validation                   // otherwise just use what's in state
-
+    const codStyle = {
+      marginBottom: "5px",
+      marginLeft: "-10px"
+    };
     const Error = ({ name }) => (
       <Field
         name={name}
@@ -1953,12 +1994,7 @@ class CancerFamilyReg extends React.Component {
             } else {
             }
 
-            // if (this.state.currentLKDA == "") {
 
-            // alert("In error")
-            console.log("before dod : " + this.state.currentLKDA);
-            console.log("before LKD : " + this.state.selectedMonthLKD);
-            console.log("before LKD : " + this.state.selectedDateLKD);
             if (
               this.state.selectedDateLKD != "" &&
               this.state.selectedMonthLKD != "" &&
@@ -1969,10 +2005,7 @@ class CancerFamilyReg extends React.Component {
                 this.state.selectedMonthLKD +
                 this.state.selectedDateLKD
               );
-              console.log("dod : " + this.state.currentLKDA);
-              console.log("LKD : " + this.state.selectedMonthLKD);
-              console.log("LKD : " + this.state.selectedDateLKD);
-              console.log("LKD : " + this.state.selectedYearLKD);
+
 
               this.state.isValidLKDSelected = true;
 
@@ -2106,7 +2139,7 @@ class CancerFamilyReg extends React.Component {
                       <div className="col-sm-12 control-margin">
                         {/* <span>{this.state.gender}</span> */}
                         {/* <input type="text" name="genderOldColumn" value={this.state.gender} /><br /> */}
-                        <span>{this.state.gender}</span>
+                        <span className="spanText">{this.state.gender}</span>
                         {/* <input type="text" name="currentaodeathColumn" /> */}
                         {/* <div className="validationMsg"> */}
                         {/* <Error name="ageColumn" /> */}
@@ -2149,7 +2182,7 @@ class CancerFamilyReg extends React.Component {
                         </span>
                       </div>
                       <br />
-                      <div className="col-sm-12 margin15">Cause of Death:</div>
+                      <div className="col-sm-12 margin15" >Cause of Death:</div>
                       <div className="col-sm-12 margin15">
                         <span className="spanText">
                           {this.state.courseOFDeath.description}
@@ -2408,13 +2441,13 @@ class CancerFamilyReg extends React.Component {
                       </div>
                       <br />
                       <div className="form-check-inline col-sm-12 ">
-                        <div className="col-sm-6">Cause of Death:</div>
+                        <div className="col-sm-6" style={codStyle}>Cause of Death:</div>
 
                         {/* <div className="col-sm-1"></div> */}
 
                         <div className="col-sm-2">(Unknown)</div>
                       </div>
-                      <div className="form-check-inline col-sm-12 control-margin">
+                      <div className="form-check-inline col-sm-12 control-margin" style={codStyle}>
                         <div className="col-sm-8">
                           <input
                             type="text"
@@ -2453,7 +2486,7 @@ class CancerFamilyReg extends React.Component {
                           onSelectYear={this.handleYearPickedLKD}
                           onSelectMonth={this.handleMonthPickedLKD}
                           onSelectDate={this.handleDatePickedLKD}
-                          onChange={this.createDate.bind(this)}
+                          onChange={this.validateLKDDate.bind(this)}
                         />
                         {/* <DatePicker
                                                     onChange={this.setCurrentLKDA}

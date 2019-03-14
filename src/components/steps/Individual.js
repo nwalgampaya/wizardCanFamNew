@@ -43,47 +43,54 @@ export default class Individual extends React.Component {
   getPatientDetails = () => {
     console.log("patientId getPatientDetails");
 
-    let status;
-    const urlpatients = properties.baseUrl + "patients/" + this.state.patientId;
-    fetch(urlpatients)
-      .then(response => {
-        status = response.status;
-        return response.json();
-      })
-      .then(data => {
-        if (status == 200) {
-          console.log(data);
-          this.setErrorFalse();
-          this.setState({
-            selectedPersonData: data
-          });
-          this.props.onInsertPatientId(this.state.selectedPersonData);
-        } else if (status == 404) {
-          console.log(data);
-          this.state.errorMsg = "Please enter a valid Individual ID";
-          // "data.apierror.message";
-          this.setErrortrue();
-          //   this.setState({
-          //     errorMsg: data.api(error.message
-          //   });
-        }
+    if (this.state.patientId != '') {
+      let status;
+      const urlpatients = properties.baseUrl + "patients/" + this.state.patientId;
+      fetch(urlpatients)
+        .then(response => {
+          status = response.status;
+          return response.json();
+        })
+        .then(data => {
+          if (status == 200) {
+            console.log(data);
+            this.setErrorFalse();
+            this.setState({
+              selectedPersonData: data
+            });
+            this.props.onInsertPatientId(this.state.selectedPersonData);
+          } else if (status == 404) {
+            console.log(data);
+            this.state.errorMsg = "Please enter a valid Individual ID";
+            // "data.apierror.message";
+            this.setErrortrue();
+            //   this.setState({
+            //     errorMsg: data.api(error.message
+            //   });
+          }
 
-        console.log("pdata" + this.state.selectedPersonData.personCID);
+          console.log("pdata" + this.state.selectedPersonData.personCID);
 
-        // this.assignDbDataToFields()
-        // this.state.profession.push(data);
-      })
-      .catch(error => {
-        document.write("Error : " + error);
-      });
+          // this.assignDbDataToFields()
+          // this.state.profession.push(data);
+        })
+        .catch(error => {
+          document.write("Error : " + error);
+        });
+    } else {
+      this.state.errorMsg = "Please enter a valid Individual ID";
+      this.setErrortrue();
+    }
   };
+
   render() {
     var errorDiv = {
       display: this.state.error ? "block" : "none",
       // marginLeft: "40px",
       textAlign: "center",
       marginBottom: "5px",
-      width: "100%"
+      width: "100%",
+      marginLeft: "-50px"
     };
     return (
       <div>

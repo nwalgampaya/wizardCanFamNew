@@ -154,7 +154,8 @@ export default class Login extends React.Component {
       marginLeft: "65px",
       textAlign: "center",
       marginBottom: "5px",
-      width: "100%"
+      width: "100%",
+      marginTop: "-30px"
     };
     var paraStyle = {
       marginBottom: "70px",

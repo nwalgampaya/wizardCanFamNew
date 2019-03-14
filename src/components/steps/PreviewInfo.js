@@ -198,12 +198,12 @@ export default class PreviewInfo extends React.Component {
             </tr>
             {values.map((val, i) => (
               <tr>
-                <td>{val.column}</td>
-                <td>
+                <td className="spanText">{val.column}</td>
+                <td className="spanText">
                   {val.previousVal}
                   {/* {this.props.arrayEditedData[i].age} */}
                 </td>
-                <td>
+                <td className="spanText">
                   {val.newVal}
 
                   {/* {this.props.changedParameters[i].age} */}

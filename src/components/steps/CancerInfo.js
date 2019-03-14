@@ -1059,14 +1059,14 @@ class CancerInfo extends React.Component {
 const PersonRow = props => {
   return (
     <tr>
-      <td>{props.cancerInfo.tumorNo}</td>
+      <td className="spanText">{props.cancerInfo.tumorNo}</td>
 
-      <td>{props.cancerInfo.site.description}</td>
-      <td>{props.cancerInfo.lateral.description}</td>
-      <td>{props.cancerInfo.histology}</td>
+      <td className="spanText">{props.cancerInfo.site.description}</td>
+      <td className="spanText">{props.cancerInfo.lateral.description}</td>
+      <td className="spanText">{props.cancerInfo.histology}</td>
 
-      <td>{props.cancerInfo.behaviour.description}</td>
-      <td>
+      <td className="spanText" >{props.cancerInfo.behaviour.description}</td>
+      <td className="spanText">
         {props.cancerInfo.dateOfDiagnosis != null
           ? props.cancerInfo.dateOfDiagnosis.slice(4, 6) +
           "/" +
@@ -1075,15 +1075,15 @@ const PersonRow = props => {
           props.cancerInfo.dateOfDiagnosis.slice(0, 4)
           : "N/A"}
       </td>
-      <td>{props.cancerInfo.ageDiagnosis}</td>
-      <td>{props.cancerInfo.diagSource.description}</td>
+      <td className="spanText">{props.cancerInfo.ageDiagnosis}</td>
+      <td className="spanText">{props.cancerInfo.diagSource.description}</td>
 
-      <td>
+      <td className="spanText">
         {props.cancerInfo.tissue != null
           ? props.cancerInfo.tissue.description
           : null}
       </td>
-      {/*<td>
+      {/*<td className="spanText">
           { props.cancerInfo.issuetype }
         </td> */}
       <td>
