@@ -5,6 +5,7 @@ import Routes from "./Routes";
 import { Redirect } from "react-router-dom";
 import FormValidator from "./validator/FormValidator.js";
 
+
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -36,8 +37,11 @@ export default class Login extends React.Component {
       console.log("In if test rere" + this.state.error);
 
     }
-    event.preventDefault();
-    console.log("test rere");
+    else {
+
+    }
+    // event.preventDefault();
+    // console.log("test rere");
   };
 
   handleChangeUserName = event => {
@@ -94,7 +98,8 @@ export default class Login extends React.Component {
 
         if (responseText === "true") {
           console.log("got api call " + responseText);
-          this.setErrortrue();
+          this.setErrorFalse();
+          this.props.onIncorrectCred(false);
           // this.props.history.push("/uscportal");
         } else {
           var error = JSON.parse(responseText);
@@ -102,7 +107,6 @@ export default class Login extends React.Component {
           console.log("else got api call " + error.apierror.message);
           // this.state.error = true;
           this.setErrortrue();
-          this.props.onIncorrectCred(true);
           event.preventDefault();
         }
       })
@@ -123,12 +127,13 @@ export default class Login extends React.Component {
 
     const passDiv = {
       marginTop: "10px",
+      marginBottom: "30px",
       textAlign: "right",
       width: "100%",
       display: "flex"
     };
     const loginDiv = {
-      marginLeft: "25px",
+      marginLeft: "100px",
       marginBottom: "20px",
       textAlign: "left"
     };
@@ -146,70 +151,80 @@ export default class Login extends React.Component {
 
     var errorDiv = {
       display: this.state.error ? "block" : "none",
-      marginLeft: "40px",
+      marginLeft: "65px",
       textAlign: "center",
       marginBottom: "5px",
       width: "100%"
     };
+    var paraStyle = {
+      marginBottom: "70px",
+    }
     var flex = {};
 
     return (
       // <div className="container">
-      <div className="content_body centered" style={alignHeight}>
+
+      // <div className="content_body centered" style={alignHeight}>
+      <div>
         <div className="welcome-para">
-          <p>WELCOME TO THE USC CCFR INFORMATICS DATA PORTAL</p>
+          <p style={paraStyle}>WELCOME TO THE USC CCFR INFORMATICS DATA PORTAL</p>
         </div>
 
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group" style={userDiv}>
-            <div className="col-sm-5 control-margin">Username:</div>
-            <div className="col-sm-4  control-margin">
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.username}
-                name="demo1"
-                onChange={this.handleChangeUserName}
-                style={alignStyle}
-              />
-            </div>
+        {/* <form > */}
+        <div className="form-group" style={userDiv}>
+          <div className="col-sm-5 control-margin">Username:</div>
+          <div className="col-sm-4  control-margin">
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.username}
+              name="demo1"
+              onChange={this.handleChangeUserName}
+              style={alignStyle}
+            />
           </div>
+        </div>
 
-          <div className="form-group" style={passDiv}>
-            <div className="col-sm-5 control-margin">Password:</div>
-            <div className="col-sm-4  control-margin " style={passWordStyle}>
-              <input
-                type="password"
-                className="form-control"
-                value={this.state.password}
-                name="demo1"
-                onChange={this.handleChangePassword}
-                style={alignStyle}
-              />
-            </div>
+        <div className="form-group" style={passDiv}>
+          <div className="col-sm-5 control-margin">Password:</div>
+          <div className="col-sm-4  control-margin " style={passWordStyle}>
+            <input
+              type="password"
+              className="form-control"
+              value={this.state.password}
+              name="demo1"
+              onChange={this.handleChangePassword}
+              style={alignStyle}
+            />
           </div>
-
-          <div className="inline-error" style={errorDiv}>
+        </div>
+        <div>
+          {/* <div className="col-sm-5 control-margin"></div> */}
+          <div className="inline-error col-sm-3" style={errorDiv}>
             <ul>
               <li className="validationMsg">{this.state.errorMsg}</li>
             </ul>
           </div>
+        </div>
 
-          <div className="form-group" style={userDiv}>
-            <div className="col-sm-5 control-margin" />
-            <div className="col-sm-4  control-margin" style={loginDiv}>
-              <input
-                className="btn btn-primary"
-                // type="button"
-                type="submit"
-                disabled={!this.validateForm()}
-                value="Login"
-              />
-            </div>
+        <div className="form-group" style={userDiv}>
+          <div className="col-sm-5 control-margin" />
+          <div className="col-sm-4  control-margin" style={loginDiv}>
+            <input
+              className="btn btn-primary"
+              // type="button"
+              type="button"
+              disabled={!this.validateForm()}
+              onClick={this.handleSubmit}
+              value="Login"
+            />
           </div>
-        </form>
+        </div>
+
+        {/* </form> */}
+        {/* // </div> */}
+
       </div>
-      // </div>
     );
   }
 }

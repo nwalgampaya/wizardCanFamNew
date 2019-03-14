@@ -17,8 +17,6 @@ import Styles from "./Styles";
 import "./App.css";
 import "./index.css";
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
 
 export default class Wizard extends React.Component {
   static propTypes = {
@@ -128,22 +126,6 @@ export default class Wizard extends React.Component {
           page: Math.min(state.page + 1, this.props.children.length - 1),
           values
         }));
-
-        async values => {
-          await sleep(3000)
-          if (this.state.page == 0 && this.props.incorrectCred) {
-            this.setState(state => ({
-              page: 0,
-              values
-            }));
-          }
-        }
-        // if (this.state.page == 1) {
-        //   window.location.reload();
-        // }
-        // if (this.state.page == 3) {
-        //   return onSavePatientOnly(values);
-        // }
       }
     }
     // }

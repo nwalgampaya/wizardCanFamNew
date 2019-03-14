@@ -1489,18 +1489,10 @@ class CancerFamilyReg extends React.Component {
   };
 
   handleIncorrectCred = incorrectCred => {
-    console.log("handle incorrectCred :")
-    this.setState({ incorrectCred: incorrectCred });
-  };
-  // choosePath(){
-  //    console.log("choose path : " + this.state.choosePathFamily)
-  //         if(this.state.choosePathFamily){
-  //             return <Family/>
-  //         }else {
-  //             return <Individual />
-  //         }
 
-  // }
+    this.wizardCmp.next();
+  };
+
 
   validateDeathDate(d, m, y, errors) {
     var currentDeathDate = this.getDate(d, m, y);
@@ -1881,7 +1873,20 @@ class CancerFamilyReg extends React.Component {
           this.wizardCmp = wizardCmp;
         }}
       >
-        <Wizard.Page>
+        <Wizard.Page
+        // validate={values => {
+        //   const errors = {};
+        //   // specificComplaintcolumn:[]
+        //   console.log(
+        //     "in validation Login" + this.state.incorrectCred
+        //   );
+        //   if (this.state.incorrectCred) {
+
+        //     errors.currentdobColumn = "test"
+        //   }
+        //   return errors;
+        // }}
+        >
           <Login ref={this.child} onSubmit={this.onSubmit.bind(this)} onIncorrectCred={this.handleIncorrectCred} />
         </Wizard.Page>
         {/* Page 0 */}

@@ -28,12 +28,13 @@ export default class HeaderPanel extends React.Component {
             &nbsp;&nbsp; <b>BLOOD</b> :
             {this.props.patientDetials.blood.description}
           </span>
-        </div>
-        <div className="headerPanel3">
           <span className="headerPanel3Span">
             <b>BUCCAL_SALIVA </b>
             {this.props.patientDetials.buccalSalvia.description}
           </span>
+        </div>
+        <div className="headerPanel3">
+
         </div>
       </div>
       // </div>
