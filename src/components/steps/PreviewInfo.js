@@ -37,14 +37,23 @@ export default class PreviewInfo extends React.Component {
         fontWeight: "bold",
         textAlign: "left"
       };
+
+      var tabWidthStyle = {
+        tableLayout: "fixed",
+        width: "150px"
+      }
+      var prevWidthStyle = {
+        tableLayout: "fixed",
+        width: "550px"
+      }
       return (
         <div>
           <p style={style}>Individual Details Updated</p>
           <table className="PRtable">
             <tbody>
-              <tr>
-                <th>Column Name</th>
-                <th>Previous Value</th>
+              <tr >
+                <th style={tabWidthStyle} >Column Name</th>
+                <th style={prevWidthStyle}>Previous Value</th>
                 <th>New Value</th>
               </tr>
               {/* {values.map((val,i)=> */}
@@ -59,21 +68,56 @@ export default class PreviewInfo extends React.Component {
       );
     }
   }
+  convertGenderAndVitalStatus(values) {
+    if (values.column == "Gender") {
+      console.log("newValue*********************************:" + values.newVal)
+      if (values.newVal == 1) {
+        values.newVal = "Male"
+      } else if (values.newVal == 2) {
+        values.newVal = "Female"
+      } else if (values.newVal == 3) {
+        values.newVal = "Unknown"
+
+      }
+    }
+    if (values.column == "Vital Status") {
+      if (values.newVal == 1) {
+        values.newVal = "Alive"
+      } else if (values.newVal == 2) {
+        values.newVal = "Dead"
+      } else if (values.newVal == 3) {
+        values.newVal = "Unknown"
+
+      }
+    }
+  }
+
   loopPersonDetails() {
+    const tableRowStyle = {
+      fontFamily: "museo_sans_rounded300",
+      fontWeight: "normal",
+      color: "rgb(23, 54, 93)"
+      // marginLeft: "-10px"
+    };
     return this.props.arrayOfChangedFields.map((values, i) => (
+      // <div>
+
       <tr>
+        {this.convertGenderAndVitalStatus(values)}
+
         <td>{values.column}</td>
-        <td>
+        <td style={tableRowStyle}>
           {values.previousVal}
           {/* {this.props.arrayEditedData[i].age} */}
         </td>
-        <td>
+        <td style={tableRowStyle}>
           {values.newVal}
 
           {/* {this.props.changedParameters[i].age} */}
           {/* {values.id} */}
         </td>
       </tr>
+      // </div>
     ));
   }
 
@@ -160,27 +204,34 @@ export default class PreviewInfo extends React.Component {
   setDataType() {
 
   }
-  convertToGetDate(date) {
-    var formatDatestr = date;
+  // convertToGetDate(date) {
+  //   var formatDatestr = date;
 
-    if (formatDatestr != null) {
-      var year = formatDatestr.slice(0, 4);
-      var month = formatDatestr.slice(4, 6);
-      var date = formatDatestr.slice(6, 8);
+  //   if (formatDatestr != null) {
+  //     var year = formatDatestr.slice(0, 4);
+  //     var month = formatDatestr.slice(4, 6);
+  //     var date = formatDatestr.slice(6, 8);
 
-      formatDatestr = month + "/" + date + "/" + year;
-    } else formatDatestr = "N/A";
-    console.log("formatDatestr : " + formatDatestr);
+  //     formatDatestr = month + "/" + date + "/" + year;
+  //   } else formatDatestr = "N/A";
+  //   console.log("formatDatestr : " + formatDatestr);
 
 
-    return formatDatestr;
-  }
+  //   return formatDatestr;
+  // }
 
   showCancerEditedFields() {
     this.state.editedRecordCount = this.props.editedRecordCount;
     console.log("&&&&&&&&&&&&&&&&&&&&&&&  :" + this.props.editedRecordCount);
     this.state.arrayOfChangedFields = this.props.arrayOfChangedFields;
-
+    var tabWidthStyle = {
+      tableLayout: "fixed",
+      width: "150px"
+    }
+    var prevWidthStyle = {
+      tableLayout: "fixed",
+      width: "550px"
+    }
     // this.props.arrayOfChangedFields.map((values,i)=>{
     //     console.log("&&&&&&&&&&&&&&&&&&&&&&&  arrayOfChangedFields:" + values.column)
 
@@ -198,8 +249,8 @@ export default class PreviewInfo extends React.Component {
             </tr>
             {values.map((val, i) => (
               <tr>
-                <td className="spanText">{val.column}</td>
-                <td className="spanText">
+                <td className="spanText" style={tabWidthStyle}>{val.column}</td>
+                <td className="spanText" style={prevWidthStyle}>
                   {val.previousVal}
                   {/* {this.props.arrayEditedData[i].age} */}
                 </td>
@@ -279,15 +330,19 @@ export default class PreviewInfo extends React.Component {
   }
   revievBeforreSave() {
     var style = {
-      marginBottom: "8px",
-      fontWeight: "bold"
+      marginBottom: "6px",
+      fontWeight: "bold",
+      fontSize: "18px",
+      textAlign: "left",
+      marginLeft: "20px",
+      marginTop: "5px,"
     };
     if (this.props.isCanecerAdded || this.props.isCancerEdited) {
       return (
         <div>
           <p style={style}> Review Details </p>
-          <div>
-            <p>
+          <div >
+            <p style={style} >
               {" "}
               Please ensure the below updates are correct before clicking "Save
               to Database" .
@@ -322,6 +377,10 @@ export default class PreviewInfo extends React.Component {
   //     // this.props.onPreviewPage(this.state.isInPreviewScreen)
   // }
   render() {
+    const tableRowStyle = {
+      marginBottom: "5px",
+      marginLeft: "-10px"
+    };
     return (
       <div>
         {this.setHeaderPanel()}
