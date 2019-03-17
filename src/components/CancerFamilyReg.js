@@ -1225,14 +1225,6 @@ class CancerFamilyReg extends React.Component {
           ? ""
           : this.state.currentCourseOFDeath
       }
-
-      // this.state.patientDataValue.courseOfDeath.description =
-      //   this.state.patientDataValue.courseOfDeath == ""
-      //     ? ""
-      //     : this.state.currentCourseOFDeath;
-
-      // this.state.patientDataValue.courseOfDeath.id = this.state.patientDataValue.personCID;
-      // this.state.courseOfDeath.description = this.state.courseOfDeath;
       // this.state.columnExist = true;
       // to fix error due to typing data to the text box
       this.setPreviewScreenData(
@@ -1825,7 +1817,6 @@ class CancerFamilyReg extends React.Component {
     if (this.state.isInPreviewScreen == true) {
       console.log("in Submit IF : ");
 
-      console.log(" cause of death in submit " + this.state.patientDataValue.courseOfDeath.description)
       this.savePatient(this.state.patientDataValue);
       // e.preventDefault();
     } else {
