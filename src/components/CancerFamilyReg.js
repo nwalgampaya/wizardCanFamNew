@@ -311,7 +311,7 @@ class CancerFamilyReg extends React.Component {
           this.state.columnExist = true;
         }
 
-        if (columnName == "Cause Of Death" || columnName == "Source Of Death") {
+        if (columnName == "Cause Of Death" || columnName == "Source Of Death" || columnName == "Age of Death") {
           // || columnName == "Relationship Code" || columnName == "Source Of LiveDate ")
           // changeCol.column = "Site"
           // if (changedField.previousVal != '') {
@@ -346,7 +346,7 @@ class CancerFamilyReg extends React.Component {
         );
         // this.state.columnExist=false;
 
-        if (columnName == "Cause Of Death" || columnName == "Source Of Death") {
+        if (columnName == "Cause Of Death" || columnName == "Source Of Death" || columnName == "Age of Death") {
           // || columnName == "Relationship Code" || columnName == "Source Of LiveDate ")
           // changeCol.column = "Site"
           // if (changedField.previousVal != '') {
@@ -589,7 +589,7 @@ class CancerFamilyReg extends React.Component {
           this.state.currentaodeath = age;
           this.setState({ currentaodeath: age, isAgeCalculated: true });
         }
-      } else if (this.state.selectedYearDOB != "9999") {
+      } else if (this.state.selectedYearDOB != "9999" && this.state.selectedYearDOB != '') {
         var birthDate = this.getDate(
           this.state.selectedDateDOB,
           this.state.selectedMonthDOB,
@@ -600,6 +600,19 @@ class CancerFamilyReg extends React.Component {
         this.state.currentaodeath = age;
         this.setState({ currentaodeath: age, isAgeCalculated: true });
       }
+      if (deathDate != '') {
+        this.setPreviewScreenData(
+          "Death Date ",
+          this.state.dateOfDeath,
+          this.state.currentDeath)
+      }
+      if (this.state.currentaodeath != '') {
+        this.setPreviewScreenData(
+          "Death Age ",
+          this.state.aodeath,
+          this.state.currentaodeath)
+      }
+
     }
     // console.log("validateDeathDate" + e);
   }
@@ -890,6 +903,9 @@ class CancerFamilyReg extends React.Component {
             ? "Dead"
             : "Unknown"
     });
+    if (patientData.vitalStatus == 1) {
+      this.state.isAlive = true
+    }
     console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" + this.state.dateOFDOB);
     this.setState({
       dateOfDeath:
@@ -942,7 +958,8 @@ class CancerFamilyReg extends React.Component {
 
     if (
       patientData.dateOfDeath != null &&
-      patientData.dateOfDeath.length == 8
+      patientData.dateOfDeath.length == 8 &&
+      patientData.dateOfDeath.slice(0, 4) != "9999"
     ) {
       var dt1 = parseInt(patientData.dateOfDeath.substring(6));
       var mon1 = parseInt(patientData.dateOfDeath.substring(4, 6));
@@ -1203,10 +1220,19 @@ class CancerFamilyReg extends React.Component {
         this.state.currentCourseOFDeath
       );
 
-      this.state.patientDataValue.courseOfDeath.description =
-        this.state.patientDataValue.courseOfDeath == ""
+      this.state.patientDataValue.courseOfDeath = {
+        id: this.state.patientDataValue.personID, description: this.state.patientDataValue.courseOfDeath == ""
           ? ""
-          : this.state.currentCourseOFDeath;
+          : this.state.currentCourseOFDeath
+      }
+
+      // this.state.patientDataValue.courseOfDeath.description =
+      //   this.state.patientDataValue.courseOfDeath == ""
+      //     ? ""
+      //     : this.state.currentCourseOFDeath;
+
+      // this.state.patientDataValue.courseOfDeath.id = this.state.patientDataValue.personCID;
+      // this.state.courseOfDeath.description = this.state.courseOfDeath;
       // this.state.columnExist = true;
       // to fix error due to typing data to the text box
       this.setPreviewScreenData(
@@ -1799,6 +1825,7 @@ class CancerFamilyReg extends React.Component {
     if (this.state.isInPreviewScreen == true) {
       console.log("in Submit IF : ");
 
+      console.log(" cause of death in submit " + this.state.patientDataValue.courseOfDeath.description)
       this.savePatient(this.state.patientDataValue);
       // e.preventDefault();
     } else {
@@ -2095,17 +2122,28 @@ class CancerFamilyReg extends React.Component {
                   "Source of Last Known Date is a required field";
               }
             }
-            if (this.state.currentSourceOFDeath == "") {
-              if (this.state.currentaodeath != "") {
-                errors.currentDeathSourceColumn =
-                  "Source of Death is a required field";
-              }
-            }
+
 
             this.validateAgeOfDeath(errors);
 
             // }
-            if (this.state.isAlive) {
+            if (!this.state.isAlive) {
+              if (this.state.currentDeath == '' && this.state.currentaodeath == '') {
+
+                errors.currentdodColumn = "Date of death or Age of Death is required"
+              }
+              if (this.state.currentSourceOFDeath == '') {
+                // if (this.state.currentaodeath != '') {
+                errors.currentDeathSourceColumn =
+                  "Source of Death is a required field";
+                // }
+              }
+              if (this.state.currentCourseOFDeath == '') {
+                errors.currentCourseOFDeathColumn =
+                  "Cause of Death is a required field";
+
+              }
+
               // this.state.uknCourseOFDeath =true;
             }
 
@@ -2459,6 +2497,9 @@ class CancerFamilyReg extends React.Component {
                             }
                             onChange={this.setCurrentCauseDeath.bind(this)}
                           />
+                          <div className="validationMsg">
+                            <Error name="currentCourseOFDeathColumn" />
+                          </div>
                         </div>
 
                         {/* <div className="col-sm-1"></div> */}
