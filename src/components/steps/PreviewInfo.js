@@ -35,7 +35,9 @@ export default class PreviewInfo extends React.Component {
       var style = {
         marginLeft: "23px",
         fontWeight: "bold",
-        textAlign: "left"
+        textAlign: "left",
+        marginLeft: "30px",
+        fontSize: "15px",
       };
 
       var tabWidthStyle = {
@@ -125,7 +127,8 @@ export default class PreviewInfo extends React.Component {
     var style = {
       marginLeft: "23px",
       fontWeight: "bold",
-      textAlign: "left"
+      textAlign: "left",
+      fontSize: "15px"
     };
     if (this.props.isCanecerAdded) {
       return (
@@ -192,9 +195,10 @@ export default class PreviewInfo extends React.Component {
 
   createEditedCancerUI() {
     var style = {
-      marginLeft: "23px",
+      marginLeft: "30px",
       fontWeight: "bold",
-      textAlign: "left"
+      textAlign: "left",
+      fontSize: "15px"
     };
     if (this.props.isCancerEdited) {
       return (
@@ -345,15 +349,20 @@ export default class PreviewInfo extends React.Component {
       fontWeight: "bold",
       fontSize: "18px",
       textAlign: "left",
-      marginLeft: "20px",
+      marginLeft: "30px",
       marginTop: "5px,"
     };
-    if (this.props.isCanecerAdded || this.props.isCancerEdited) {
+
+    var style2 = {
+      fontSize: "17px",
+      textAlign: "center",
+    }
+    if (this.props.isCanecerAdded || this.props.isCancerEdited || this.props.isCanFamEdited) {
       return (
         <div>
           <p style={style}> Review Details </p>
           <div >
-            <p style={style} >
+            <p style={(style, style2)} >
               {" "}
               Please ensure the below updates are correct before clicking "Save
               to Database" .

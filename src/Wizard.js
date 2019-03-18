@@ -337,13 +337,13 @@ export default class Wizard extends React.Component {
                     )} */}
 
                     {/* Invisible button to get the next button allignment correctly */}
-                    {(page == 1 || page == 3) && (
+                    {(page == 1 || page == 3 || page == 7) && (
                       <button className="invisible" type="button" />
                     )}
 
                     {/* { page == 3 && (<button className="btn btn-primary" type="button" onClick={this.previous}> Back</button>)} */}
                     {/* (!this.props.choosePathFamily ||page != 6 ||page == 7) && */}
-                    {page > 1 && page != 3 && page != 2 && (
+                    {page > 1 && page != 3 && page != 2 && page != 7 && (
                       // (page != 8 && this.props.choosePathFamily) && (
                       <button
                         className="btn btn-primary"
