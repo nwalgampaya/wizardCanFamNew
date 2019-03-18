@@ -1221,13 +1221,16 @@ class CancerFamilyReg extends React.Component {
     }
     if (
       this.state.currentCourseOFDeath != this.state.courseOFDeath &&
-      this.state.currentCourseOFDeath != ""
+      (this.state.currentCourseOFDeath != "" || this.state.uknCourseOFDeath)
     ) {
       console.log(
         "IN POST REQUEST currentCourseOFDeath : " +
         this.state.currentCourseOFDeath
       );
 
+      if (this.state.uknCourseOFDeath) {
+        this.state.currentCourseOFDeath = "999999"
+      }
       this.state.patientDataValue.courseOfDeath = {
         id: this.state.patientDataValue.personID, description: this.state.patientDataValue.courseOfDeath == ""
           ? ""
@@ -2139,7 +2142,7 @@ class CancerFamilyReg extends React.Component {
             this.validateAgeOfDeath(errors);
 
             // }
-            if (!this.state.isAlive && this.state.currentStatus != '') {
+            if (!this.state.isAlive && this.state.currentStatus != '' && this.state.status != "Dead") {
               if (this.state.currentDeath == '' && this.state.currentaodeath == '') {
 
                 errors.currentdodColumn = "Date of death or Age of Death is required"
@@ -2150,7 +2153,7 @@ class CancerFamilyReg extends React.Component {
                   "Source of Death is a required field";
                 // }
               }
-              if (this.state.currentCourseOFDeath == '') {
+              if (this.state.currentCourseOFDeath == '' && !this.state.uknCourseOFDeath) {
                 errors.currentCourseOFDeathColumn =
                   "Cause of Death is a required field";
 

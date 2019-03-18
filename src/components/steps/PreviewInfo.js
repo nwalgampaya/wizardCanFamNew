@@ -139,6 +139,11 @@ export default class PreviewInfo extends React.Component {
 
   createCancerFields() {
     console.log("In new Cancer Preview");
+    const tableRowStyle = {
+      fontFamily: "museo_sans_rounded300",
+      fontWeight: "normal",
+      color: "rgb(23, 54, 93)"
+    };
     // || this.props.isCancerEdited
     // if(this.props.isCanecerAdded ){
     return this.props.newCancerArr.map((values, i) => (
@@ -150,35 +155,35 @@ export default class PreviewInfo extends React.Component {
           </tr>
           <tr>
             <td>Site</td>
-            <td>{values.site.code}</td>
+            <td style={tableRowStyle}>{values.site.code}</td>
           </tr>
           <tr>
             <td>Lateral</td>
-            <td>{values.lateral.description}</td>
+            <td style={tableRowStyle}>{values.lateral.description}</td>
           </tr>
           <tr>
             <td>Histology</td>
-            <td>{values.histology}</td>
+            <td style={tableRowStyle}>{values.histology}</td>
           </tr>
           <tr>
             <td>Behavior</td>
-            <td>{values.behaviour.description}</td>
+            <td style={tableRowStyle}>{values.behaviour.description}</td>
           </tr>
           <tr>
             <td>Date Of Diagnosis</td>
-            <td>{values.dateOfDiagnosis /* {values.site.code} */}</td>
+            <td style={tableRowStyle}>{values.dateOfDiagnosis /* {values.site.code} */}</td>
           </tr>
           <tr>
             <td>Age Of Diagnosis</td>
-            <td>{values.ageDiagnosis /* {values.lateral.code} */}</td>
+            <td style={tableRowStyle}>{values.ageDiagnosis /* {values.lateral.code} */}</td>
           </tr>
           <tr>
             <td>Source</td>
-            <td>{values.diagSource.description}</td>
+            <td style={tableRowStyle}>{values.diagSource.description}</td>
           </tr>
           <tr>
             <td>Tissue</td>
-            <td>{values.tissue.description}</td>
+            <td style={tableRowStyle}>{values.tissue.description}</td>
           </tr>
         </tbody>
       </table>
