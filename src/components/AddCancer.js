@@ -479,7 +479,7 @@ export default class AddCancer extends React.Component {
         this.state.selectedMonth,
         this.state.selectedYear
       );
-      if (this.stateisExistingBirthDate) {
+      if (this.state.isExistingBirthDate) {
         if (diagDate < this.state.existingBirthDate) {
           return false;
         }
@@ -751,7 +751,7 @@ export default class AddCancer extends React.Component {
                         </option>
                       );
                     })
-                    // <option >{"Hospital Rec"}</option>
+                      // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>

@@ -968,7 +968,8 @@ td.numeric {
 }
 .PRtable {
   border-collapse: collapse;
-  /* 	border: #dae5f4 8px solid; */
+  	/* border: #494938 2px solid; */
+  	border: #dde2d2 2px solid;
   margin: auto;
   width: 95%;
   margin-bottom: 25px;

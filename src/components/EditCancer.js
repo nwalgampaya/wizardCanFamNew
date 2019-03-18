@@ -143,7 +143,8 @@ export default class EditCancer extends React.Component {
 
     if (
       this.patientData.dateOfBirth != null &&
-      this.patientData.dateOfBirth.length == 8
+      this.patientData.dateOfBirth.length == 8 &&
+      this.patientData.dateOfBirth.slice(0, 4) != "9999"
     ) {
       var dt1 = parseInt(this.patientData.dateOfBirth.substring(6));
       var mon1 = parseInt(this.patientData.dateOfBirth.substring(4, 6));
@@ -220,8 +221,8 @@ export default class EditCancer extends React.Component {
 
         console.log("AGE IS " + age);
       } else {
-        this.setState({ ageDiagnosis: "", isAgeCalculated: false });
-        cancerLocal.ageDiagnosis = "";
+        this.setState({ isAgeCalculated: false });
+        // cancerLocal.ageDiagnosis = "";
       }
     } else {
       this.setState({
@@ -515,7 +516,7 @@ export default class EditCancer extends React.Component {
         this.state.selectedMonth,
         this.state.selectedYear
       );
-      if (this.stateisExistingBirthDate) {
+      if (this.state.isExistingBirthDate) {
         if (diagDate < this.state.existingBirthDate) {
           return false;
         }
@@ -524,7 +525,9 @@ export default class EditCancer extends React.Component {
           return false;
         }
       }
+
     }
+    // }
     return true;
   };
   getAge(today, substracted) {
@@ -808,7 +811,7 @@ export default class EditCancer extends React.Component {
                         </option>
                       );
                     })
-                    // <option >{"Hospital Rec"}</option>
+                      // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>
@@ -933,7 +936,7 @@ export default class EditCancer extends React.Component {
               </div>
               <div className="row form-check form-check-inline">
                 <div className="col-sm-5">Date Of Diagnosis:</div>
-                <div className="col-sm-4 control-margin">
+                <div className="col-sm-5 control-margin">
                   <DateSelect
                     isAlive={false}
                     value={this.state.dateOfDiagnosis}
@@ -944,7 +947,7 @@ export default class EditCancer extends React.Component {
                     onSelectDate={this.handleDatePickedDiag}
                   />
 
-                  <div
+                  <span
                     className="inline-error-dialog"
                     style={
                       validation.dateOfDiagnosis.isInvalid
@@ -957,7 +960,7 @@ export default class EditCancer extends React.Component {
                         {validation.dateOfDiagnosis.message}
                       </li>
                     </ul>
-                  </div>
+                  </span>
                 </div>
               </div>
 

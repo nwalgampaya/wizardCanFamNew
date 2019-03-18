@@ -232,6 +232,12 @@ export default class PreviewInfo extends React.Component {
       tableLayout: "fixed",
       width: "550px"
     }
+    const tableRowStyle = {
+      fontFamily: "museo_sans_rounded300",
+      fontWeight: "normal",
+      color: "rgb(23, 54, 93)"
+      // marginLeft: "-10px"
+    };
     // this.props.arrayOfChangedFields.map((values,i)=>{
     //     console.log("&&&&&&&&&&&&&&&&&&&&&&&  arrayOfChangedFields:" + values.column)
 
@@ -243,18 +249,18 @@ export default class PreviewInfo extends React.Component {
         <table className="PRtable">
           <tbody>
             <tr>
-              <th>Column Name</th>
-              <th>Previous Value</th>
+              <th style={tabWidthStyle} >Column Name</th>
+              <th style={prevWidthStyle}>Previous Value</th>
               <th>New Value</th>
             </tr>
             {values.map((val, i) => (
               <tr>
-                <td className="spanText" style={tabWidthStyle}>{val.column}</td>
-                <td className="spanText" style={prevWidthStyle}>
+                <td >{val.column}</td>
+                <td style={tableRowStyle}>
                   {val.previousVal}
                   {/* {this.props.arrayEditedData[i].age} */}
                 </td>
-                <td className="spanText">
+                <td style={tableRowStyle}>
                   {val.newVal}
 
                   {/* {this.props.changedParameters[i].age} */}
