@@ -294,6 +294,23 @@ class CancerFamilyReg extends React.Component {
   //Transfered from StartPageRegistry
 
   // This function is used to fill an array to carry the -New Details- data to the preview screen
+
+  removePreviewScreenData(columnName) {
+    this.state.arrayOfChangedFields = this.state.arrayOfChangedFields.filter(
+      e => e.column !== columnName
+    );
+
+    if (this.state.arrayOfChangedFields.length > 0) {
+      this.state.isCanFamEdited = true;
+    } else {
+      this.state.isCanFamEdited = false;
+    }
+
+    this.setState({
+      countChangedFields: this.state.arrayOfChangedFields.length
+    });
+  }
+
   setPreviewScreenData(columnName, previousValue, nextValue) {
     // var columnExist = false;
 
@@ -409,12 +426,13 @@ class CancerFamilyReg extends React.Component {
       this.setState({
         currentGender: null
       });
+      this.removePreviewScreenData("Gender");
     } else {
       this.setState({
         currentGender: event.target.value
       });
 
-      if (this.state.gender != event.target.value) {
+      if (this.state.patientData.intGender != event.target.value) {
         this.setPreviewScreenData(
           "Gender",
           this.state.gender,
@@ -639,6 +657,10 @@ class CancerFamilyReg extends React.Component {
       this.setState({
         currentStatus: null
       });
+      this.removePreviewScreenData("Vital Status");
+      this.setState({
+        isAlive: true
+      });
     } else {
       if (event.target.value == 2) {
         this.setState({
@@ -692,12 +714,17 @@ class CancerFamilyReg extends React.Component {
       currentSourceOFDeath: event.target.value
     });
 
-    if (this.state.currentSourceOFDeath != event.target.value) {
+    if (
+      event.target.value != "Choose One" &&
+      this.state.currentSourceOFDeath != event.target.value
+    ) {
       this.setPreviewScreenData(
         "Source Of Death",
         this.state.sourceOFDeath,
         event.target.value
       );
+    } else {
+      this.removePreviewScreenData("Source Of Death");
     }
   }
 
@@ -756,6 +783,8 @@ class CancerFamilyReg extends React.Component {
         this.state.fPI1Status.description,
         event.target.value
       );
+    } else {
+      this.removePreviewScreenData("FUP1 Status ");
     }
   }
   setcurrentfPI2Status(event) {
@@ -772,6 +801,8 @@ class CancerFamilyReg extends React.Component {
         this.state.fPI2Status.description,
         event.target.value
       );
+    } else {
+      this.removePreviewScreenData("FUP2 Status ");
     }
   }
   setcurrentfPI3Status(event) {
@@ -788,6 +819,8 @@ class CancerFamilyReg extends React.Component {
         this.state.fPI3Status.description,
         event.target.value
       );
+    } else {
+      this.removePreviewScreenData("FUP3 Status ");
     }
   }
   setcurrentfPI4Status(event) {
@@ -804,6 +837,8 @@ class CancerFamilyReg extends React.Component {
         this.state.fPI4Status.description,
         event.target.value
       );
+    } else {
+      this.removePreviewScreenData("FUP4 Status ");
     }
   }
 
@@ -821,6 +856,8 @@ class CancerFamilyReg extends React.Component {
         this.state.relationshipCode.description,
         event.target.value
       );
+    } else {
+      this.removePreviewScreenData("Relationship Code ");
     }
   }
 
@@ -1207,6 +1244,7 @@ class CancerFamilyReg extends React.Component {
       );
     }
     if (
+      this.state.currentSourceOFDeath != "Choose One" &&
       this.state.currentSourceOFDeath != this.state.sourceOFDeath &&
       this.state.currentSourceOFDeath != ""
     ) {
@@ -1236,6 +1274,7 @@ class CancerFamilyReg extends React.Component {
       );
     }
     if (
+      this.state.currentCourseOFDeath != "Choose One" &&
       this.state.currentCourseOFDeath != this.state.courseOFDeath &&
       (this.state.currentCourseOFDeath != "" || this.state.uknCourseOFDeath)
     ) {
@@ -1277,6 +1316,7 @@ class CancerFamilyReg extends React.Component {
           : this.state.currentLKDA;
     }
     if (
+      this.state.currentCourseOfLiveDate != "Choose One" &&
       this.state.currentCourseOfLiveDate != this.state.sourceOfLiveDate &&
       this.state.currentCourseOfLiveDate != ""
     ) {
@@ -1297,6 +1337,7 @@ class CancerFamilyReg extends React.Component {
       );
     }
     if (
+      this.state.currentfPI1Status != "Choose One" &&
       this.state.currentfPI1Status != this.state.fPI1Status &&
       this.state.currentfPI1Status != ""
     ) {
@@ -1321,6 +1362,7 @@ class CancerFamilyReg extends React.Component {
       );
     }
     if (
+      this.state.currentfPI2Status != "Choose One" &&
       this.state.currentfPI2Status != this.state.fPI2Status &&
       this.state.currentfPI2Status != ""
     ) {
@@ -1337,6 +1379,7 @@ class CancerFamilyReg extends React.Component {
       this.state.patientDataValue.fPI2Status.id = fieldValues.id;
     }
     if (
+      this.state.currentfPI3Status != "Choose One" &&
       this.state.currentfPI3Status != this.state.fPI3Status &&
       this.state.currentfPI3Status != ""
     ) {
@@ -1353,6 +1396,7 @@ class CancerFamilyReg extends React.Component {
       this.state.patientDataValue.fPI3Status.id = fieldValues.id;
     }
     if (
+      this.state.currentfPI4Status != "Choose One" &&
       this.state.currentfPI4Status != this.state.fPI4Status &&
       this.state.currentfPI4Status != ""
     ) {
@@ -1370,6 +1414,7 @@ class CancerFamilyReg extends React.Component {
     }
 
     if (
+      this.state.currentRelationshipCode != "Choose One" &&
       this.state.currentRelationshipCode != this.state.relationshipCode &&
       this.state.currentRelationshipCode != ""
     ) {

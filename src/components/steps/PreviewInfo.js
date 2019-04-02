@@ -308,11 +308,14 @@ export default class PreviewInfo extends React.Component {
         </div>
       );
     } else {
+      var fontcolor = {
+        fontSize: "16px"
+      };
       return (
         <div>
-          <h4 className="reviewStyle"> Review Details </h4>
+          <h3 className="reviewStyle"> Review Details </h3>
           <div className="boxPreview headerPanelPreview">
-            <p>
+            <p style={fontcolor}>
               {" "}
               No data changes have been made. Please Exit Record or make changes
               to Save to Database.
