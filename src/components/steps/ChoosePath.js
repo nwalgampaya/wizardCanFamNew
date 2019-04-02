@@ -57,22 +57,21 @@ export default class ChoosePath extends React.Component {
         <div style={alignStyle}>
           <div>
             <button
+              onClick={this.handleFamily}
               className="col-sm-12 chooseImage"
               style={buttonMargin}
               type="submit"
             >
               <img
                 src={require("../../img/family.png")}
-                onClick={this.handleFamily}
               />
             </button>
             <span className="col-sm-12">Update family members</span>
           </div>
           <div>
-            <button className="col-sm-12 chooseImage" type="submit">
+            <button onClick={this.handleIndividual} className="col-sm-12 chooseImage" type="submit">
               <img
                 src={require("../../img/individual.png")}
-                onClick={this.handleIndividual}
               />
             </button>
             <span className="col-sm-12">Update an individual</span>
