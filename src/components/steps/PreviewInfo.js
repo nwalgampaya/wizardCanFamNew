@@ -144,6 +144,25 @@ export default class PreviewInfo extends React.Component {
     }
   }
 
+  convertDateFormat(date) {
+    var formatDatestr = date;
+    // console.log( "year: "+ str.slice(0,4) )
+    // console.log( "mon: "+ str.slice(4,6) )
+    // console.log( "date: "+ str.slice(6,8) )
+
+    // formatDatestr = formatDatestr!=null ? formatDatestr : 0;
+    if (formatDatestr != null)
+      formatDatestr =
+        formatDatestr.slice(4, 6) +
+        "/" +
+        formatDatestr.slice(6, 8) +
+        "/" +
+        formatDatestr.slice(0, 4);
+    else formatDatestr = "N/A";
+
+    return formatDatestr;
+  }
+
   createCancerFields() {
     console.log("In new Cancer Preview");
     const tableRowStyle = {
@@ -179,7 +198,7 @@ export default class PreviewInfo extends React.Component {
           <tr>
             <td>Date Of Diagnosis</td>
             <td style={tableRowStyle}>
-              {values.dateOfDiagnosis /* {values.site.code} */}
+              {this.convertDateFormat(values.dateOfDiagnosis)} }
             </td>
           </tr>
           <tr>
@@ -271,14 +290,14 @@ export default class PreviewInfo extends React.Component {
               <tr>
                 <td>{val.column}</td>
                 <td style={tableRowStyle}>
-                  {val.previousVal}
-                  {/* {this.props.arrayEditedData[i].age} */}
+                  {val.column == "Date Of Diagnosis"
+                    ? this.convertDateFormat(val.previousVal)
+                    : val.previousVal}
                 </td>
                 <td style={tableRowStyle}>
-                  {val.newVal}
-
-                  {/* {this.props.changedParameters[i].age} */}
-                  {/* {values.id} */}
+                  {val.column == "Date Of Diagnosis"
+                    ? this.convertDateFormat(val.newVal)
+                    : val.newVal}
                 </td>
               </tr>
             ))}
@@ -308,11 +327,14 @@ export default class PreviewInfo extends React.Component {
         </div>
       );
     } else {
+      var fontcolor = {
+        fontSize: "16px"
+      };
       return (
         <div>
-          <h4 className="reviewStyle"> Review Details </h4>
+          <h3 className="reviewStyle"> Review Details </h3>
           <div className="boxPreview headerPanelPreview">
-            <p>
+            <p style={fontcolor}>
               {" "}
               No data changes have been made. Please Exit Record or make changes
               to Save to Database.
