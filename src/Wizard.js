@@ -17,7 +17,6 @@ import Styles from "./Styles";
 import "./App.css";
 import "./index.css";
 
-
 export default class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
@@ -131,19 +130,15 @@ export default class Wizard extends React.Component {
     // }
   };
 
-
   // this.setState(state => ({
   //   page: Math.min(state.page + 1, this.props.children.length - 1),
   //   values
   // }))}
 
-
   ExitRecord = () => {
     // const { onExitRecord } = this.props;
     sessionStorage.setItem("reloading", "true");
     document.location.reload(true);
-
-
   };
 
   logout = () => {
@@ -194,7 +189,6 @@ export default class Wizard extends React.Component {
   //   }))
 
   componentDidMount() {
-
     var reloading = sessionStorage.getItem("reloading");
     if (reloading) {
       sessionStorage.removeItem("reloading");
@@ -202,7 +196,6 @@ export default class Wizard extends React.Component {
         page: 2
       }));
     }
-
   }
   endSession = () => {
     this.setState(state => ({
@@ -267,7 +260,7 @@ export default class Wizard extends React.Component {
     //   height: "400px",
     // backgroundImage: `url(${background})`
     // };
-    const alignButton = { marginLeft: "40%" };
+    const alignButton = { marginLeft: "38%" };
     const { children } = this.props;
     const { page, values } = this.state;
     const activePage = React.Children.toArray(children)[page];
@@ -320,14 +313,14 @@ export default class Wizard extends React.Component {
                     {/* {isLastPage && ( */}
                     {((page == 9 && this.props.choosePathFamily) ||
                       page == 6) && (
-                        <button
-                          className="btn btn-primary pull-right"
-                          type="button"
-                          onClick={this.endSession}
-                        >
-                          Finish
+                      <button
+                        className="btn btn-primary pull-right"
+                        type="button"
+                        onClick={this.endSession}
+                      >
+                        Finish
                       </button>
-                      )}
+                    )}
                     {/* {page > 0 && (
                       <button className="btn btn-primary" styles={{ float: 'left', paddingLeft: '10px' }} type="button" onClick={this.previous}>
                         Previous
@@ -459,25 +452,26 @@ export default class Wizard extends React.Component {
                     {/* TODo add condition to disable save button when nothing edited or new added */}
                     {(page == 5 ||
                       (page == 8 && this.props.choosePathFamily)) && (
-                        <button
-                          disabled={
-                            true
-                              ? ((page == 5) && !(
+                      <button
+                        disabled={
+                          true
+                            ? page == 5 &&
+                              !(
                                 this.props.isCanecerAdded ||
                                 this.props.isCancerEdited ||
                                 this.props.isCanFamEdited
-                              ))
-                              : false
-                          }
-                          //  background-color: #cfc7b8;
-                          // btnOverWrite btn-primaryOverWrite
-                          // className="btn btn-primary pull-right"
-                          className="btnOverWrite btn-primaryOverWrite pull-right btn-disabled"
-                          type="submit"
-                        >
-                          Save to database
+                              )
+                            : false
+                        }
+                        //  background-color: #cfc7b8;
+                        // btnOverWrite btn-primaryOverWrite
+                        // className="btn btn-primary pull-right"
+                        className="btnOverWrite btn-primaryOverWrite pull-right btn-disabled"
+                        type="submit"
+                      >
+                        Save to database
                       </button>
-                      )}
+                    )}
 
                     {/* {!page == 0 && !page == 1 && !isLastPage && <button className="btn btn-primary pull-right " type="submit">  Next  </button>} */}
                     {/* {page == 1 && (<button className="btn btn-primary pull-right" type="submit" disabled={submitting}>

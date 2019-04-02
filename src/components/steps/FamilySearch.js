@@ -130,20 +130,33 @@ export default class FamilySearch extends React.Component {
 
   showSearchTabHeader() {
     if (this.state.isSearched == true) {
-      return (
-        <tr>
-          <th> {this.showSelectAllChkBx()} </th>
-          <th> Individual ID</th>
-          <th> LKD Date</th>
-        </tr>
-      );
+      if (this.state.individualId.length > 0) {
+        return (
+          <tr>
+            <th> {this.showSelectAllChkBx()} </th>
+            <th> Individual ID</th>
+            <th> LKD Date</th>
+          </tr>
+        );
+      } else {
+        return (
+          <tr>
+            <th>
+              {" "}
+              There are no living/eligible participants in this family to update
+              Last Known Date. Please update individual details for participants
+              you wish to update first.
+            </th>
+          </tr>
+        );
+      }
     }
   }
   showSelectAllChkBx() {
     const paddingLft = { paddingLeft: "10px" };
     if (this.state.isSearched == true) {
       return (
-        <div className="form-check form-check-inline">
+        <div className="form-check form-check-inline chkScale">
           {/* <tr> */}
           <input
             checked={this.state.isCheckedAll}
@@ -155,9 +168,6 @@ export default class FamilySearch extends React.Component {
             name="selectAllChkbx"
             onChange={this.setAllCheckBoxValues.bind(this)}
           />
-          <nbsp />
-          <label style={paddingLft}>Select All</label>
-          {/* </tr> */}
         </div>
       );
     }
@@ -485,7 +495,6 @@ export default class FamilySearch extends React.Component {
       display: "flex"
     };
     const loginDiv = {
-      marginLeft: "25px",
       marginBottom: "20px",
       textAlign: "left"
     };
@@ -508,27 +517,31 @@ export default class FamilySearch extends React.Component {
     const leftMargin = {
       marginLeft: "15px",
       // marginLeft: "40%"
-      marginRight: "15px"
+      marginRight: "15px",
+      backgroundColor: "#f9f6f1",
+      height: "100px"
     };
     const comboStyle = {
-      marginBottom: "14px",
-      backgroundColor: "white"
+      marginBottom: "14px"
+      // backgroundColor: "white"
+    };
+    var fontcolor = {
+      color: "black",
+      fontSize: "16px"
+    };
+    var controlMargin = {
+      marginTop: "10px",
+      marginBottom: "8px"
     };
     return (
       <div>
-        <div className="box headerPanel1">
-          {/* <div className="headerPanel1Div"> */}
-          <h3 style={h3Align}>Family Search</h3>
-        </div>
-        {/* </div> */}
-        <p>Please enter the Family ID that you would like to update: </p>
+        <p style={fontcolor}>
+          Please enter the Family ID that you would like to update{" "}
+        </p>
 
         <div className="row" style={leftMargin}>
-          <div className="col-sm-4" style={{ backgroundColor: "#f9f6f1" }}>
-            <div
-              className="col-sm-12 control-margin"
-              style={{ marginBottom: "14px" }}
-            >
+          <div className="col-sm-4">
+            <div className="col-sm-12  lableBold" style={controlMargin}>
               Family ID:
             </div>
             <div className="col-sm-12 control-margin">
@@ -540,7 +553,7 @@ export default class FamilySearch extends React.Component {
                     height: "42px",
                     border: "1px solid #e6e6e6",
                     padding: "0 35px 0 19px",
-                    color: "#999",
+                    // color: "#999",
                     bordeRadius: "4px"
                   },
                   placeholder: "Enter Family ID"
@@ -570,12 +583,16 @@ export default class FamilySearch extends React.Component {
             </div>
           </div>
 
-          <div className="col-sm-4 " style={{ backgroundColor: "#f9f6f1" }}>
-            <div className="col-sm-12 control-margin">Source:</div>
+          <div className="col-sm-4 ">
+            <div className="col-sm-12 lableBold" style={controlMargin}>
+              Source:
+            </div>
 
             <div className="col-sm-12" style={comboStyle}>
               <select
+                style={{ backgroundColor: "white" }}
                 className="form-control "
+                // style={{ color: "#eee" }}
                 value={this.state.selectedSrlCode}
                 onChange={this.setSrlcodes.bind(this)}
                 name="srlCodesColumn"
@@ -594,11 +611,8 @@ export default class FamilySearch extends React.Component {
             </div>
           </div>
 
-          <div className="col-sm-4 " style={{ backgroundColor: "#f9f6f1" }}>
-            <div
-              className="col-sm-12 control-margin"
-              style={{ backgroundColor: "#f9f6f1" }}
-            >
+          <div className="col-sm-4 ">
+            <div className="col-sm-12 lableBold" style={controlMargin}>
               LKD Date:
             </div>
             <div
@@ -617,8 +631,7 @@ export default class FamilySearch extends React.Component {
             <li className="validationMsg">{this.state.errorMsg}</li>
           </ul>
         </div>
-        <br />
-        <br />
+
         {/* disabled={this.state.sendCurrentLKD =='' && this.state.familyIdValue =='' &&  this.state.selectedSrlCode ==''} */}
 
         <div className="form-group" style={userDiv}>

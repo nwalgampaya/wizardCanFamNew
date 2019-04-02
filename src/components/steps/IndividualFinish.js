@@ -1,22 +1,24 @@
-import React from 'react';
+import React from "react";
 
 export default class IndividualFinish extends React.Component {
+  render() {
+    var fontcolor = {
+      color: "black",
+      fontSize: "16px"
+    };
+    return (
+      <div>
+        <div text-align="center">
+          <p style={fontcolor}>
+            Changes to the participant data have been saved
+          </p>
 
-    render() {
-
-        return (
-            <div>
-                <h3> SUCCESS</h3>
-                <br/>
-                <div text-align="center">
-                    <p>Please click here to edit more patients.</p>
-                </div>
-                <br/>
-                <div text-align="center">
-                    <p>Please click the "Finish" button below to conclude this session and return to the home screen.</p>
-                </div>
-
-            </div>
-        )
-    }
-} 
+          <p style={fontcolor}>
+            Please click the "Finish" button below to conclude this session and
+            return to the home screen.
+          </p>
+        </div>
+      </div>
+    );
+  }
+}

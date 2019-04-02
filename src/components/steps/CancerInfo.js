@@ -235,19 +235,19 @@ class CancerInfo extends React.Component {
     console.log("locaDoDiag : " + locaDoDiag);
     console.log(
       "In Negative difference: " +
-      Math.floor((locaDoDeath - locaDoDiag) / 31536000000)
+        Math.floor((locaDoDeath - locaDoDiag) / 31536000000)
     );
 
     console.log(
       "In Negative :  dateOfDeath: " +
-      new Date(
-        this.convertDateFormat(this.state.selectedPersonData.dateOfDeath)
-      )
+        new Date(
+          this.convertDateFormat(this.state.selectedPersonData.dateOfDeath)
+        )
     );
 
     console.log(
       "In Negative : dateOfDiagFromDb  : " +
-      new Date(this.convertDateFormat(this.state.dateOfDiagFromDb))
+        new Date(this.convertDateFormat(this.state.dateOfDiagFromDb))
     );
 
     // Math.floor((dodiag - dob) / 31536000000);
@@ -285,11 +285,11 @@ class CancerInfo extends React.Component {
     // }
     console.log(
       "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL" +
-      this.props.editedRecordCount
+        this.props.editedRecordCount
     );
     console.log(
       "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL Length" +
-      this.state.arrayEditedData.length
+        this.state.arrayEditedData.length
     );
 
     // const urlProfession = properties.baseUrl + "practitionerscore/" ;
@@ -324,12 +324,12 @@ class CancerInfo extends React.Component {
     this.state.newCancerModalId = Math.floor(Math.random() * 10);
     console.log(
       "site &&&&&&&&&&&&&&&&&&&&&77 intGender : " +
-      this.props.patientDataValue.intGender
+        this.props.patientDataValue.intGender
     );
 
     console.log(
       "site &&&&&&&&&&&&&&&&&&&&&77" +
-      this.props.patientDataValue.cancerList[0].id
+        this.props.patientDataValue.cancerList[0].id
     );
     // this.state.profession.push(data);
 
@@ -910,7 +910,7 @@ class CancerInfo extends React.Component {
     console.log("loadDataToEditDialog TUmorNo : " + id);
     console.log(
       "loadDataToEditDialog TUmorNo : " +
-      this.state.selectedPersonData.personCID
+        this.state.selectedPersonData.personCID
     );
     //ToDu
     // save the changed row in to an array , this will be compaired with the original data in the review.
@@ -963,7 +963,7 @@ class CancerInfo extends React.Component {
 
     console.log(
       "siteEditDlg behaviourcodesFromDb' diagSourceFromDbFromDb" +
-      this.state.diagSourceFromDb
+        this.state.diagSourceFromDb
     );
   }
   setCurrentSource() {
@@ -1002,23 +1002,27 @@ class CancerInfo extends React.Component {
       marginBottom: "8px",
       fontWeight: "bold"
     };
+    var paragaphStyle = {
+      color: "black",
+      fontSize: "16px"
+    };
     return (
       <div>
         <HeaderPanel patientDetials={this.state.patientData} />
-        <p> Cancer Information</p>
+        <h3> Cancer Information</h3>
         <table className="TFtable">
           <tbody>
             <tr>
-              <th>TUMOR_NO</th>
-              <th>SITE</th>
-              <th>LATERAL</th>
-              <th>HISTOLOGY</th>
-              <th>BEHAVIOR</th>
-              <th>DIAGNOSIS DATE</th>
-              <th>AGE DIAGNOSIS</th>
-              <th>DIAGNOSIS SOURCE:</th>
-              <th>TISSUE</th>
-              <th>UPDATE</th>
+              <th>Tumor No</th>
+              <th>Site</th>
+              <th>Lateral</th>
+              <th>Histology</th>
+              <th>Behaviour</th>
+              <th>Diagnosis Date</th>
+              <th>Age Diagnosis</th>
+              <th>Diagnosis Source</th>
+              <th>Tissue</th>
+              <th>Update</th>
             </tr>
 
             {rows}
@@ -1028,9 +1032,10 @@ class CancerInfo extends React.Component {
           {" "}
           Add Cancer
         </Button>
-        <p>
-          “If you wish to delete any of these cancers please contact CFR
-          Informatics.”{" "}
+        <p style={paragaphStyle}>
+          Please contact{" "}
+          <a href="mailto:m.angelakos@unimelb.edu.au">CFR Informatics</a> if you
+          wish to delete any of these cancers.
         </p>
         {/* Modal for Editing New Cancer - START*/}
         {this.state.showAddCancerDialog ? (
@@ -1065,14 +1070,14 @@ const PersonRow = props => {
       <td className="spanText">{props.cancerInfo.lateral.description}</td>
       <td className="spanText">{props.cancerInfo.histology}</td>
 
-      <td className="spanText" >{props.cancerInfo.behaviour.description}</td>
+      <td className="spanText">{props.cancerInfo.behaviour.description}</td>
       <td className="spanText">
         {props.cancerInfo.dateOfDiagnosis != null
           ? props.cancerInfo.dateOfDiagnosis.slice(4, 6) +
-          "/" +
-          props.cancerInfo.dateOfDiagnosis.slice(6, 8) +
-          "/" +
-          props.cancerInfo.dateOfDiagnosis.slice(0, 4)
+            "/" +
+            props.cancerInfo.dateOfDiagnosis.slice(6, 8) +
+            "/" +
+            props.cancerInfo.dateOfDiagnosis.slice(0, 4)
           : "N/A"}
       </td>
       <td className="spanText">{props.cancerInfo.ageDiagnosis}</td>
@@ -1088,6 +1093,7 @@ const PersonRow = props => {
         </td> */}
       <td>
         <Button
+          className="btn-warning"
           bsSize="small"
           onClick={() => props.handleShow(props.tumorId, props.rowId)}
         >

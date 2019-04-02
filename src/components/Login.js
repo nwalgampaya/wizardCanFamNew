@@ -5,7 +5,6 @@ import Routes from "./Routes";
 import { Redirect } from "react-router-dom";
 import FormValidator from "./validator/FormValidator.js";
 
-
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +23,7 @@ export default class Login extends React.Component {
   }
 
   handleSubmit = event => {
-    console.log("LogIn handlesubmit")
+    console.log("LogIn handlesubmit");
     var payload = {
       username: this.state.username,
       password: this.state.password
@@ -35,10 +34,7 @@ export default class Login extends React.Component {
     if (this.state.error) {
       event.preventDefault();
       console.log("In if test rere" + this.state.error);
-
-    }
-    else {
-
+    } else {
     }
     // event.preventDefault();
     // console.log("test rere");
@@ -60,18 +56,17 @@ export default class Login extends React.Component {
     this.setState({ error: false });
   }
   setErrortrue() {
-
     this.setState({ error: true });
     console.log("setErrortrue" + this.state.error);
   }
   onSubmit() {
-    console.log("in LOGIN submit" + this.state.username)
+    console.log("in LOGIN submit" + this.state.username);
 
     var payload = {
       username: this.state.username,
       password: this.state.password
     };
-    this.login(payload)
+    this.login(payload);
   }
   login(user, event) {
     console.log("patientId getPatientDetails");
@@ -133,7 +128,7 @@ export default class Login extends React.Component {
       display: "flex"
     };
     const loginDiv = {
-      marginLeft: "100px",
+      marginLeft: "50px",
       marginBottom: "20px",
       textAlign: "left"
     };
@@ -158,8 +153,11 @@ export default class Login extends React.Component {
       marginTop: "-30px"
     };
     var paraStyle = {
-      marginBottom: "70px",
-    }
+      marginBottom: "70px"
+    };
+    var lblDiv = {
+      marginTop: "8px"
+    };
     var flex = {};
 
     return (
@@ -168,12 +166,16 @@ export default class Login extends React.Component {
       // <div className="content_body centered" style={alignHeight}>
       <div>
         <div className="welcome-para">
-          <p style={paraStyle}>WELCOME TO THE USC CCFR INFORMATICS DATA PORTAL</p>
+          <p style={paraStyle}>
+            WELCOME TO THE USC CCFR INFORMATICS DATA PORTAL
+          </p>
         </div>
 
         {/* <form > */}
         <div className="form-group" style={userDiv}>
-          <div className="col-sm-5 control-margin">Username:</div>
+          <div className="col-sm-5 control-margin lableBold" style={lblDiv}>
+            Username:
+          </div>
           <div className="col-sm-4  control-margin">
             <input
               type="text"
@@ -187,7 +189,9 @@ export default class Login extends React.Component {
         </div>
 
         <div className="form-group" style={passDiv}>
-          <div className="col-sm-5 control-margin">Password:</div>
+          <div className="col-sm-5 control-margin lableBold" style={lblDiv}>
+            Password:
+          </div>
           <div className="col-sm-4  control-margin " style={passWordStyle}>
             <input
               type="password"
@@ -224,7 +228,6 @@ export default class Login extends React.Component {
 
         {/* </form> */}
         {/* // </div> */}
-
       </div>
     );
   }

@@ -59,26 +59,38 @@ export default class FamilySaveInfo extends React.Component {
       });
   }
   createUI() {
+    var style = {
+      fontSize: "16px",
+      textAlign: "center",
+      marginTop: "15px"
+    };
     return (
-      // this.props.changedParameters.map((values, i) =>
-      <table className="TFtable">
-        <tbody>
-          <tr>
-            <th>Selected Individual ID</th>
-            <th>LKD Date Old</th>
-            <th>LKD Date New</th>
-          </tr>
-          {this.props.chkBoxId.map((value, i) => (
-            <tr key={i}>
-              {console.log("value saveFam: " + value)}
-              <td>{value.patientIDs}</td>
-              <td>{value.lkdDate}</td>
-              <td>{this.props.currentLKD}</td>
-              {/* {console.log("value : " + value[i].lkdDate)} */}
+      <div>
+        {/* // this.props.changedParameters.map((values, i) => */}
+        <h3> Review Updates</h3>
+        <table className="TFtable">
+          <tbody>
+            <tr>
+              <th>Individual ID</th>
+              <th>LKD Date Old</th>
+              <th>LKD Date New</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            {this.props.chkBoxId.map((value, i) => (
+              <tr key={i}>
+                {console.log("value saveFam: " + value)}
+                <td>{value.patientIDs}</td>
+                <td>{value.lkdDate}</td>
+                <td>{this.props.currentLKD}</td>
+                {/* {console.log("value : " + value[i].lkdDate)} */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p style={style}>
+          Please ensure the below updates are correct before clicking "Save to
+          Database"
+        </p>
+      </div>
       //     <div key={i}>
       //        <input type="text" value={el||''} onChange={this.handleChange.bind(this, i)} />
       //        <input type='button' value='remove' onClick={this.removeClick.bind(this, i)}/>

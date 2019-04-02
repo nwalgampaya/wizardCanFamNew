@@ -43,9 +43,10 @@ export default class Individual extends React.Component {
   getPatientDetails = () => {
     console.log("patientId getPatientDetails");
 
-    if (this.state.patientId != '') {
+    if (this.state.patientId != "") {
       let status;
-      const urlpatients = properties.baseUrl + "patients/" + this.state.patientId;
+      const urlpatients =
+        properties.baseUrl + "patients/" + this.state.patientId;
       fetch(urlpatients)
         .then(response => {
           status = response.status;
@@ -92,18 +93,21 @@ export default class Individual extends React.Component {
       width: "100%",
       marginLeft: "-50px"
     };
+    var paraStyle = {
+      fontSize: "16px",
+      color: "black"
+    };
     return (
       <div>
-        <p>
-          {" "}
-          Please enter Individual ID to update a participant's follow-up and
-          cancer data{" "}
+        <p style={paraStyle}>
+          Please enter an Individual ID to update a participant's follow-up and
+          cancer data
         </p>
         <div className="form-holder-search">
           <input
             className="form-control-Search"
             type="search"
-            placeholder="Patient CID"
+            placeholder="Individual ID"
             value={this.state.patientId}
             onChange={this.setPatientId.bind(this)}
             name="patientSearch"

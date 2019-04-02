@@ -37,24 +37,30 @@ export default class PreviewInfo extends React.Component {
         fontWeight: "bold",
         textAlign: "left",
         marginLeft: "30px",
-        fontSize: "15px",
+        fontSize: "15px"
+      };
+      var styleSubHeader = {
+        marginBottom: "10px",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "16px"
       };
 
       var tabWidthStyle = {
         tableLayout: "fixed",
         width: "150px"
-      }
+      };
       var prevWidthStyle = {
         tableLayout: "fixed",
         width: "550px"
-      }
+      };
       return (
         <div>
-          <p style={style}>Individual Details Updated</p>
+          <p style={styleSubHeader}>Individual Details Updated</p>
           <table className="PRtable">
             <tbody>
-              <tr >
-                <th style={tabWidthStyle} >Column Name</th>
+              <tr>
+                <th style={tabWidthStyle}>Column Name</th>
                 <th style={prevWidthStyle}>Previous Value</th>
                 <th>New Value</th>
               </tr>
@@ -72,31 +78,29 @@ export default class PreviewInfo extends React.Component {
   }
   convertGenderAndVitalStatus(values) {
     if (values.column == "Gender") {
-      console.log("newValue*********************************:" + values.newVal)
+      console.log("newValue*********************************:" + values.newVal);
       if (values.newVal == 1) {
-        values.newVal = "Male"
+        values.newVal = "Male";
       } else if (values.newVal == 2) {
-        values.newVal = "Female"
+        values.newVal = "Female";
       } else if (values.newVal == 3) {
-        values.newVal = "Unknown"
-
+        values.newVal = "Unknown";
       }
     }
     if (values.column == "Vital Status") {
       if (values.newVal == 1) {
-        values.newVal = "Alive"
+        values.newVal = "Alive";
       } else if (values.newVal == 2) {
-        values.newVal = "Dead"
+        values.newVal = "Dead";
       } else if (values.newVal == 3) {
-        values.newVal = "Unknown"
-
+        values.newVal = "Unknown";
       }
     }
   }
 
   loopPersonDetails() {
     const tableRowStyle = {
-      fontFamily: "museo_sans_rounded300",
+      fontFamily: "Muli-SemiBold",
       fontWeight: "normal",
       color: "rgb(23, 54, 93)"
       // marginLeft: "-10px"
@@ -125,10 +129,10 @@ export default class PreviewInfo extends React.Component {
 
   createNewCancerUI() {
     var style = {
-      marginLeft: "23px",
+      marginBottom: "10px",
       fontWeight: "bold",
-      textAlign: "left",
-      fontSize: "15px"
+      textAlign: "center",
+      fontSize: "16px"
     };
     if (this.props.isCanecerAdded) {
       return (
@@ -174,11 +178,15 @@ export default class PreviewInfo extends React.Component {
           </tr>
           <tr>
             <td>Date Of Diagnosis</td>
-            <td style={tableRowStyle}>{values.dateOfDiagnosis /* {values.site.code} */}</td>
+            <td style={tableRowStyle}>
+              {values.dateOfDiagnosis /* {values.site.code} */}
+            </td>
           </tr>
           <tr>
             <td>Age Of Diagnosis</td>
-            <td style={tableRowStyle}>{values.ageDiagnosis /* {values.lateral.code} */}</td>
+            <td style={tableRowStyle}>
+              {values.ageDiagnosis /* {values.lateral.code} */}
+            </td>
           </tr>
           <tr>
             <td>Source</td>
@@ -195,10 +203,10 @@ export default class PreviewInfo extends React.Component {
 
   createEditedCancerUI() {
     var style = {
-      marginLeft: "30px",
+      marginBottom: "10px",
       fontWeight: "bold",
-      textAlign: "left",
-      fontSize: "15px"
+      textAlign: "center",
+      fontSize: "16px"
     };
     if (this.props.isCancerEdited) {
       return (
@@ -210,9 +218,7 @@ export default class PreviewInfo extends React.Component {
     }
   }
 
-  setDataType() {
-
-  }
+  setDataType() {}
   // convertToGetDate(date) {
   //   var formatDatestr = date;
 
@@ -225,7 +231,6 @@ export default class PreviewInfo extends React.Component {
   //   } else formatDatestr = "N/A";
   //   console.log("formatDatestr : " + formatDatestr);
 
-
   //   return formatDatestr;
   // }
 
@@ -236,11 +241,11 @@ export default class PreviewInfo extends React.Component {
     var tabWidthStyle = {
       tableLayout: "fixed",
       width: "150px"
-    }
+    };
     var prevWidthStyle = {
       tableLayout: "fixed",
       width: "550px"
-    }
+    };
     const tableRowStyle = {
       fontFamily: "museo_sans_rounded300",
       fontWeight: "normal",
@@ -258,13 +263,13 @@ export default class PreviewInfo extends React.Component {
         <table className="PRtable">
           <tbody>
             <tr>
-              <th style={tabWidthStyle} >Column Name</th>
+              <th style={tabWidthStyle}>Column Name</th>
               <th style={prevWidthStyle}>Previous Value</th>
               <th>New Value</th>
             </tr>
             {values.map((val, i) => (
               <tr>
-                <td >{val.column}</td>
+                <td>{val.column}</td>
                 <td style={tableRowStyle}>
                   {val.previousVal}
                   {/* {this.props.arrayEditedData[i].age} */}
@@ -348,30 +353,51 @@ export default class PreviewInfo extends React.Component {
       marginBottom: "6px",
       fontWeight: "bold",
       fontSize: "18px",
+      marginLeft: "30px",
+      marginTop: "15px,"
+    };
+
+    var style2 = {
+      fontSize: "17px",
+      textAlign: "center"
+    };
+    if (
+      this.props.isCanecerAdded ||
+      this.props.isCancerEdited ||
+      this.props.isCanFamEdited
+    ) {
+      return <p style={style}> Review Updates </p>;
+    }
+  }
+
+  revievBeforreSaveEnd() {
+    var style = {
+      marginBottom: "6px",
+      fontWeight: "bold",
+      fontSize: "18px",
       textAlign: "left",
       marginLeft: "30px",
       marginTop: "5px,"
     };
 
     var style2 = {
-      fontSize: "17px",
-      textAlign: "center",
-    }
-    if (this.props.isCanecerAdded || this.props.isCancerEdited || this.props.isCanFamEdited) {
+      fontSize: "16px",
+      textAlign: "center"
+    };
+    if (
+      this.props.isCanecerAdded ||
+      this.props.isCancerEdited ||
+      this.props.isCanFamEdited
+    ) {
       return (
-        <div>
-          <p style={style}> Review Details </p>
-          <div >
-            <p style={(style, style2)} >
-              {" "}
-              Please ensure the below updates are correct before clicking "Save
-              to Database" .
-            </p>
-          </div>
-        </div>
+        <p style={(style, style2)}>
+          Please ensure the below updates are correct before clicking "Save to
+          Database"
+        </p>
       );
     }
   }
+
   setHeaderPanel() {
     return (
       <div>
@@ -410,7 +436,7 @@ export default class PreviewInfo extends React.Component {
 
         {this.createUI()}
 
-        {/* {this.createCancerFields()} */}
+        {this.revievBeforreSaveEnd()}
       </div>
     );
   }

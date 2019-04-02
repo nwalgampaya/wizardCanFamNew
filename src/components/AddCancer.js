@@ -751,7 +751,7 @@ export default class AddCancer extends React.Component {
                         </option>
                       );
                     })
-                      // <option >{"Hospital Rec"}</option>
+                    // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>
@@ -1044,7 +1044,7 @@ export default class AddCancer extends React.Component {
                 type="button"
                 onClick={this.handleCloseAddCancer.bind(this)}
               >
-                Close
+                Cancel
               </button>
               {/* <Button onClick={this.handleCloseAddCancer} >Close</Button> */}
               {/* <button  disabled={isSubmitting}>Save</button> */}
@@ -1052,10 +1052,11 @@ export default class AddCancer extends React.Component {
               {/* <Button disabled= {!this.state.enableSaveButton} onClick={this.handleSave}>Save</Button> */}
 
               <Button
+                style={{ width: "170px" }}
                 className="btn btn-primary"
                 onClick={this.handleSaveAddCancer.bind(this)}
               >
-                Save
+                Save And Return
               </Button>
             </Modal.Footer>
           </Form>

@@ -26,7 +26,12 @@ export default class ChoosePath extends React.Component {
 
     this.props.onChooseOption(this.state.chooseTheFamily);
   }
+
   render() {
+    var paraStyle = {
+      color: "black",
+      fontSize: "16px"
+    };
     const buttonMargin = {
       marginRight: "25px"
     };
@@ -35,12 +40,16 @@ export default class ChoosePath extends React.Component {
       marginBottom: "50px",
       marginTop: "25px",
       display: "flex",
-      marginLeft: "30%"
+      marginLeft: "10%"
+    };
+    var fontcolor = {
+      color: "black",
+      fontSize: "16px"
     };
     return (
       <div>
         <div>
-          <p>
+          <p style={paraStyle}>
             This tool is used to update the Last Known Alive Date (LKD) and
             other details of participants in the Colon Cancer Family Registry
           </p>
@@ -53,20 +62,20 @@ export default class ChoosePath extends React.Component {
               type="submit"
             >
               <img
-                src={require("../../img/step-3.png")}
+                src={require("../../img/family.png")}
                 onClick={this.handleFamily}
               />
             </button>
-            <span className="col-sm-12">Family</span>
+            <span className="col-sm-12">Update family members</span>
           </div>
           <div>
             <button className="col-sm-12 chooseImage" type="submit">
               <img
-                src={require("../../img/step-4.png")}
+                src={require("../../img/individual.png")}
                 onClick={this.handleIndividual}
               />
             </button>
-            <span className="col-sm-12">Individual</span>
+            <span className="col-sm-12">Update an individual</span>
           </div>
         </div>
       </div>
