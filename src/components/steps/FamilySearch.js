@@ -36,6 +36,24 @@ export default class FamilySearch extends React.Component {
     this.handleLkd = this.handleLkd.bind(this);
     this.handleSearchGetFamily = this.handleSearchGetFamily.bind(this);
   }
+  convertDateFormat(date) {
+    var formatDatestr = date;
+    // console.log( "year: "+ str.slice(0,4) )
+    // console.log( "mon: "+ str.slice(4,6) )
+    // console.log( "date: "+ str.slice(6,8) )
+
+    // formatDatestr = formatDatestr!=null ? formatDatestr : 0;
+    if (formatDatestr != null)
+      formatDatestr =
+        formatDatestr.slice(4, 6) +
+        "/" +
+        formatDatestr.slice(6, 8) +
+        "/" +
+        formatDatestr.slice(0, 4);
+    else formatDatestr = "N/A";
+
+    return formatDatestr;
+  }
 
   handleLkd(currentLKD) {
     console.log("handleLkd :" + currentLKD);
@@ -195,7 +213,7 @@ export default class FamilySearch extends React.Component {
 
           {/* <td><input onChange={this.setfamilyId.bind(this)} value={i} type="radio" name="familyId"/></td> */}
           <td>{value.patientIDs}</td>
-          <td>{value.lkdDate}</td>
+          <td>{this.convertDateFormat(value.lkdDate)}</td>
         </tr>
       ));
     }

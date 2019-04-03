@@ -16,6 +16,25 @@ export default class FamilySaveInfo extends React.Component {
     };
   }
 
+  convertDateFormat(date) {
+    var formatDatestr = date;
+    // console.log( "year: "+ str.slice(0,4) )
+    // console.log( "mon: "+ str.slice(4,6) )
+    // console.log( "date: "+ str.slice(6,8) )
+
+    // formatDatestr = formatDatestr!=null ? formatDatestr : 0;
+    if (formatDatestr != null)
+      formatDatestr =
+        formatDatestr.slice(4, 6) +
+        "/" +
+        formatDatestr.slice(6, 8) +
+        "/" +
+        formatDatestr.slice(0, 4);
+    else formatDatestr = "N/A";
+
+    return formatDatestr;
+  }
+
   onSaveCancerFamilyID(e) {
     console.log("onSaveCancerFamilyID");
     this.props.chkBoxId.map(
@@ -79,8 +98,8 @@ export default class FamilySaveInfo extends React.Component {
               <tr key={i}>
                 {console.log("value saveFam: " + value)}
                 <td>{value.patientIDs}</td>
-                <td>{value.lkdDate}</td>
-                <td>{this.props.currentLKD}</td>
+                <td>{this.convertDateFormat(value.lkdDate)}</td>
+                <td>{this.convertDateFormat(this.props.currentLKD)}</td>
                 {/* {console.log("value : " + value[i].lkdDate)} */}
               </tr>
             ))}
