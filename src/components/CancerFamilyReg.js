@@ -338,7 +338,7 @@ class CancerFamilyReg extends React.Component {
 
           console.log(
             "Cause Of Death --------------------------------" +
-              changedField.previousVal
+            changedField.previousVal
           );
         }
         // if (columnName == "Relationship Code") {
@@ -373,7 +373,7 @@ class CancerFamilyReg extends React.Component {
 
           console.log(
             "Cause Of Death --------------------------------" +
-              changedField.previousVal
+            changedField.previousVal
           );
         }
         this.setState({ countChangedFields: ++this.state.countChangedFields });
@@ -403,7 +403,7 @@ class CancerFamilyReg extends React.Component {
 
         console.log(
           "Cause Of Death --------------------------------" +
-            changedField.previousVal
+          changedField.previousVal
         );
       }
     }
@@ -464,19 +464,19 @@ class CancerFamilyReg extends React.Component {
 
     // console.log("Mnt" + mnth)
     var mnths = {
-        Jan: "01",
-        Feb: "02",
-        Mar: "03",
-        Apr: "04",
-        May: "05",
-        Jun: "06",
-        Jul: "07",
-        Aug: "08",
-        Sep: "09",
-        Oct: "10",
-        Nov: "11",
-        Dec: "12"
-      },
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12"
+    },
       date = str2.split(" ");
 
     // console.log("date new 1" + date[1])
@@ -692,7 +692,7 @@ class CancerFamilyReg extends React.Component {
     this.state.sendCurrentDateDeath = this.convert(currentDeath);
     console.log(
       "sendCurrentDateDeath : ddddddddddddddddddddddd : " +
-        this.state.sendCurrentDateDeath
+      this.state.sendCurrentDateDeath
     );
   }
   setAgeOfDeath(event) {
@@ -751,7 +751,7 @@ class CancerFamilyReg extends React.Component {
     this.state.sendCurrentLKDA = this.convert(currentLKDA);
     console.log(
       "sendCurrentDateDeath : ddddddddddddddddddddddd : " +
-        this.state.sendCurrentLKDA
+      this.state.sendCurrentLKDA
     );
   }
 
@@ -939,8 +939,8 @@ class CancerFamilyReg extends React.Component {
           patientData.intGender == 1
             ? "Male"
             : patientData.intGender == 2
-            ? "Female"
-            : "Unknown"
+              ? "Female"
+              : "Unknown"
       });
     console.log(
       "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE intGender" + patientData.intGender
@@ -956,8 +956,8 @@ class CancerFamilyReg extends React.Component {
         patientData.vitalStatus == 1
           ? "Alive"
           : patientData.vitalStatus == 2
-          ? "Dead"
-          : "Unknown"
+            ? "Dead"
+            : "Unknown"
     });
     if (patientData.vitalStatus == 1) {
       this.state.isAlive = true;
@@ -1065,13 +1065,9 @@ class CancerFamilyReg extends React.Component {
 
     this.setState({
       sourceOfLiveDate: {
-        id: patientData.sourceOfLiveDate.id,
-        code: patientData.sourceOfLiveDate.code,
-        description: patientData.sourceOfLiveDate.description
-
-        //  patientData.sourceOfLiveDate != null ?                 : ''
-        //  patientData.sourceOfLiveDate != null ? : ''
-        //  patientData.sourceOfLiveDate != null ?             : ''
+        id: patientData.sourceOfLiveDate == null ? "" : patientData.sourceOfLiveDate.id,
+        code: patientData.sourceOfLiveDate == null ? "" : patientData.sourceOfLiveDate.code,
+        description: patientData.sourceOfLiveDate == null ? "" : patientData.sourceOfLiveDate.description,
       }
     });
 
@@ -1270,7 +1266,7 @@ class CancerFamilyReg extends React.Component {
       // this.state.patientDataValue.sourceOfDeath.id = fieldValues.id
       console.log(
         "IN POST REQUEST currentSourceOFDeath  id: " +
-          this.state.patientDataValue.sourceOfDeath.id
+        this.state.patientDataValue.sourceOfDeath.id
       );
     }
     if (
@@ -1280,7 +1276,7 @@ class CancerFamilyReg extends React.Component {
     ) {
       console.log(
         "IN POST REQUEST currentCourseOFDeath : " +
-          this.state.currentCourseOFDeath
+        this.state.currentCourseOFDeath
       );
 
       if (this.state.uknCourseOFDeath) {
@@ -1333,7 +1329,7 @@ class CancerFamilyReg extends React.Component {
       this.state.patientDataValue.sourceOfLiveDate.id = fieldValues.id;
       console.log(
         "IN POST REQUEST currentsourceOfLiveDate  id: " +
-          this.state.patientDataValue.sourceOfLiveDate.id
+        this.state.patientDataValue.sourceOfLiveDate.id
       );
     }
     if (
@@ -1358,7 +1354,7 @@ class CancerFamilyReg extends React.Component {
       this.state.patientDataValue.fPI1Status.id = fieldValues.id;
       console.log(
         "IN POST REQUEST currentfPI1Status  id: " +
-          this.state.patientDataValue.fPI1Status.id
+        this.state.patientDataValue.fPI1Status.id
       );
     }
     if (
@@ -1899,7 +1895,7 @@ class CancerFamilyReg extends React.Component {
     if (this.state.isInPreviewScreen == true) {
       console.log(
         "in Submit IF statusstatusstatusstatus: " +
-          this.state.patientDataValue.courseOfDeath.description
+        this.state.patientDataValue.courseOfDeath.description
       );
 
       this.savePatient(this.state.patientDataValue);
@@ -2084,8 +2080,8 @@ class CancerFamilyReg extends React.Component {
               this.state.isValidBirthDateSelected = true;
               this.state.currentDOB = this.convertDateFormat(
                 this.state.selectedYearDOB +
-                  this.state.selectedMonthDOB +
-                  this.state.selectedDateDOB
+                this.state.selectedMonthDOB +
+                this.state.selectedDateDOB
               );
               console.log("dob : " + this.state.selectedMonthDOB);
               console.log("dob : " + this.state.selectedDateDOB);
@@ -2130,8 +2126,8 @@ class CancerFamilyReg extends React.Component {
             ) {
               this.state.currentLKDA = this.convertDateFormat(
                 this.state.selectedYearLKD +
-                  this.state.selectedMonthLKD +
-                  this.state.selectedDateLKD
+                this.state.selectedMonthLKD +
+                this.state.selectedDateLKD
               );
 
               this.state.isValidLKDSelected = true;
@@ -2182,8 +2178,8 @@ class CancerFamilyReg extends React.Component {
             ) {
               this.state.currentDeath = this.convertDateFormat(
                 this.state.selectedYear +
-                  this.state.selectedMonth +
-                  this.state.selectedDate
+                this.state.selectedMonth +
+                this.state.selectedDate
               );
               this.state.isValidDeathSelected = true;
               console.log("dod : " + this.state.currentDeath);
@@ -2681,7 +2677,7 @@ class CancerFamilyReg extends React.Component {
                             );
                           })
 
-                          // <option >{"Hospital Rec"}</option>
+                            // <option >{"Hospital Rec"}</option>
                           }
                         </select>
                         <div className="validationMsg">
@@ -2801,7 +2797,7 @@ class CancerFamilyReg extends React.Component {
                             );
                           })
 
-                          // <option >{"Hospital Rec"}</option>
+                            // <option >{"Hospital Rec"}</option>
                           }
                         </select>
                       </div>

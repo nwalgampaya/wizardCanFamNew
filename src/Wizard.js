@@ -208,6 +208,15 @@ export default class Wizard extends React.Component {
     }));
     // window.location.reload();
   };
+
+
+  updateFamily = () => {
+    this.setState(state => ({
+      // page: Math.max(state.page + 1, 0)
+      page: 7
+    }));
+    // window.location.reload();
+  };
   selectCategory = () => {
     // const {returnToFirst } = this.props
     const { getCategoryFromServer } = this.props;
@@ -319,14 +328,25 @@ export default class Wizard extends React.Component {
 
                     )} */}
                     {/* {isLastPage && ( */}
+
                     {((page == 9 && this.props.choosePathFamily) ||
                       page == 6) && (
+                        <button
+                          className="btn btn-primary pull-right"
+                          type="button"
+                          onClick={this.endSession}
+                        >
+                          Finish
+                      </button>
+                      )}
+                    {(page == 9 && this.props.choosePathFamily) && (
                       <button
                         className="btn btn-primary pull-right"
+                        style={{ marginRight: "20px", width: "180px" }}
                         type="button"
-                        onClick={this.endSession}
+                        onClick={this.updateFamily}
                       >
-                        Finish
+                        Update Next Family
                       </button>
                     )}
                     {/* {page > 0 && (
@@ -350,15 +370,15 @@ export default class Wizard extends React.Component {
                       page == 5 ||
                       ((page == 7 || page == 8 || page == 9) &&
                         this.props.choosePathFamily)) && (
-                      <button
-                        className="btn btn-primary"
-                        type="button"
-                        onClick={this.logout}
-                      >
-                        {" "}
-                        Logout
+                        <button
+                          className="btn btn-primary"
+                          type="button"
+                          onClick={this.logout}
+                        >
+                          {" "}
+                          Logout
                       </button>
-                    )}
+                      )}
                     {/* {(!this.props.choosePathFamily || page == 7) && (
                       <button className="invisible" type="button">
                         Invisible
@@ -375,25 +395,25 @@ export default class Wizard extends React.Component {
                       page == 6 ||
                       page == 5 ||
                       this.props.choosePathFamily) && (
-                      <button className="invisible" type="button">
-                        Invisible Invisible Invisible aaa{" "}
-                      </button>
-                    )}
+                        <button className="invisible" type="button">
+                          Invisible Invisible Invisible aaa{" "}
+                        </button>
+                      )}
                     {(((page == 3 || page == 4 || page == 6 || page == 5) &&
                       page != 6) ||
                       ((page == 7 || page == 8) &&
                         this.props.choosePathFamily)) && (
-                      <button
-                        style={
-                          page == 5 || page == 8 ? alignCancel5 : alignCancel
-                        }
-                        className="btn btn-primary"
-                        type="button"
-                        onClick={this.ExitRecord}
-                      >
-                        Cancel This Update
+                        <button
+                          style={
+                            page == 5 || page == 8 ? alignCancel5 : alignCancel
+                          }
+                          className="btn btn-primary"
+                          type="button"
+                          onClick={this.ExitRecord}
+                        >
+                          Cancel This Update
                       </button>
-                    )}
+                      )}
                     {page == 2 && (!this.props.choosePathFamily || page == 7) && (
                       <button
                         style={alignButton}
@@ -417,10 +437,10 @@ export default class Wizard extends React.Component {
                       page == 6 ||
                       page == 5 ||
                       this.props.choosePathFamily) && (
-                      <button className="invisible" type="button">
-                        Invisible Invisible Invisible
+                        <button className="invisible" type="button">
+                          Invisible Invisible Invisible
                       </button>
-                    )}
+                      )}
                     {/* {(page == 3 || page == 4 || page == 6 || page == 5) && (
                       <button className="invisible" type="button">
                         xx{" "}
@@ -437,20 +457,20 @@ export default class Wizard extends React.Component {
 
                     {((page > 1 && page != 6 && !this.props.choosePathFamily) ||
                       page == 8) && (
-                      // (page != 8 && this.props.choosePathFamily) && (
-                      <button
-                        // style={this.props.choosePathFamily == true ? alignBack : ''}
-                        className="btn btn-primary"
-                        style={
-                          page == 2 ? { float: "right" } : { float: "none" }
-                        }
-                        type="button"
-                        onClick={this.previous}
-                      >
-                        {" "}
-                        Back
+                        // (page != 8 && this.props.choosePathFamily) && (
+                        <button
+                          // style={this.props.choosePathFamily == true ? alignBack : ''}
+                          className="btn btn-primary"
+                          style={
+                            page == 2 ? { float: "right" } : { float: "none" }
+                          }
+                          type="button"
+                          onClick={this.previous}
+                        >
+                          {" "}
+                          Back
                       </button>
-                    )}
+                      )}
                     {/* {(this.props.choosePathFamily && page == 8) && (
                       // (page != 8 && this.props.choosePathFamily) && (
                       <button
@@ -508,27 +528,27 @@ export default class Wizard extends React.Component {
                     {/* TODo add condition to disable save button when nothing edited or new added */}
                     {(page == 5 ||
                       (page == 8 && this.props.choosePathFamily)) && (
-                      <button
-                        style={{ width: "180px" }}
-                        disabled={
-                          true
-                            ? page == 5 &&
+                        <button
+                          style={{ width: "180px" }}
+                          disabled={
+                            true
+                              ? page == 5 &&
                               !(
                                 this.props.isCanecerAdded ||
                                 this.props.isCancerEdited ||
                                 this.props.isCanFamEdited
                               )
-                            : false
-                        }
-                        //  background-color: #cfc7b8;
-                        // btnOverWrite btn-primaryOverWrite
-                        // className="btn btn-primary pull-right"
-                        className="btn btn-primary pull-right"
-                        type="submit"
-                      >
-                        Save To Database
+                              : false
+                          }
+                          //  background-color: #cfc7b8;
+                          // btnOverWrite btn-primaryOverWrite
+                          // className="btn btn-primary pull-right"
+                          className="btn btn-primary pull-right"
+                          type="submit"
+                        >
+                          Save To Database
                       </button>
-                    )}
+                      )}
                     {/* {!page == 0 && !page == 1 && !isLastPage && <button className="btn btn-primary pull-right " type="submit">  Next  </button>} */}
                     {/* {page == 1 && (<button className="btn btn-primary pull-right" type="submit" disabled={submitting}>
                       Start</button>
