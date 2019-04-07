@@ -1,25 +1,18 @@
-import React from 'react';
+import React from "react";
 // import React, { Component } from 'react';
 
-
-export default class Family extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-     
-     
-        }
-    }
-
-    render(){
-
-        return(
-
-            <div>
-
-                <h2>In family Screen</h2>
-
-            </div>
-        )
-    }
-}
+export const FamilyStateObj = {
+  checkboxObj: {
+    lkdDate: "",
+    patientIDs: ""
+  },
+  isSearched: false,
+  individualId: [],
+  chkBoxId: [],
+  familyId: "",
+  selectedSrlCode: "",
+  currentLKD: "",
+  sendCurrentLKD: "",
+  isChecked: [],
+  isCheckedAll: false
+};

@@ -1550,10 +1550,6 @@ class CancerFamilyReg extends React.Component {
     this.setState({ isChecked: isChecked });
   };
   handleDataFromFamilySearch = (chkBoxId, selectedSrlCode, currentLKD) => {
-    console.log("handleDataFromFamilySearch : " + chkBoxId);
-    console.log("handleDataFromFamilySearch : " + selectedSrlCode);
-    console.log("handleDataFromFamilySearch : " + currentLKD);
-
     this.setState({ chkBoxId: chkBoxId });
     this.setState({ selectedSrlCode: selectedSrlCode });
     this.setState({ currentLKD: currentLKD });

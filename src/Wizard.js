@@ -11,6 +11,7 @@ import uniLogo from "../src/img/UniLogo.png";
 import globalHealthLogo from "../src/img/globalHealth.png";
 import proneImg from "../src/img/ProneProne.png";
 import cFamImg from "../src/img/cfr-banner.jpg";
+import Store from "../src/components/steps/FamilyStore";
 
 import Styles from "./Styles";
 
@@ -142,6 +143,8 @@ export default class Wizard extends React.Component {
       page: 1
     }));
     sessionStorage.setItem("reloading", "true");
+    Store.clearFamilySearchState();
+
     // document.location.reload(true);
   };
 

@@ -18,6 +18,18 @@ body {
 .lableBold {
   font-weight: bold;
 }
+.loading_overlay_content {
+  color: black;
+}
+
+.form-control-date {
+  height: 42px;
+  width: 100%;
+  padding: 0 35px 0 19px;
+  /* color: #999;
+  background: 0 0;
+  border: 1px solid #e6e6e6; */
+}
 
 .chkScale {
   zoom: 2;
