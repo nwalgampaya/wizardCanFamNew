@@ -214,10 +214,12 @@ export default class Wizard extends React.Component {
 
 
   updateFamily = () => {
+    Store.clearFamilySearchState();
     this.setState(state => ({
       // page: Math.max(state.page + 1, 0)
       page: 7
     }));
+
     // window.location.reload();
   };
   selectCategory = () => {
