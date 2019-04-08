@@ -145,7 +145,7 @@ export default class Wizard extends React.Component {
     sessionStorage.setItem("reloading", "true");
     Store.clearFamilySearchState();
 
-    // document.location.reload(true);
+    document.location.reload(true);
   };
 
   logout = () => {
@@ -200,7 +200,7 @@ export default class Wizard extends React.Component {
     if (reloading) {
       sessionStorage.removeItem("reloading");
       this.setState(state => ({
-        page: 2
+        page: 1
       }));
     }
   }
