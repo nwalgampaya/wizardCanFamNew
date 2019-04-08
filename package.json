@@ -30,5 +30,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://localhost:8080/uscportal"
+  "homepage": "http://localhost:8080/usc_test"
 }
