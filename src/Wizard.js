@@ -145,7 +145,7 @@ export default class Wizard extends React.Component {
     sessionStorage.setItem("reloading", "true");
     Store.clearFamilySearchState();
 
-    // document.location.reload(true);
+    document.location.reload(true);
   };
 
   logout = () => {
@@ -203,7 +203,7 @@ export default class Wizard extends React.Component {
     if (reloading) {
       sessionStorage.removeItem("reloading");
       this.setState(state => ({
-        page: 2
+        page: 1
       }));
     }
   }
@@ -216,10 +216,12 @@ export default class Wizard extends React.Component {
   };
 
   updateFamily = () => {
+    Store.clearFamilySearchState();
     this.setState(state => ({
       // page: Math.max(state.page + 1, 0)
       page: 7
     }));
+
     // window.location.reload();
   };
   selectCategory = () => {
