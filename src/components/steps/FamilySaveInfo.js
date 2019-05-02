@@ -87,6 +87,10 @@ export default class FamilySaveInfo extends React.Component {
       <div>
         {/* // this.props.changedParameters.map((values, i) => */}
         <h3> Review Updates</h3>
+        <p style={style}>
+          Please ensure the below updates are correct before clicking "Save To
+          Database"
+        </p>
         <table className="TFtable">
           <tbody>
             <tr>
@@ -105,10 +109,6 @@ export default class FamilySaveInfo extends React.Component {
             ))}
           </tbody>
         </table>
-        <p style={style}>
-          Please ensure the below updates are correct before clicking "Save to
-          Database"
-        </p>
       </div>
       //     <div key={i}>
       //        <input type="text" value={el||''} onChange={this.handleChange.bind(this, i)} />

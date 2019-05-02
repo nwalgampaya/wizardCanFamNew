@@ -278,36 +278,6 @@ class CancerInfo extends React.Component {
       });
     }
     this.state.editedRecordCoun = this.props.editedRecordCoun;
-    // if(this.props.editedRecordCoun=='undefined'){
-
-    //   this.state.editedRecordCoun= 0;
-    // }else {
-    // }
-    console.log(
-      "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL" +
-        this.props.editedRecordCount
-    );
-    console.log(
-      "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL Length" +
-        this.state.arrayEditedData.length
-    );
-
-    // const urlProfession = properties.baseUrl + "practitionerscore/" ;
-    // fetch saved practitioner rec id
-
-    // const urlCancerInfo = properties.baseUrl + "patients/" + personID + "cancers";
-    //TODO - remove the hard code
-    // const urlCancerInfo = properties.baseUrl + "patients/" + "121000186001" + "/cancers";
-    // fetch(urlCancerInfo)
-    //   .then(response => response.json())
-    //   .then((data) => {
-
-    //     this.setState({
-    //       cancerInfo: data,
-
-    //     });
-
-    // })
 
     // Assigning the patient object to local variables
     // var OldCancerList = this.props.patientDataValue.cancerList;
@@ -327,10 +297,6 @@ class CancerInfo extends React.Component {
         this.props.patientDataValue.intGender
     );
 
-    console.log(
-      "site &&&&&&&&&&&&&&&&&&&&&77" +
-        this.props.patientDataValue.cancerList[0].id
-    );
     // this.state.profession.push(data);
 
     const urlIcdcodes = properties.baseUrl + "icdcodes";

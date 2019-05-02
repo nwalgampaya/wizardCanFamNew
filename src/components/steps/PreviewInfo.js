@@ -83,7 +83,7 @@ export default class PreviewInfo extends React.Component {
         values.newVal = "Male";
       } else if (values.newVal == 2) {
         values.newVal = "Female";
-      } else if (values.newVal == 3) {
+      } else if (values.newVal == 9) {
         values.newVal = "Unknown";
       }
     }
@@ -92,7 +92,7 @@ export default class PreviewInfo extends React.Component {
         values.newVal = "Alive";
       } else if (values.newVal == 2) {
         values.newVal = "Dead";
-      } else if (values.newVal == 3) {
+      } else if (values.newVal == 9) {
         values.newVal = "Unknown";
       }
     }
@@ -100,7 +100,7 @@ export default class PreviewInfo extends React.Component {
 
   loopPersonDetails() {
     const tableRowStyle = {
-      fontFamily: "Muli-SemiBold",
+      // fontFamily: "Muli-SemiBold",
       fontWeight: "normal",
       color: "rgb(23, 54, 93)"
       // marginLeft: "-10px"
@@ -166,7 +166,6 @@ export default class PreviewInfo extends React.Component {
   createCancerFields() {
     console.log("In new Cancer Preview");
     const tableRowStyle = {
-      fontFamily: "museo_sans_rounded300",
       fontWeight: "normal",
       color: "rgb(23, 54, 93)"
     };
@@ -266,7 +265,6 @@ export default class PreviewInfo extends React.Component {
       width: "550px"
     };
     const tableRowStyle = {
-      fontFamily: "museo_sans_rounded300",
       fontWeight: "normal",
       color: "rgb(23, 54, 93)"
       // marginLeft: "-10px"
@@ -413,7 +411,7 @@ export default class PreviewInfo extends React.Component {
     ) {
       return (
         <p style={(style, style2)}>
-          Please ensure the below updates are correct before clicking "Save to
+          Please ensure the below updates are correct before clicking "Save To
           Database"
         </p>
       );
@@ -453,7 +451,7 @@ export default class PreviewInfo extends React.Component {
       <div>
         {this.setHeaderPanel()}
         {this.revievBeforreSave()}
-        {this.displayLiveDate()}
+        {/* {this.displayLiveDate()} */}
         {/* {this.createTablePersonDetails()} */}
 
         {this.createUI()}

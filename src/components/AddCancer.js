@@ -263,10 +263,14 @@ export default class AddCancer extends React.Component {
   }
 
   setTumorNo() {
-    this.state.cancer.tumorNo = Math.max(
-      ...this.getTumorNos(this.patientData.cancerList)
-    );
-    this.state.cancer.tumorNo = this.state.cancer.tumorNo + 1;
+    if (this.patientData.cancerList && this.patientData.cancerList.length) {
+      this.state.cancer.tumorNo = Math.max(
+        ...this.getTumorNos(this.patientData.cancerList)
+      );
+      this.state.cancer.tumorNo = this.state.cancer.tumorNo + 1;
+    } else {
+      this.state.cancer.tumorNo = 1;
+    }
   }
   setPatientPersonId() {
     console.log("PATIENT NO : " + this.props.patientData.personID);
@@ -284,6 +288,7 @@ export default class AddCancer extends React.Component {
     if (validation.isValid) {
       this.setTumorNo();
       this.setPatientPersonId();
+      this.state.cancer.centerNo = 12;
       var addedList = [...this.patientData.cancerList, this.state.cancer];
       this.patientData.cancerList = addedList;
       this.setState({ showAddCancerDialog: false });

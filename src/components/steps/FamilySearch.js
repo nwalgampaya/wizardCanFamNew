@@ -177,8 +177,8 @@ export default class FamilySearch extends React.Component {
               <th>
                 {" "}
                 There are no living/eligible participants in this family to
-                update Last Known Date. Please update individual details for
-                participants you wish to update first.
+                update Last Known Date. Please update these participants
+                individually.
               </th>
             </tr>
           );
@@ -457,8 +457,8 @@ export default class FamilySearch extends React.Component {
               });
             } else if (status == 404) {
               console.log(data);
-              this.state.errorMsg =
-                "Patient not found for family " + familyIdValue;
+              this.setState({ isSearched: false });
+              this.state.errorMsg = "Invalid Family ID";
               // data.apierror.message;
               this.setErrortrue();
               //   this.setState({
