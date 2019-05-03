@@ -16,7 +16,7 @@ export default class HeaderPanel extends React.Component {
             <span className="headerPanel2Span">
               <b>Person ID:</b> {this.props.patientDetials.personID}
               <br />
-              <b>Family ID:</b> {this.props.patientDetials.familyID}
+              <b>Family ID:</b> {this.props.patientDetials.membership.familyID}
               <br />
               <b>MotherID:</b> {this.props.patientDetials.motherID} <br />
               <b>FatherID:</b> {this.props.patientDetials.fatherID}

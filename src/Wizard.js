@@ -208,10 +208,12 @@ export default class Wizard extends React.Component {
     }
   }
   endSession = () => {
+    const {onBackPressReload }= this.props;
     this.setState(state => ({
       // page: Math.max(state.page + 1, 0)
       page: 1
     }));
+    return onBackPressReload();
     // window.location.reload();
   };
 
@@ -257,21 +259,28 @@ export default class Wizard extends React.Component {
     const isLastPage = page === React.Children.count(children) - 1;
 
     // if(isLastPage){
-    if (this.state.page == 1) {
-      this.next(values);
-      // return onSubmit(values)
-    }
-    // else if(this.state.isModalOpen){
-    //   console.log("dialog Open")
-    // }
-    else {
-      this.next(values);
+    if (this.props.choosePathFamily == false) {
+      if (this.state.page == 1) {
+        this.next(values);
+        // return onSubmit(values)
+      }
+      // else if(this.state.isModalOpen){
+      //   console.log("dialog Open")
+      // }
+      else {
+        this.next(values);
 
-      console.log(
-        "******************** PRESSED ON SUBMIT **********************************"
-      );
-      return onSubmit(values);
+        console.log(
+          "******************** PRESSED ON SUBMIT **********************************"
+        );
+        return onSubmit(values);
+      }
     }
+    else {
+
+      this.next(values);
+    }
+
   };
 
   render() {
@@ -284,6 +293,7 @@ export default class Wizard extends React.Component {
     const alignButton = { marginLeft: "37%" };
     const alignCancel = { marginLeft: "7%", width: "200px" };
     const alignCancel5 = { marginLeft: "2%", width: "200px" };
+    const marginRight = { marginRight: "220px" };
     const alignBack = { marginRight: "0" };
     const { children } = this.props;
     const { page, values } = this.state;
@@ -402,8 +412,8 @@ export default class Wizard extends React.Component {
                       page == 6 ||
                       page == 5 ||
                       this.props.choosePathFamily) && (
-                      <button className="invisible" type="button">
-                        Invisible Invisible Invisible aaa{" "}
+                      <button style={marginRight} className="invisible" type="button">
+                       
                       </button>
                     )}
                     {(((page == 3 || page == 4 || page == 6 || page == 5) &&
@@ -435,8 +445,8 @@ export default class Wizard extends React.Component {
                       </button>
                     )}
                     {page == 2 && (
-                      <button className="invisible" type="button">
-                        Invisible Invisible Invisible
+                      <button style={marginRight} className="invisible" type="button">
+                       
                       </button>
                     )}
                     {(page == 3 ||
@@ -444,8 +454,8 @@ export default class Wizard extends React.Component {
                       page == 6 ||
                       page == 5 ||
                       this.props.choosePathFamily) && (
-                      <button className="invisible" type="button">
-                        Invisible Invisible Invisible
+                      <button style={marginRight} className="invisible" type="button">
+                       
                       </button>
                     )}
                     {/* {(page == 3 || page == 4 || page == 6 || page == 5) && (
@@ -462,7 +472,7 @@ export default class Wizard extends React.Component {
                     {/* page !=3 &&  */}
                     {/* || ((page == 7) && this.props.choosePathFamily)) */}
 
-                    {((page > 1 && page != 6 && !this.props.choosePathFamily) ||
+                    {((page > 1 && page != 3 &&  page != 6 && !this.props.choosePathFamily) ||
                       page == 8) && (
                       // (page != 8 && this.props.choosePathFamily) && (
                       <button

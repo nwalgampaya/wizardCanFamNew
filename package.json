@@ -25,10 +25,10 @@
     "yup": "^0.26.6"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://localhost:8080/uscportal"
+  "homepage": "http://localhost:8080/usc_test"
 }

@@ -47,7 +47,13 @@ export default class FamilySearch extends React.Component {
 
     this.handleLkd = this.handleLkd.bind(this);
     this.handleSearchGetFamily = this.handleSearchGetFamily.bind(this);
+    this.baseState= this.state ;
   }
+
+  onBackPressReload= () => {
+    this.setState(this.baseState)
+  }
+
   convertDateFormat(date) {
     var formatDatestr = date;
     // console.log( "year: "+ str.slice(0,4) )
@@ -80,7 +86,7 @@ export default class FamilySearch extends React.Component {
     );
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() {   
     // var reloading = sessionStorage.getItem("reloading");
     // if (reloading) {
     //   Store.clearProductList();

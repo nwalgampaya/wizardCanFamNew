@@ -24,6 +24,7 @@ import DeathDateSelect from "./util/DeathDateSelect";
 import HeaderPanel from "./HeaderPanel";
 import FamilyFinish from "./steps/FamilyFinish";
 import Login from "./Login";
+import Store from "./steps/FamilyStore";
 
 // import FormValidator from './validator/FormValidator';
 
@@ -223,6 +224,7 @@ class CancerFamilyReg extends React.Component {
     );
     this.assignDbDataToFields = this.assignDbDataToFields.bind(this);
     this.setAgeOfDeath = this.setAgeOfDeath.bind(this);
+    this.baseState= this.state ;
   }
 
   //Transfered from StartPageRegistry
@@ -232,13 +234,23 @@ class CancerFamilyReg extends React.Component {
 
   // }
 
+  onBackPressReload= () => {
+    console.log(" onBackPressReload:  " + this.state.choosePathFamily/*  */)
+    if(this.state.choosePathFamily){
+      Store.clearFamilySearchState();
+    }else{
+      this.setState(this.baseState)
+    }
+
+  }
+
   choosePath() {
     console.log("SELECTED OPTION family" + this.state.choosePathFamily);
     if (this.state.choosePathFamily) {
       //  fourthPage:'',
       this.state.sixthPage = (
         <FamilySearch
-          ref={this.child}
+          ref="familyCHD"//{this.child}""
           onFamilySearch={this.handleDataFromFamilySearch}
           onProceedButton={this.handleChkFlagFamilySearch}
         />
@@ -1769,7 +1781,7 @@ class CancerFamilyReg extends React.Component {
   onSelectCancerFamId(e) {
     console.log(" cancerFamily onSelectCancerFamId ");
 
-    this.child.current.onSelectCancerFamId();
+    this.refs.familyCHD.onSelectCancerFamId();
   }
 
   onSaveCancerFamilyID() {
@@ -1784,7 +1796,53 @@ class CancerFamilyReg extends React.Component {
     this.child.current.onCancerInfoPage();
   }
 
+  loadDropBoxValues(){
+    const urlFupcodes = properties.baseUrl + "fupcodes/";
+    fetch(urlFupcodes)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          fupcodesRest: data
+        });
+        // this.state.profession.push(data);
+      });
+    const urlSrcOfDeath = properties.baseUrl + "srcDeathcodes/";
+    fetch(urlSrcOfDeath)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          srcOfDeathRest: data
+        });
+        // this.state.profession.push(data);
+      });
+
+    const urlLastKnownDates = properties.baseUrl + "srlcodes/";
+    fetch(urlLastKnownDates)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          lastKnownDatesRest: data
+        });
+        // this.state.profession.push(data);
+      });
+    const urlrelcodes = properties.baseUrl + "relcodes/";
+    fetch(urlrelcodes)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          relcodesRest: data
+        });
+        // this.state.profession.push(data);
+      });
+  }
+  
+
   onSearchPatient() {
+    this.loadDropBoxValues();
     console.log(" cancerFamily onSaveCancerFamilyID ");
     if (this.childInvidiualCmp instanceof Individual) {
       this.childInvidiualCmp.getPatientDetails();
@@ -1917,6 +1975,7 @@ class CancerFamilyReg extends React.Component {
         isCancerEdited={this.state.isCancerEdited}
         isCanFamEdited={this.state.isCanFamEdited}
         incorrectCred={this.state.incorrectCred}
+        onBackPressReload={this.onBackPressReload.bind(this)}
         ref={wizardCmp => {
           this.wizardCmp = wizardCmp;
         }}
