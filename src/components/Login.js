@@ -16,6 +16,7 @@ export default class Login extends React.Component {
       errorMsg: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    global.userName = "";
   }
 
   validateForm() {
@@ -94,7 +95,10 @@ export default class Login extends React.Component {
         if (responseText === "true") {
           console.log("got api call " + responseText);
           this.setErrorFalse();
-          this.props.onIncorrectCred(false);
+          this.props.onIncorrectCred(this.state.username);
+
+          global.userName = this.state.username;
+
           // this.props.history.push("/uscportal");
         } else {
           var error = JSON.parse(responseText);

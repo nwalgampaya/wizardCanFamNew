@@ -2,6 +2,7 @@ import React from "react";
 // import React, { Component } from 'react';
 import { properties } from "../../properties.js";
 
+import Store from "./FamilyStore";
 export default class FamilySaveInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -37,14 +38,17 @@ export default class FamilySaveInfo extends React.Component {
 
   onSaveCancerFamilyID(e) {
     console.log("onSaveCancerFamilyID");
-    this.props.chkBoxId.map(
-      (value, i) => (
-        console.log(" patient id map " + value.patientIDs),
-        (this.state.PatientLKDDTO.patientIDs[i] = value.patientIDs)
-      )
-    );
+    // this.props.chkBoxId.map(
+    //   (value, i) => (
+    //     console.log(" patient id map " + value.patientIDs),
+    //     (this.state.PatientLKDDTO.patientIDs[i] = value.patientIDs)
+    //   )
+    // );
+    this.state.PatientLKDDTO.patientIDs = this.props.chkBoxId;
     (this.state.PatientLKDDTO.lkdDate = this.props.currentLKD),
       (this.state.PatientLKDDTO.lkdSource.code = this.props.selectedSrlCode);
+
+    this.state.PatientLKDDTO.userName = global.userName;
 
     const urlSavefamilyId = properties.baseUrl + "patients/lkd";
 
@@ -95,8 +99,8 @@ export default class FamilySaveInfo extends React.Component {
           <tbody>
             <tr>
               <th>Individual ID</th>
-              <th>LKD Date Old</th>
-              <th>LKD Date New</th>
+              <th>LIVEDATE Old</th>
+              <th>LIVEDATE New</th>
             </tr>
             {this.props.chkBoxId.map((value, i) => (
               <tr key={i}>

@@ -70,7 +70,7 @@ export default class AddCancer extends React.Component {
         field: "dateOfDiagnosis",
         method: "isEmpty",
         validWhen: false,
-        message: "Date Of Diagnosis is a required field"
+        message: "Date Of Diagnosis cannot be empty"
       },
 
       {
@@ -139,9 +139,14 @@ export default class AddCancer extends React.Component {
       var dt1 = parseInt(this.patientData.dateOfDeath.substring(6));
       var mon1 = parseInt(this.patientData.dateOfDeath.substring(4, 6));
       var yr1 = parseInt(this.patientData.dateOfDeath.substring(0, 4));
-      var date1 = new Date(yr1, mon1 - 1, dt1);
-      this.state.existingDeathDate = date1;
-      this.state.isExistingDeathDate = true;
+
+      if (yr1 != "9999") {
+        this.state.existingDeathDate = date1;
+        this.state.isExistingDeathDate = true;
+        var date1 = new Date(yr1, mon1 - 1, dt1);
+      } else {
+        this.state.isExistingDeathDate = false;
+      }
     }
 
     if (
@@ -151,9 +156,13 @@ export default class AddCancer extends React.Component {
       var dt1 = parseInt(this.patientData.dateOfBirth.substring(6));
       var mon1 = parseInt(this.patientData.dateOfBirth.substring(4, 6));
       var yr1 = parseInt(this.patientData.dateOfBirth.substring(0, 4));
-      var date1 = new Date(yr1, mon1 - 1, dt1);
-      this.state.existingBirthDate = date1;
-      this.state.isExistingBirthDate = true;
+      if (yr1 != "9999") {
+        var date1 = new Date(yr1, mon1 - 1, dt1);
+        this.state.existingBirthDate = date1;
+        this.state.isExistingBirthDate = true;
+      } else {
+        this.state.isExistingBirthDate = false;
+      }
     }
   }
 
@@ -199,35 +208,47 @@ export default class AddCancer extends React.Component {
     if (
       this.state.selectedDay != "" &&
       this.state.selectedMonth != "" &&
-      this.state.selectedYear != "" &&
-      this.state.selectedYear != "9999"
+      this.state.selectedYear != ""
     ) {
-      console.log("in age calc");
-      var dateOfDiagn =
-        this.state.selectedYear +
-        this.state.selectedMonth +
-        this.state.selectedDay;
-      this.setState({ dateOfDiagnosis: dateOfDiagn });
-      console.log("in age calc " + this.state.dateOfDiagnosis);
+      if (this.state.selectedYear != "9999") {
+        console.log("in age calc");
+        var dateOfDiagn =
+          this.state.selectedYear +
+          this.state.selectedMonth +
+          this.state.selectedDay;
+        this.setState({ dateOfDiagnosis: dateOfDiagn });
+        console.log("in age calc " + this.state.dateOfDiagnosis);
 
-      cancerLocal.dateOfDiagnosis = dateOfDiagn;
+        cancerLocal.dateOfDiagnosis = dateOfDiagn;
 
-      if (this.state.isExistingBirthDate) {
-        var diagDate = this.getDate(
-          this.state.selectedDay,
-          this.state.selectedMonth,
-          this.state.selectedYear
-        );
-        var age = this.getAge(diagDate, this.state.existingBirthDate);
-        this.isAgeCalculated = true;
-        this.state.ageDiagnosis = age;
-        this.setState({ ageDiagnosis: age, isAgeCalculated: true });
-        cancerLocal.ageDiagnosis = age;
+        if (this.state.isExistingBirthDate) {
+          var diagDate = this.getDate(
+            this.state.selectedDay,
+            this.state.selectedMonth,
+            this.state.selectedYear
+          );
+          var age = this.getAge(diagDate, this.state.existingBirthDate);
+          this.isAgeCalculated = true;
+          this.state.ageDiagnosis = age;
+          this.setState({ ageDiagnosis: age, isAgeCalculated: true });
+          cancerLocal.ageDiagnosis = age;
 
-        console.log("AGE IS " + age);
+          console.log("AGE IS " + age);
+        } else {
+          this.setState({ ageDiagnosis: "", isAgeCalculated: false });
+          cancerLocal.ageDiagnosis = "";
+        }
       } else {
+        var dateOfDiagn =
+          this.state.selectedYear +
+          this.state.selectedMonth +
+          this.state.selectedDay;
+        this.setState({ dateOfDiagnosis: dateOfDiagn });
         this.setState({ ageDiagnosis: "", isAgeCalculated: false });
         cancerLocal.ageDiagnosis = "";
+        console.log("in age calc " + this.state.dateOfDiagnosis);
+
+        cancerLocal.dateOfDiagnosis = dateOfDiagn;
       }
     } else {
       this.setState({

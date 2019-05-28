@@ -144,7 +144,7 @@ class CancerInfo extends React.Component {
     this.setCurrentSource = this.setCurrentSource.bind(this);
     this.state.patientData = this.props.patientDataValue;
     this.convertToGetDate = this.convertToGetDate.bind(this);
-
+    this.baseState = this.state;
     // this.handleSubmit = this.handleSubmit.bind(this);
     // handleSubmit
   }
@@ -153,6 +153,10 @@ class CancerInfo extends React.Component {
   //   // componentWillUpdate  () {
 
   // }
+
+  setBaseState() {
+    this.setState(this.baseState);
+  }
 
   convertToGetDate(date) {
     var formatDatestr = date;
@@ -477,9 +481,9 @@ class CancerInfo extends React.Component {
 
     this.setState({ isNewCancer: this.state.isNewCancer });
 
-    this.createEditedArray(editedCancer);
     // Conditioning only to display edited cancers in preview , to avoid New cancer displayed as edited
     if (!this.state.isNewCancer) {
+      this.createEditedArray(editedCancer);
       this.getChangedFieldsOnly(editedCancer);
     }
 
@@ -515,7 +519,8 @@ class CancerInfo extends React.Component {
     cancerEdited.tumorNo = editedCancer.tumorNo;
 
     if (cancerBeforeEdited.site.code != editedCancer.site.code) {
-      cancerEdited.site = editedCancer.site.code;
+      cancerEdited.site =
+        editedCancer.site.code + " | " + editedCancer.site.description;
     }
     if (cancerBeforeEdited.lateral.code != editedCancer.lateral.code) {
       console.log("lateral changed ***********" + this.state.lateralFromDb);
@@ -578,7 +583,10 @@ class CancerInfo extends React.Component {
 
       if (param == "site") {
         changeCol.column = "Site";
-        changeCol.previousVal = changeCol.previousVal.code;
+        changeCol.previousVal =
+          changeCol.previousVal.code +
+          " | " +
+          changeCol.previousVal.description;
         console.log("--------------------------------" + changeCol.previousVal);
       }
       if (param == "lateral") {
@@ -839,6 +847,7 @@ class CancerInfo extends React.Component {
   }
 
   refresEditedhCancerList(cancer) {
+    cancer.updated = true;
     const index = this.state.patientDataObject.cancerList.findIndex(
       e => e.tumorNo == cancer.tumorNo
     );

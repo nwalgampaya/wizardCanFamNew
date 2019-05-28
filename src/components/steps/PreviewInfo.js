@@ -56,7 +56,7 @@ export default class PreviewInfo extends React.Component {
       };
       return (
         <div>
-          <p style={styleSubHeader}>Individual Details Updated</p>
+          <p style={styleSubHeader}>Individual Details</p>
           <table className="PRtable">
             <tbody>
               <tr>
@@ -137,7 +137,7 @@ export default class PreviewInfo extends React.Component {
     if (this.props.isCanecerAdded) {
       return (
         <div>
-          <p style={style}>Added Cancer Details</p>
+          <p style={style}>New Cancers</p>
           {this.createCancerFields()}
         </div>
       );
@@ -180,7 +180,9 @@ export default class PreviewInfo extends React.Component {
           </tr>
           <tr>
             <td>Site</td>
-            <td style={tableRowStyle}>{values.site.code}</td>
+            <td style={tableRowStyle}>
+              {values.site.code + " | " + values.site.description}
+            </td>
           </tr>
           <tr>
             <td>Lateral</td>
@@ -197,7 +199,7 @@ export default class PreviewInfo extends React.Component {
           <tr>
             <td>Date Of Diagnosis</td>
             <td style={tableRowStyle}>
-              {this.convertDateFormat(values.dateOfDiagnosis)} }
+              {this.convertDateFormat(values.dateOfDiagnosis)}
             </td>
           </tr>
           <tr>
@@ -229,7 +231,7 @@ export default class PreviewInfo extends React.Component {
     if (this.props.isCancerEdited) {
       return (
         <div>
-          <p style={style}>Updated Cancer Details |</p>
+          <p style={style}>Existing Cancer Updates</p>
           {this.showCancerEditedFields()}
         </div>
       );

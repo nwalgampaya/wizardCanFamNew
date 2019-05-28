@@ -53,25 +53,25 @@ export default class EditCancer extends React.Component {
         field: "behaviour",
         method: "isEmpty",
         validWhen: false,
-        message: "behaviour is required"
+        message: "Behaviour is required field"
       },
       {
         field: "tissue",
         method: "isEmpty",
         validWhen: false,
-        message: "tissue is required"
+        message: "Tissue is required field"
       },
       {
         field: "diagSource",
         method: "isEmpty",
         validWhen: false,
-        message: "diagSource is required"
+        message: "DiagSource is required field"
       },
       {
         field: "dateOfDiagnosis",
         method: "isEmpty",
         validWhen: false,
-        message: "dateOfDiagnosis is required"
+        message: "Date Of Diagnosis cannot be empty"
       },
 
       {
@@ -85,7 +85,7 @@ export default class EditCancer extends React.Component {
         field: "ageDiagnosis",
         method: "isEmpty",
         validWhen: false,
-        message: "ageDiagnosis is required"
+        message: "Age Of Diagnosis is a required field"
       }
     ]);
 
@@ -136,9 +136,13 @@ export default class EditCancer extends React.Component {
       var dt1 = parseInt(this.patientData.dateOfDeath.substring(6));
       var mon1 = parseInt(this.patientData.dateOfDeath.substring(4, 6));
       var yr1 = parseInt(this.patientData.dateOfDeath.substring(0, 4));
-      var date1 = new Date(yr1, mon1 - 1, dt1);
-      this.state.existingDeathDate = date1;
-      this.state.isExistingDeathDate = true;
+      if (yr1 != "9999") {
+        this.state.existingDeathDate = date1;
+        this.state.isExistingDeathDate = true;
+        var date1 = new Date(yr1, mon1 - 1, dt1);
+      } else {
+        this.state.isExistingDeathDate = false;
+      }
     }
 
     if (
@@ -149,9 +153,13 @@ export default class EditCancer extends React.Component {
       var dt1 = parseInt(this.patientData.dateOfBirth.substring(6));
       var mon1 = parseInt(this.patientData.dateOfBirth.substring(4, 6));
       var yr1 = parseInt(this.patientData.dateOfBirth.substring(0, 4));
-      var date1 = new Date(yr1, mon1 - 1, dt1);
-      this.state.existingBirthDate = date1;
-      this.state.isExistingBirthDate = true;
+      if (yr1 != "9999") {
+        var date1 = new Date(yr1, mon1 - 1, dt1);
+        this.state.existingBirthDate = date1;
+        this.state.isExistingBirthDate = true;
+      } else {
+        this.state.isExistingBirthDate = false;
+      }
     }
   }
 
@@ -190,39 +198,53 @@ export default class EditCancer extends React.Component {
   };
 
   calculateAgeOfDiag() {
+    console.log("in age calc start");
+
     let cancerLocal = Object.assign({}, this.state.cancer);
     if (
       this.state.selectedDay != "" &&
       this.state.selectedMonth != "" &&
-      this.state.selectedYear != "" &&
-      this.state.selectedYear != "9999"
+      this.state.selectedYear != ""
     ) {
-      var dateOfDiagn =
-        this.state.selectedYear +
-        this.state.selectedMonth +
-        this.state.selectedDay;
-      this.setState({ dateOfDiagnosis: dateOfDiagn });
-      console.log(
-        "dateOfDiagnosis calculateAgeOf : " + this.state.dateOfDiagnosis
-      );
-      cancerLocal.dateOfDiagnosis = dateOfDiagn;
+      if (this.state.selectedYear != "9999") {
+        console.log("in age calc");
+        var dateOfDiagn =
+          this.state.selectedYear +
+          this.state.selectedMonth +
+          this.state.selectedDay;
+        this.setState({ dateOfDiagnosis: dateOfDiagn });
+        console.log("in age calc " + this.state.dateOfDiagnosis);
 
-      if (this.state.isExistingBirthDate) {
-        var diagDate = this.getDate(
-          this.state.selectedDay,
-          this.state.selectedMonth,
-          this.state.selectedYear
-        );
-        var age = this.getAge(diagDate, this.state.existingBirthDate);
-        this.isAgeCalculated = true;
-        this.state.ageDiagnosis = age;
-        this.setState({ ageDiagnosis: age, isAgeCalculated: true });
-        cancerLocal.ageDiagnosis = age;
+        cancerLocal.dateOfDiagnosis = dateOfDiagn;
 
-        console.log("AGE IS " + age);
+        if (this.state.isExistingBirthDate) {
+          var diagDate = this.getDate(
+            this.state.selectedDay,
+            this.state.selectedMonth,
+            this.state.selectedYear
+          );
+          var age = this.getAge(diagDate, this.state.existingBirthDate);
+          this.isAgeCalculated = true;
+          this.state.ageDiagnosis = age;
+          this.setState({ ageDiagnosis: age, isAgeCalculated: true });
+          cancerLocal.ageDiagnosis = age;
+
+          console.log("AGE IS " + age);
+        } else {
+          this.setState({ ageDiagnosis: "", isAgeCalculated: false });
+          cancerLocal.ageDiagnosis = "";
+        }
       } else {
-        this.setState({ isAgeCalculated: false });
-        // cancerLocal.ageDiagnosis = "";
+        var dateOfDiagn =
+          this.state.selectedYear +
+          this.state.selectedMonth +
+          this.state.selectedDay;
+        this.setState({ dateOfDiagnosis: dateOfDiagn });
+        this.setState({ ageDiagnosis: "", isAgeCalculated: false });
+        cancerLocal.ageDiagnosis = "";
+        console.log("in age calc " + this.state.dateOfDiagnosis);
+
+        cancerLocal.dateOfDiagnosis = dateOfDiagn;
       }
     } else {
       this.setState({
@@ -525,7 +547,6 @@ export default class EditCancer extends React.Component {
           return false;
         }
       }
-
     }
     // }
     return true;
@@ -811,7 +832,7 @@ export default class EditCancer extends React.Component {
                         </option>
                       );
                     })
-                      // <option >{"Hospital Rec"}</option>
+                    // <option >{"Hospital Rec"}</option>
                     }
                     }
                   </select>

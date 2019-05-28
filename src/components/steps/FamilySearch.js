@@ -47,12 +47,12 @@ export default class FamilySearch extends React.Component {
 
     this.handleLkd = this.handleLkd.bind(this);
     this.handleSearchGetFamily = this.handleSearchGetFamily.bind(this);
-    this.baseState= this.state ;
+    this.baseState = this.state;
   }
 
-  onBackPressReload= () => {
-    this.setState(this.baseState)
-  }
+  onBackPressReload = () => {
+    this.setState(this.baseState);
+  };
 
   convertDateFormat(date) {
     var formatDatestr = date;
@@ -86,7 +86,7 @@ export default class FamilySearch extends React.Component {
     );
   }
 
-  componentWillUnmount() {   
+  componentWillUnmount() {
     // var reloading = sessionStorage.getItem("reloading");
     // if (reloading) {
     //   Store.clearProductList();
@@ -174,7 +174,7 @@ export default class FamilySearch extends React.Component {
             <tr>
               <th> {this.showSelectAllChkBx()} </th>
               <th> Individual ID</th>
-              <th> LKD Date</th>
+              <th> LIVEDATE</th>
             </tr>
           );
         } else {
@@ -547,6 +547,25 @@ export default class FamilySearch extends React.Component {
     console.log("onSavePatientOnly in family component");
   }
 
+  returnSelectStatment() {
+    if (
+      !this.state.isLoading &&
+      this.state.isSearched &&
+      this.state.individualId.length > 0
+    ) {
+      var fontcolor = {
+        color: "black",
+        fontSize: "16px"
+      };
+      return (
+        <p style={fontcolor}>
+          Please select the family members that the above LIVEDATE and
+          LIVEDATESRC applies to.
+        </p>
+      );
+    }
+  }
+
   LoadingIndicator(isLoading) {
     const override = css`
       display: block;
@@ -627,6 +646,12 @@ export default class FamilySearch extends React.Component {
       color: "black",
       fontSize: "16px"
     };
+    var headerPara = {
+      color: "black",
+      fontSize: "16px",
+      marginLeft: "15px",
+      marginRight: "15px"
+    };
     var controlMargin = {
       marginTop: "10px",
       marginBottom: "8px"
@@ -638,8 +663,10 @@ export default class FamilySearch extends React.Component {
     };
     return (
       <div>
-        <p style={fontcolor}>
-          Please enter the Family ID that you would like to update{" "}
+        <p style={headerPara}>
+          {"    "}To update LIVEDATE and LVEDATESRC for multiple individuals
+          from a family, please enter the FAMILY_ID, LIVEDATE and LIVEDATESRC
+          below.
         </p>
         <div className="row" style={leftMargin}>
           <div className="col-sm-4">
@@ -735,7 +762,7 @@ export default class FamilySearch extends React.Component {
 
           <div className="col-sm-4 ">
             <div className="col-sm-12 lableBold" style={controlMarginLKD}>
-              LKD Date:
+              LIVEDATE:
             </div>
             <div
               className="col-sm-12 control-margin"
@@ -785,19 +812,11 @@ export default class FamilySearch extends React.Component {
           </div>
         </div>
         {this.LoadingIndicator(this.state.isLoading)}
+        {this.returnSelectStatment()}
+
         <table className="TFtable">
           <tbody>
             {this.showSearchTabHeader()}
-            {/* <input
-              checked={this.state.isCheckedAll}
-              className="form-check-input"
-              type="checkbox"
-              // id={i}
-              // id={value.patientIDs}
-              // value={value.lkdDate}
-              name="selectAllChkbx"
-              onChange={this.setAllCheckBoxValues.bind(this)}
-            /> */}
 
             {this.showFamilyId()}
           </tbody>
