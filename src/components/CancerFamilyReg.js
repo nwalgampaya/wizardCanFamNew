@@ -218,6 +218,7 @@ class CancerFamilyReg extends React.Component {
       isExistingBirthDate: false,
       childInvidiualCmp: null,
       wizardCmp: null
+      //arrayOfChangedFields: []
     };
     this.userName = "";
     this.arrayOfChangedFields = new Array();
@@ -245,8 +246,14 @@ class CancerFamilyReg extends React.Component {
     if (this.state.choosePathFamily) {
       Store.clearFamilySearchState();
     } else {
+      this.setstate;
       this.setState(this.baseState);
-
+      this.setState({
+        arrayEditedData: [],
+        patientDataValue: [],
+        newCancerArr: []
+      });
+      this.arrayOfChangedFields = new Array();
       // this.refs.cancerInfoCHD.setBaseState({}, () => this.setDefaultSt());
     }
   };
