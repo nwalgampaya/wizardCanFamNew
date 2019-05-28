@@ -248,6 +248,8 @@ class CancerFamilyReg extends React.Component {
     } else {
       this.setstate;
       this.setState(this.baseState);
+
+      //base state setting not worked for arrays //reference will be held
       this.setState({
         arrayEditedData: [],
         patientDataValue: [],
