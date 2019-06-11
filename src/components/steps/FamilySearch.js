@@ -173,7 +173,7 @@ export default class FamilySearch extends React.Component {
           return (
             <tr>
               <th> {this.showSelectAllChkBx()} </th>
-              <th> Individual ID</th>
+              <th>PERSON_CID</th>
               <th> LIVEDATE</th>
             </tr>
           );
@@ -664,7 +664,7 @@ export default class FamilySearch extends React.Component {
     return (
       <div>
         <p style={headerPara}>
-          {"    "}To update LIVEDATE and LVEDATESRC for multiple individuals
+          {"    "}To update LIVEDATE and LIVEDATESRC for multiple individuals
           from a family, please enter the FAMILY_ID, LIVEDATE and LIVEDATESRC
           below.
         </p>

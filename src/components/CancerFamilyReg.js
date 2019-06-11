@@ -459,7 +459,10 @@ class CancerFamilyReg extends React.Component {
         currentGender: event.target.value
       });
 
-      if (this.state.patientData.intGender != event.target.value) {
+      if (
+        this.state.patientData.intGender != event.target.value &&
+        event.target.value != undefined
+      ) {
         this.setPreviewScreenData(
           "Gender",
           this.state.gender,
@@ -702,7 +705,8 @@ class CancerFamilyReg extends React.Component {
     console.log("in SetCurrentStatus");
     if (
       this.getIntStatus(this.state.status) != event.target.value &&
-      event.target.value != ""
+      event.target.value != "" &&
+      event.target.value != undefined
     ) {
       this.setPreviewScreenData(
         "Vital Status",
@@ -805,19 +809,25 @@ class CancerFamilyReg extends React.Component {
       }
     });
 
-    if (this.state.currentSourceOFDeath)
-      if (
-        event.target.value != "Choose One" &&
-        this.state.sourceOFDeath.description != event.target.value
-      ) {
-        this.setPreviewScreenData(
-          "Source Of Death",
-          this.state.sourceOFDeath,
-          event.target.value
-        );
-      } else {
-        this.removePreviewScreenData("Source Of Death");
-      }
+    if (event.target.value == "Choose One") {
+      this.setState({
+        currentCourseOFDeath: "",
+        uknCourseOFDeath: false
+      });
+    }
+
+    if (
+      event.target.value != "Choose One" &&
+      this.state.sourceOFDeath.description != event.target.value
+    ) {
+      this.setPreviewScreenData(
+        "Source Of Death",
+        this.state.sourceOFDeath,
+        event.target.value
+      );
+    } else {
+      this.removePreviewScreenData("Source Of Death");
+    }
   }
 
   setCurrentCauseDeath(event) {
@@ -1312,6 +1322,7 @@ class CancerFamilyReg extends React.Component {
     } else {
       this.state.patientDataValue.dateOfDeath = this.state.patientData.dateOfDeath;
     }
+
     if (
       this.state.currentaodeath != this.state.aodeath &&
       this.state.currentaodeath != ""
@@ -1478,14 +1489,38 @@ class CancerFamilyReg extends React.Component {
     }
 
     // when Alive remove all the Death related data from the db
-    if (this.state.isAlive) {
-      this.state.patientDataValue.dateOfDeath = "";
-      this.state.patientDataValue.ageOfDeath = "";
-      // this.state.patientDataValue.sourceOfDeath = { id: '', code: '', description: '' };
-      this.state.patientDataValue.courseOfDeath = {
-        id: this.state.patientDataValue.personID,
-        description: ""
-      };
+    if (this.state.currentStatus == 1) {
+      this.state.patientDataValue.dateOfDeath = null;
+      this.state.patientDataValue.ageOfDeath = null;
+      this.state.patientDataValue.ageOfDeathEst = null;
+      this.state.patientDataValue.sourceOfDeath = null; // { id: '', code: '', description: '' };
+      this.state.patientDataValue.courseOfDeath = null;
+    }
+
+    if (
+      this.state.currentStatus == 1 &&
+      this.getIntStatus(this.state.status) == 2
+    ) {
+      if (this.state.dateOfDeath != "")
+        this.setPreviewScreenData(
+          "Death Date",
+          this.state.dateOfDeath,
+          this.state.currentDeath
+        );
+      if (this.state.aodeath != "")
+        this.setPreviewScreenData("Death Age", this.state.aodeath, "");
+      if (this.state.sourceOFDeath.description != "")
+        this.setPreviewScreenData(
+          "Source Of Death",
+          this.state.sourceOFDeath,
+          ""
+        );
+      if (this.state.courseOFDeath.description != "")
+        this.setPreviewScreenData(
+          "Cause Of Death",
+          this.state.courseOFDeath,
+          ""
+        );
     }
   }
 

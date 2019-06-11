@@ -675,20 +675,7 @@ class CancerInfo extends React.Component {
     );
   }
   sendEditedCancerToPreview() {
-    this.state.arrayEditedData.map((values, i) => {
-      // console.log("i : " + values)
-      // values.map((values,i)=>{
-      // console.log("i : " + i)
-      // if(values.column=="site"){
-      //   console.log("previousVal : " + values.previousVal.code)
-      // }if(values.column=="lateral"){
-      //   console.log("previousVal : " + values.previousVal.code)
-      // }else{
-      //   console.log("previousVal : " + values.previousVal)
-      // }
-      //   console.log("newVal: " + values.newVal)
-      // })
-    });
+    this.state.arrayEditedData.map((values, i) => {});
 
     // Sending the modified patient object to be saved to main page(cancerFamily)
     //this.state.patientDataObject.cancerList = this.state.cancerInfo;

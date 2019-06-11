@@ -50,8 +50,11 @@ export default class ChoosePath extends React.Component {
       <div>
         <div>
           <p style={paraStyle}>
-            This tool is used to update the Last Known Alive Date (LKD) and
-            other details of participants in the Colon Cancer Family Registry
+            Welcome to the USC CCFR Informatics Data Portal. Please select an
+            option below to submit follow-up data updates to the Colon Cancer
+            Family Registry database.
+            {/* This tool is used to update the Last Known Alive Date (LKD) and
+            other details of participants in the Colon Cancer Family Registry*/}
           </p>
         </div>
         <div style={alignStyle}>
@@ -62,19 +65,19 @@ export default class ChoosePath extends React.Component {
               style={buttonMargin}
               type="submit"
             >
-              <img
-                src={require("../../img/family.png")}
-              />
+              <img src={require("../../img/family.png")} />
             </button>
-            <span className="col-sm-12">Update family members</span>
+            <span className="col-sm-12">Update Family LIVEDATE</span>
           </div>
           <div>
-            <button onClick={this.handleIndividual} className="col-sm-12 chooseImage" type="submit">
-              <img
-                src={require("../../img/individual.png")}
-              />
+            <button
+              onClick={this.handleIndividual}
+              className="col-sm-12 chooseImage"
+              type="submit"
+            >
+              <img src={require("../../img/individual.png")} />
             </button>
-            <span className="col-sm-12">Update an individual</span>
+            <span className="col-sm-12">Individual Updates</span>
           </div>
         </div>
       </div>

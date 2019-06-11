@@ -206,7 +206,11 @@ export default class EditCancer extends React.Component {
       this.state.selectedMonth != "" &&
       this.state.selectedYear != ""
     ) {
-      if (this.state.selectedYear != "9999") {
+      if (
+        this.state.selectedYear != "9999" &&
+        this.state.selectedMonth != "99" &&
+        this.state.selectedDay != "99"
+      ) {
         console.log("in age calc");
         var dateOfDiagn =
           this.state.selectedYear +
@@ -240,8 +244,9 @@ export default class EditCancer extends React.Component {
           this.state.selectedMonth +
           this.state.selectedDay;
         this.setState({ dateOfDiagnosis: dateOfDiagn });
-        this.setState({ ageDiagnosis: "", isAgeCalculated: false });
-        cancerLocal.ageDiagnosis = "";
+        //this.setState({ ageDiagnosis: "", isAgeCalculated: false });
+        this.setState({ isAgeCalculated: false });
+        //cancerLocal.ageDiagnosis = "";
         console.log("in age calc " + this.state.dateOfDiagnosis);
 
         cancerLocal.dateOfDiagnosis = dateOfDiagn;
@@ -249,10 +254,10 @@ export default class EditCancer extends React.Component {
     } else {
       this.setState({
         dateOfDiagnosis: "",
-        ageDiagnosis: "",
+        //ageDiagnosis: "",
         isAgeCalculated: false
       });
-      cancerLocal.ageDiagnosis = "";
+      //cancerLocal.ageDiagnosis = "";
       cancerLocal.dateOfDiagnosis = "";
     }
     this.state.cancer = cancerLocal;

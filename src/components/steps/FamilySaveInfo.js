@@ -98,7 +98,7 @@ export default class FamilySaveInfo extends React.Component {
         <table className="TFtable">
           <tbody>
             <tr>
-              <th>Individual ID</th>
+              <th>PERSON_CID</th>
               <th>LIVEDATE Old</th>
               <th>LIVEDATE New</th>
             </tr>

@@ -169,9 +169,14 @@ export default class PreviewInfo extends React.Component {
       fontWeight: "normal",
       color: "rgb(23, 54, 93)"
     };
-    // || this.props.isCancerEdited
-    // if(this.props.isCanecerAdded ){
-    return this.props.newCancerArr.map((values, i) => (
+    var newCancerArr = [];
+    this.props.patientData.cancerList.map((value, i) => {
+      if (!value.id) {
+        newCancerArr.push(value);
+      }
+    });
+
+    return newCancerArr.map((values, i) => (
       <table className="PRtable">
         <tbody>
           <tr>
