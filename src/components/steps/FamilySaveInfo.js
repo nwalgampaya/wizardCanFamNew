@@ -101,6 +101,7 @@ export default class FamilySaveInfo extends React.Component {
               <th>PERSON_CID</th>
               <th>LIVEDATE Old</th>
               <th>LIVEDATE New</th>
+              <th>Source</th>
             </tr>
             {this.props.chkBoxId.map((value, i) => (
               <tr key={i}>
@@ -108,6 +109,8 @@ export default class FamilySaveInfo extends React.Component {
                 <td>{value.patientIDs}</td>
                 <td>{this.convertDateFormat(value.lkdDate)}</td>
                 <td>{this.convertDateFormat(this.props.currentLKD)}</td>
+                <td>{this.props.source}</td>
+
                 {/* {console.log("value : " + value[i].lkdDate)} */}
               </tr>
             ))}

@@ -202,6 +202,7 @@ class CancerFamilyReg extends React.Component {
       chkBoxId: "",
       selectedSrlCode: "",
       currentLKD: "",
+      source: "",
       isCanFamEdited: false,
       isValidBirthDateSelected: false,
       isValidLKDSelected: false,
@@ -1331,7 +1332,7 @@ class CancerFamilyReg extends React.Component {
 
       this.setPreviewScreenData(
         "Death Age",
-        this.state.ageOfDeath,
+        this.state.patientData.ageOfDeath,
         this.state.currentaodeath
       );
     } else {
@@ -1571,10 +1572,16 @@ class CancerFamilyReg extends React.Component {
 
     this.setState({ isChecked: isChecked });
   };
-  handleDataFromFamilySearch = (chkBoxId, selectedSrlCode, currentLKD) => {
+  handleDataFromFamilySearch = (
+    chkBoxId,
+    selectedSrlCode,
+    currentLKD,
+    source
+  ) => {
     this.setState({ chkBoxId: chkBoxId });
     this.setState({ selectedSrlCode: selectedSrlCode });
     this.setState({ currentLKD: currentLKD });
+    this.setState({ source: source });
   };
 
   // To set 'isInPreviewScreen' false
@@ -1784,6 +1791,18 @@ class CancerFamilyReg extends React.Component {
               errors.currentaodeathColumn = "Invalid Age of Death";
             }
           }
+        }
+      }
+    } else {
+      if (
+        this.state.currentStatus == 2
+      ) {
+        if (
+          this.state.selectedDate == "99" ||
+          this.state.selectedMonth == "99" ||
+          this.state.selectedYear == "9999"
+        ) {
+          errors.currentaodeathColumn = "Age of Death is Required";
         }
       }
     }
@@ -2935,6 +2954,7 @@ class CancerFamilyReg extends React.Component {
               chkBoxId={this.state.chkBoxId}
               selectedSrlCode={this.state.selectedSrlCode}
               currentLKD={this.state.currentLKD}
+              source={this.state.source}
               ref={this.child}
             />{" "}
             {/* Page 8 */}

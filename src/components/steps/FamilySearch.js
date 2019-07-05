@@ -38,7 +38,8 @@ export default class FamilySearch extends React.Component {
         isChecked: [],
         isCheckedSingle: false,
         isCheckedAll: false,
-        isLoading: false
+        isLoading: false,
+        read: null
         // { id:'',
         //   value:'',
 
@@ -510,10 +511,18 @@ export default class FamilySearch extends React.Component {
     FamilyStateObj.isCheckedAll = this.state.isCheckedAll;
     FamilyStateObj.sendCurrentLKD = this.state.sendCurrentLKD;
     Store.saveFamilySearchState(FamilyStateObj);
+
+    this.state.srlcodesRest.map((read, i) => {
+      if (read.code == this.state.selectedSrlCode) {
+        this.state.read = read.description;
+      }
+    });
+
     this.props.onFamilySearch(
       this.state.chkBoxId,
       this.state.selectedSrlCode,
-      this.state.sendCurrentLKD
+      this.state.sendCurrentLKD,
+      this.state.read
     );
   }
 
