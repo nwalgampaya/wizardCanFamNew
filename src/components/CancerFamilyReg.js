@@ -233,6 +233,7 @@ class CancerFamilyReg extends React.Component {
     this.assignDbDataToFields = this.assignDbDataToFields.bind(this);
     this.setAgeOfDeath = this.setAgeOfDeath.bind(this);
     this.baseState = this.state;
+    this.isCaluculatedAge = false;
   }
 
   //Transfered from StartPageRegistry
@@ -640,7 +641,7 @@ class CancerFamilyReg extends React.Component {
           this.state.selectedYearDOB
         );
         var age = this.getAge(deathDate, birthDate);
-        this.isAgeCalculated = true;
+        this.isCaluculatedAge = true;
         this.state.currentaodeath = age;
         this.setState({ currentaodeath: age, isAgeCalculated: true });
 
@@ -649,7 +650,7 @@ class CancerFamilyReg extends React.Component {
         var currentBirthDate = this.state.existingBirthDate;
         if (typeof currentBirthDate !== "undefined") {
           var age = this.getAge(deathDate, currentBirthDate);
-          this.isAgeCalculated = true;
+          this.isCaluculatedAge = true;
           this.state.currentaodeath = age;
           this.setState({ currentaodeath: age, isAgeCalculated: true });
         }
@@ -663,18 +664,31 @@ class CancerFamilyReg extends React.Component {
           this.state.selectedYearDOB
         );
         var age = this.getAge(deathDate, birthDate);
-        this.isAgeCalculated = true;
+        this.isCaluculatedAge = true;
         this.state.currentaodeath = age;
+        this.isCaluculatedAge = true;
         this.setState({ currentaodeath: age, isAgeCalculated: true });
       }
       if (deathDate != "") {
       } else {
+        this.isCaluculatedAge = false;
         this.setState({ currentaodeath: "", isAgeCalculated: false });
         this.removePreviewScreenData("Death Age");
       }
     } else {
+      this.isCaluculatedAge = false;
       this.setState({ currentaodeath: "", isAgeCalculated: false });
       this.removePreviewScreenData("Death Age");
+    }
+
+    if (
+      (this.state.selectedDate == "99" ||
+        this.state.selectedMonth == "99" ||
+        this.state.selectedYear == "9999") &&
+      this.isCaluculatedAge
+    ) {
+      this.isCaluculatedAge = false;
+      this.setState({ currentaodeath: age, isAgeCalculated: false });
     }
     // console.log("validateDeathDate" + e);
   }
@@ -1534,7 +1548,10 @@ class CancerFamilyReg extends React.Component {
 
   savePatient(patientDataObject) {
     console.log("vital status savepatient " + patientDataObject.vitalStatus);
-    patientDataObject.userName = global.userName;
+
+    var userName = sessionStorage.getItem("userName");
+    console.log("userName " + userName);
+    patientDataObject.userName = userName;
     const urlSavePatient =
       properties.baseUrl + "patients/" + patientDataObject.personID;
 
@@ -1794,9 +1811,7 @@ class CancerFamilyReg extends React.Component {
         }
       }
     } else {
-      if (
-        this.state.currentStatus == 2
-      ) {
+      if (this.state.currentStatus == 2) {
         if (
           this.state.selectedDate == "99" ||
           this.state.selectedMonth == "99" ||

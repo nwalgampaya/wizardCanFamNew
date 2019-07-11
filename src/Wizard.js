@@ -143,12 +143,14 @@ export default class Wizard extends React.Component {
       page: 1
     }));
     sessionStorage.setItem("reloading", "true");
+
     Store.clearFamilySearchState();
 
     document.location.reload(true);
   };
 
   logout = () => {
+    sessionStorage.removeItem("userName");
     window.location.reload();
   };
   previous = () => {
@@ -200,6 +202,7 @@ export default class Wizard extends React.Component {
 
   componentDidMount() {
     var reloading = sessionStorage.getItem("reloading");
+
     if (reloading) {
       sessionStorage.removeItem("reloading");
       this.setState(state => ({
@@ -208,7 +211,7 @@ export default class Wizard extends React.Component {
     }
   }
   endSession = () => {
-    const {onBackPressReload }= this.props;
+    const { onBackPressReload } = this.props;
     this.setState(state => ({
       // page: Math.max(state.page + 1, 0)
       page: 1
@@ -275,12 +278,9 @@ export default class Wizard extends React.Component {
         );
         return onSubmit(values);
       }
-    }
-    else {
-
+    } else {
       this.next(values);
     }
-
   };
 
   render() {
@@ -412,9 +412,11 @@ export default class Wizard extends React.Component {
                       page == 6 ||
                       page == 5 ||
                       this.props.choosePathFamily) && (
-                      <button style={marginRight} className="invisible" type="button">
-                       
-                      </button>
+                      <button
+                        style={marginRight}
+                        className="invisible"
+                        type="button"
+                      />
                     )}
                     {(((page == 3 || page == 4 || page == 6 || page == 5) &&
                       page != 6) ||
@@ -445,18 +447,22 @@ export default class Wizard extends React.Component {
                       </button>
                     )}
                     {page == 2 && (
-                      <button style={marginRight} className="invisible" type="button">
-                       
-                      </button>
+                      <button
+                        style={marginRight}
+                        className="invisible"
+                        type="button"
+                      />
                     )}
                     {(page == 3 ||
                       page == 4 ||
                       page == 6 ||
                       page == 5 ||
                       this.props.choosePathFamily) && (
-                      <button style={marginRight} className="invisible" type="button">
-                       
-                      </button>
+                      <button
+                        style={marginRight}
+                        className="invisible"
+                        type="button"
+                      />
                     )}
                     {/* {(page == 3 || page == 4 || page == 6 || page == 5) && (
                       <button className="invisible" type="button">
@@ -472,7 +478,10 @@ export default class Wizard extends React.Component {
                     {/* page !=3 &&  */}
                     {/* || ((page == 7) && this.props.choosePathFamily)) */}
 
-                    {((page > 1 && page != 3 &&  page != 6 && !this.props.choosePathFamily) ||
+                    {((page > 1 &&
+                      page != 3 &&
+                      page != 6 &&
+                      !this.props.choosePathFamily) ||
                       page == 8) && (
                       // (page != 8 && this.props.choosePathFamily) && (
                       <button

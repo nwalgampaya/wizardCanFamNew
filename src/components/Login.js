@@ -97,7 +97,8 @@ export default class Login extends React.Component {
           this.setErrorFalse();
           this.props.onIncorrectCred(this.state.username);
 
-          global.userName = this.state.username;
+          // global.userName = this.state.username;
+          sessionStorage.setItem("userName", this.state.username);
 
           // this.props.history.push("/uscportal");
         } else {

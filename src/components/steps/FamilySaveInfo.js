@@ -48,7 +48,9 @@ export default class FamilySaveInfo extends React.Component {
     (this.state.PatientLKDDTO.lkdDate = this.props.currentLKD),
       (this.state.PatientLKDDTO.lkdSource.code = this.props.selectedSrlCode);
 
-    this.state.PatientLKDDTO.userName = global.userName;
+    var userName = sessionStorage.getItem("userName");
+    console.log("userName " + userName);
+    this.state.PatientLKDDTO.userName = userName;
 
     const urlSavefamilyId = properties.baseUrl + "patients/lkd";
 
