@@ -4,6 +4,6 @@ export const properties = {
   // baseUrl: "http://128.250.143:8090/uscportal/api/"
   // baseUrl: "http://localhost:8080/uscportal/api/"
   // baseUrl: "http://accfr.coloncfr.org/uscportal/api/"
-  // baseUrl: "http://usc.coloncfr.org/uscportal/api/"
-  baseUrl: "http://localhost:8080/uscportal/api/"
+  baseUrl: "https://usc.coloncfr.org/uscportal/api/"
+  // baseUrl: "http://localhost:8080/uscportal/api/"
 };
