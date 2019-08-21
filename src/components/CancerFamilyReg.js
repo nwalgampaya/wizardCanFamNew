@@ -1135,6 +1135,9 @@ class CancerFamilyReg extends React.Component {
         description:
           patientData.courseOfDeath == null
             ? ""
+            : patientData.courseOfDeath.description == null ||
+              patientData.courseOfDeath.description == ""
+            ? patientData.courseOfDeath.code
             : patientData.courseOfDeath.description
         // code: patientData.sourceOfLiveDate.code,
         // patientData.courseOfDeath,
@@ -1375,15 +1378,27 @@ class CancerFamilyReg extends React.Component {
       this.state.currentCourseOFDeath != this.state.courseOFDeath.description &&
       this.state.currentCourseOFDeath != ""
     ) {
-      this.state.patientDataValue.courseOfDeath = {
-        id: this.state.patientDataValue.personID,
-        description: this.state.currentCourseOFDeath,
-        centerNo: 12,
-        codSource:
-          this.state.patientDataValue.sourceOfDeath != null
-            ? this.state.patientDataValue.sourceOfDeath.codCode
-            : null
-      };
+      if (this.state.currentCourseOFDeath == "999999") {
+        this.state.patientDataValue.courseOfDeath = {
+          id: this.state.patientDataValue.personID,
+          code: this.state.currentCourseOFDeath,
+          centerNo: 12,
+          codSource:
+            this.state.patientDataValue.sourceOfDeath != null
+              ? this.state.patientDataValue.sourceOfDeath.codCode
+              : null
+        };
+      } else {
+        this.state.patientDataValue.courseOfDeath = {
+          id: this.state.patientDataValue.personID,
+          description: this.state.currentCourseOFDeath,
+          centerNo: 12,
+          codSource:
+            this.state.patientDataValue.sourceOfDeath != null
+              ? this.state.patientDataValue.sourceOfDeath.codCode
+              : null
+        };
+      }
       // this.state.columnExist = true;
       // to fix error due to typing data to the text box
       if (this.state.uknCourseOFDeath) {
