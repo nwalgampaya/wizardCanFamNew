@@ -130,7 +130,7 @@ export default class DateSelect extends React.Component {
   getYears() {
     var i;
     var j = 0;
-    for (i = 2019; i > 1800; i--) {
+    for (i = 2020; i > 1800; i--) {
       j = ++j;
       this.state.yearArray[j] = i;
       // console.log("j"+ j)
